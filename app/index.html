@@ -59,18 +59,33 @@
                 minZoom: 11
             }).addTo(map);
 
-            // 🟡 左側：黄色エリア
-            const yellowCoords = [[35.31751, 139.38287], [35.31697, 139.38283], [35.31713, 139.39223], [35.31764, 139.39215]];
-            yellowPoly = L.polygon(yellowCoords, { color: '#eab308', fillColor: '#eab308', fillOpacity: 0.5, weight: 2, lineCap: 'round' }).addTo(map).bindPopup("<strong>西側エリア</strong><br>ゴミ量: 中");
+            // 🟡 左側：黄色エリア（円に変更）
+            yellowPoly = L.circle([35.3172, 139.3875], {
+                radius: 400, // 👈 半径（メートル）
+                color: '#eab308',
+                fillColor: '#eab308',
+                fillOpacity: 0.5,
+                weight: 2
+            }).addTo(map).bindPopup("<strong>西側エリア</strong><br>ゴミ量: 中");
 
-            // 🔴 右側：赤エリア
-            const redCoords = [[35.31764, 139.39215], [35.31713, 139.39223], [35.31610, 139.41000], [35.31665, 139.41000]];
-            redPoly = L.polygon(redCoords, { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.5, weight: 2, lineCap: 'round' }).addTo(map).bindPopup("<strong>東側エリア</strong><br>ゴミ量: 多 (優先回収エリア)");
+            // 🔴 右側：赤エリア（円に変更）
+            redPoly = L.circle([35.3168, 139.4010], {
+                radius: 600, // 👈 半径（メートル）
+                color: '#ef4444',
+                fillColor: '#ef4444',
+                fillOpacity: 0.5,
+                weight: 2
+            }).addTo(map).bindPopup("<strong>東側エリア</strong><br>ゴミ量: 多 (優先回収エリア)");
 
-            // 🟣 中央：紫エリア
-            const dangerAreaCoords = [[35.31740, 139.39700], [35.31650, 139.39850], [35.31720, 139.40000]];
-            dangerPoly = L.polygon(dangerAreaCoords, { color: '#a855f7', fillColor: '#a855f7', fillOpacity: 0.6, weight: 2, lineCap: 'round' }).addTo(map).bindPopup("<strong>注射器発見要注意区域</strong>");
-
+            // 🟣 中央：紫エリア（円に変更）
+            dangerPoly = L.circle([35.3168, 139.3985], {
+                radius: 200, // 👈 半径（メートル）
+                color: '#a855f7',
+                fillColor: '#a855f7',
+                fillOpacity: 0.6,
+                weight: 2
+            }).addTo(map).bindPopup("<strong>注射器発見要注意区域</strong>");
+            
             // ⚠️ 警告マーカー
             const dangerMarker = L.marker([35.31650, 139.39850], {
                 icon: L.divIcon({
