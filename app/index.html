@@ -14,83 +14,186 @@
 </head>
 <body class="bg-slate-950 font-sans text-slate-100 overflow-hidden">
 
+    <!-- 🗺️ 地図エリア -->
     <div id="leaflet-map" class="absolute inset-0 z-0"></div>
 
-    <div class="absolute top-24 left-6 z-[1001]">
-        <button id="menu-open-btn" class="hamburger-btn">
-            <span></span>
-            <span></span>
-            <span></span>
+    <!-- ☰ ハンバーガーボタン -->
+    <div class="absolute top-6 left-6 z-10">
+        <button id="menu-open-btn" class="hamburger-btn bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 shadow-lg cursor-pointer hover:bg-slate-800 transition-all">
+            <i class="fa-solid fa-bars text-xl text-white"></i>
         </button>
     </div>
 
-    <div id="menu-overlay" class="menu-overlay hidden"></div>
+    <!-- ⬛ メニュー背景オーバーレイ -->
+    <div id="menu-overlay" class="fixed inset-0 bg-black/60 z-20 hidden backdrop-blur-sm transition-opacity"></div>
 
-    <div id="side-menu" class="side-menu-drawer -left-full">
-        <div class="drawer-header">
-            <button id="menu-close-btn" class="drawer-close-btn">
+    <!-- 📱 サイドメニュー（画像のシンプルなレイアウト） -->
+    <div id="side-menu" class="fixed top-0 left-0 h-full w-64 bg-[#232542] z-30 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-6">
+        <!-- メニューヘッダー -->
+        <div class="flex items-center gap-4 pb-4 border-b border-slate-400/40">
+            <button id="menu-close-btn" class="w-8 h-8 flex items-center justify-center border border-slate-300/50 rounded text-slate-200 hover:bg-slate-700/50 cursor-pointer">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-            <span class="drawer-title">メニュー</span>
+            <span class="text-lg font-medium text-white tracking-wide">メニュー</span>
         </div>
 
-        <nav class="drawer-nav">
-            <a href="#" class="drawer-item">お知らせ</a>
-            <a href="#" class="drawer-item">ごみ一覧</a>
-            <a href="#" class="drawer-item">通知</a>
+        <!-- ナビゲーション項目（テキストのみ） -->
+        <nav class="flex flex-col gap-6 pt-6">
+            <button id="nav-notice-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
+                お知らせ
+            </button>
+            <button id="nav-trash-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
+                ごみ一覧
+            </button>
+            <button id="nav-notify-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
+                通知
+            </button>
         </nav>
     </div>
 
+
+    <!-- 📄 お知らせ画面（2枚目の写真イメージ） -->
+    <div id="notice-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+        <div class="p-6">
+            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 p-2 cursor-pointer mb-6">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <!-- DB連携を想定したコンテンツ構成 -->
+            <div class="space-y-10 max-w-2xl mx-auto pt-2">
+                <div class="space-y-3">
+                    <h2 class="text-xl font-bold tracking-tight">ボランティア募集活動募集</h2>
+                    <div class="border-b-2 border-slate-400 w-full my-2"></div>
+                    <div class="border-b-2 border-slate-400 w-full my-2"></div>
+                </div>
+
+                <div class="space-y-3">
+                    <h2 class="text-xl font-bold tracking-tight">危険海岸漂着物のお知らせ</h2>
+                    <div class="border-b-2 border-slate-400 w-full my-2"></div>
+                    <div class="border-b-2 border-slate-400 w-full my-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 🖼️ ごみ一覧機能画面（3枚目の写真イメージ） -->
+    <div id="trash-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+        <div class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
+            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h1 class="text-lg font-bold text-center flex-1 pr-8">ごみ一覧機能</h1>
+        </div>
+
+        <div class="p-6 max-w-2xl mx-auto w-full space-y-6">
+            <!-- ごみカード1 -->
+            <div class="flex gap-4 pb-6 border-b border-slate-300 items-start">
+                <div class="w-32 h-24 bg-slate-300 border border-slate-400 rounded flex items-center justify-center font-bold text-slate-700 flex-shrink-0">
+                    ゴミ画像
+                </div>
+                <div class="flex-1 space-y-2">
+                    <div class="flex justify-between text-sm text-slate-700">
+                        <span>日時</span>
+                        <span>放置時間</span>
+                    </div>
+                    <div class="space-y-2 pt-1">
+                        <div class="text-sm font-semibold text-slate-800">コメント</div>
+                        <div class="border-b border-slate-400 w-full"></div>
+                        <div class="border-b border-slate-400 w-full"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ごみカード2 -->
+            <div class="flex gap-4 pb-6 border-b border-slate-300 items-start">
+                <div class="w-32 h-24 bg-slate-300 border border-slate-400 rounded flex items-center justify-center font-bold text-slate-700 flex-shrink-0">
+                    ゴミ画像
+                </div>
+                <div class="flex-1 space-y-2">
+                    <div class="flex justify-between text-sm text-slate-700">
+                        <span>日時</span>
+                        <span>放置時間</span>
+                    </div>
+                    <div class="space-y-2 pt-1">
+                        <div class="text-sm font-semibold text-slate-800">コメント</div>
+                        <div class="border-b border-slate-400 w-full"></div>
+                        <div class="border-b border-slate-400 w-full"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ごみカード3 -->
+            <div class="flex gap-4 pb-6 border-b border-slate-300 items-start">
+                <div class="w-32 h-24 bg-slate-300 border border-slate-400 rounded flex items-center justify-center font-bold text-slate-700 flex-shrink-0">
+                    ゴミ画像
+                </div>
+                <div class="flex-1 space-y-2">
+                    <div class="flex justify-between text-sm text-slate-700">
+                        <span>日時</span>
+                        <span>放置時間</span>
+                    </div>
+                    <div class="space-y-2 pt-1">
+                        <div class="text-sm font-semibold text-slate-800">コメント</div>
+                        <div class="border-b border-slate-400 w-full"></div>
+                        <div class="border-b border-slate-400 w-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 🔔 通知画面（仮画面） -->
+    <div id="notify-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+        <div class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
+            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h1 class="text-lg font-bold text-center flex-1 pr-8">通知機能</h1>
+        </div>
+        <div class="p-6 max-w-2xl mx-auto w-full text-center text-slate-500 pt-20">
+            （通知画面のデザインは準備中です）
+        </div>
+    </div>
+
+
+    <!-- ⚙️ スクリプト -->
     <script>
         let map;
-        let yellowPoly, redPoly, dangerPoly;
 
         function initMap() {
             const initialLatLng = [35.3168, 139.3940];
-            const zoomLevel = 15;
             map = L.map('leaflet-map', {
                 zoomControl: true, 
                 attributionControl: false 
-            }).setView(initialLatLng, zoomLevel);
+            }).setView(initialLatLng, 15);
 
-            const tileUrl = "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg";
-            L.tileLayer(tileUrl, {
+            L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg", {
                 maxNativeZoom: 18,
                 minZoom: 11
             }).addTo(map);
 
-            // 🟡 左側：黄色エリア（円に変更）
-            yellowPoly = L.circle([35.3172, 139.3875], {
-                radius: 400, // 👈 半径（メートル）
-                color: '#eab308',
-                fillColor: '#eab308',
-                fillOpacity: 0.5,
-                weight: 2
+            // 🟡 黄色エリア
+            L.circle([35.3172, 139.3875], {
+                radius: 400, color: '#eab308', fillColor: '#eab308', fillOpacity: 0.5, weight: 2
             }).addTo(map).bindPopup("<strong>西側エリア</strong><br>ゴミ量: 中");
 
-            // 🔴 右側：赤エリア（円に変更）
-            redPoly = L.circle([35.3168, 139.4010], {
-                radius: 600, // 👈 半径（メートル）
-                color: '#ef4444',
-                fillColor: '#ef4444',
-                fillOpacity: 0.5,
-                weight: 2
+            // 🔴 赤エリア
+            L.circle([35.3168, 139.4010], {
+                radius: 600, color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.5, weight: 2
             }).addTo(map).bindPopup("<strong>東側エリア</strong><br>ゴミ量: 多 (優先回収エリア)");
 
-            // 🟣 中央：紫エリア（円に変更）
-            dangerPoly = L.circle([35.3168, 139.3985], {
-                radius: 200, // 👈 半径（メートル）
-                color: '#a855f7',
-                fillColor: '#a855f7',
-                fillOpacity: 0.6,
-                weight: 2
+            // 🟣 紫エリア
+            L.circle([35.3168, 139.3985], {
+                radius: 200, color: '#a855f7', fillColor: '#a855f7', fillOpacity: 0.6, weight: 2
             }).addTo(map).bindPopup("<strong>注射器発見要注意区域</strong>");
             
             // ⚠️ 警告マーカー
-            const dangerMarker = L.marker([35.31650, 139.39850], {
+            L.marker([35.31650, 139.39850], {
                 icon: L.divIcon({
                     className: 'custom-pin-danger',
-                    html: '<div class="bg-red-500 text-white rounded-full p-2.5 shadow-lg border-2 border-white flex items-center justify-center w-10 h-10 animate-bounce text-sm hover:scale-115 transition-all">⚠️</div>',
+                    html: '<div class="bg-red-500 text-white rounded-full p-2.5 shadow-lg border-2 border-white flex items-center justify-center w-10 h-10 animate-bounce text-sm">⚠️</div>',
                     iconSize: [40, 40],
                     iconAnchor: [20, 20]
                 })
@@ -99,29 +202,65 @@
             setTimeout(() => { map.invalidateSize(); }, 300);
         }
 
-        // ドロワーメニュー制御
+        // 要素の取得
         const openBtn = document.getElementById('menu-open-btn');
         const closeBtn = document.getElementById('menu-close-btn');
         const sideMenu = document.getElementById('side-menu');
         const overlay = document.getElementById('menu-overlay');
 
+        const navNoticeBtn = document.getElementById('nav-notice-btn');
+        const navTrashBtn = document.getElementById('nav-trash-btn');
+        const navNotifyBtn = document.getElementById('nav-notify-btn');
+
+        const noticePage = document.getElementById('notice-page');
+        const trashPage = document.getElementById('trash-page');
+        const notifyPage = document.getElementById('notify-page');
+        const backBtns = document.querySelectorAll('.back-to-map-btn');
+
+        // メニュー開閉
         function openMenu() {
-            sideMenu.classList.remove('-left-full');
-            sideMenu.classList.add('left-0');
+            sideMenu.classList.remove('-translate-x-full');
             overlay.classList.remove('hidden');
-            setTimeout(() => overlay.classList.add('opacity-100'), 10);
         }
 
         function closeMenu() {
-            sideMenu.classList.remove('left-0');
-            sideMenu.classList.add('-left-full');
-            overlay.classList.remove('opacity-100');
-            setTimeout(() => overlay.classList.add('hidden'), 300);
+            sideMenu.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
         }
 
         openBtn.addEventListener('click', openMenu);
         closeBtn.addEventListener('click', closeMenu);
         overlay.addEventListener('click', closeMenu);
+
+        // 各ページへの移動
+        function showPage(pageElement) {
+            closeMenu();
+            pageElement.classList.remove('hidden');
+            pageElement.classList.add('flex');
+        }
+
+        // 地図画面への復帰
+        function returnToMap() {
+            noticePage.classList.add('hidden');
+            noticePage.classList.remove('flex');
+
+            trashPage.classList.add('hidden');
+            trashPage.classList.remove('flex');
+
+            notifyPage.classList.add('hidden');
+            notifyPage.classList.remove('flex');
+
+            closeMenu();
+        }
+
+        // イベントバインド
+        navNoticeBtn.addEventListener('click', () => showPage(noticePage));
+        navTrashBtn.addEventListener('click', () => showPage(trashPage));
+        navNotifyBtn.addEventListener('click', () => showPage(notifyPage));
+
+        backBtns.forEach(btn => {
+            btn.addEventListener('click', returnToMap);
+        });
 
         window.addEventListener('DOMContentLoaded', initMap);
         window.addEventListener('resize', () => { if (map) map.invalidateSize(); });
