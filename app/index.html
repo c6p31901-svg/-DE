@@ -27,7 +27,7 @@
     <!-- ⬛ メニュー背景オーバーレイ -->
     <div id="menu-overlay" class="fixed inset-0 bg-black/60 z-20 hidden backdrop-blur-sm transition-opacity"></div>
 
-    <!-- 📱 サイドメニュー（画像のシンプルなレイアウト） -->
+    <!-- 📱 サイドメニュー -->
     <div id="side-menu" class="fixed top-0 left-0 h-full w-64 bg-[#232542] z-30 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-6">
         <!-- メニューヘッダー -->
         <div class="flex items-center gap-4 pb-4 border-b border-slate-400/40">
@@ -37,7 +37,7 @@
             <span class="text-lg font-medium text-white tracking-wide">メニュー</span>
         </div>
 
-        <!-- ナビゲーション項目（テキストのみ） -->
+        <!-- ナビゲーション項目 -->
         <nav class="flex flex-col gap-6 pt-6">
             <button id="nav-notice-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
                 お知らせ
@@ -52,14 +52,13 @@
     </div>
 
 
-    <!-- 📄 お知らせ画面（2枚目の写真イメージ） -->
+    <!-- 📄 お知らせ画面 -->
     <div id="notice-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
         <div class="p-6">
             <button class="back-to-map-btn text-2xl text-black hover:opacity-70 p-2 cursor-pointer mb-6">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
 
-            <!-- DB連携を想定したコンテンツ構成 -->
             <div class="space-y-10 max-w-2xl mx-auto pt-2">
                 <div class="space-y-3">
                     <h2 class="text-xl font-bold tracking-tight">ボランティア募集活動募集</h2>
@@ -77,7 +76,7 @@
     </div>
 
 
-    <!-- 🖼️ ごみ一覧機能画面（3枚目の写真イメージ） -->
+    <!-- 🖼️ ごみ一覧機能画面 -->
     <div id="trash-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
         <div class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
             <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1">
@@ -87,7 +86,6 @@
         </div>
 
         <div class="p-6 max-w-2xl mx-auto w-full space-y-6">
-            <!-- ごみカード1 -->
             <div class="flex gap-4 pb-6 border-b border-slate-300 items-start">
                 <div class="w-32 h-24 bg-slate-300 border border-slate-400 rounded flex items-center justify-center font-bold text-slate-700 flex-shrink-0">
                     ゴミ画像
@@ -105,25 +103,6 @@
                 </div>
             </div>
 
-            <!-- ごみカード2 -->
-            <div class="flex gap-4 pb-6 border-b border-slate-300 items-start">
-                <div class="w-32 h-24 bg-slate-300 border border-slate-400 rounded flex items-center justify-center font-bold text-slate-700 flex-shrink-0">
-                    ゴミ画像
-                </div>
-                <div class="flex-1 space-y-2">
-                    <div class="flex justify-between text-sm text-slate-700">
-                        <span>日時</span>
-                        <span>放置時間</span>
-                    </div>
-                    <div class="space-y-2 pt-1">
-                        <div class="text-sm font-semibold text-slate-800">コメント</div>
-                        <div class="border-b border-slate-400 w-full"></div>
-                        <div class="border-b border-slate-400 w-full"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ごみカード3 -->
             <div class="flex gap-4 pb-6 border-b border-slate-300 items-start">
                 <div class="w-32 h-24 bg-slate-300 border border-slate-400 rounded flex items-center justify-center font-bold text-slate-700 flex-shrink-0">
                     ゴミ画像
@@ -144,7 +123,7 @@
     </div>
 
 
-    <!-- 🔔 通知画面（仮画面） -->
+    <!-- 🔔 通知画面 -->
     <div id="notify-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
         <div class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
             <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1">
@@ -164,10 +143,17 @@
 
         function initMap() {
             const initialLatLng = [35.3168, 139.3940];
+            
+            // ズームコントロールを一旦初期化で無効化
             map = L.map('leaflet-map', {
-                zoomControl: true, 
+                zoomControl: false, 
                 attributionControl: false 
             }).setView(initialLatLng, 15);
+
+            // ズームコントロールを右下に配置
+            L.control.zoom({
+                position: 'bottomright'
+            }).addTo(map);
 
             L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg", {
                 maxNativeZoom: 18,
