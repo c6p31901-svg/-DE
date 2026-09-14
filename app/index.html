@@ -3,178 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>湘南海岸美化・Web GIS リアルタイムダッシュボード</title>
-    
+    <title>湘南・三浦海岸美化 Web GIS Dashboard</title>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Leaflet Omnivore (KML読み込みプラグイン) -->
+    <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js"></script>
+    <!-- Turf.js (円領域などの判定用) -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-slate-950 font-sans text-slate-100 overflow-hidden">
 
     <!-- 🗺️ 地図エリア -->
-    <div id="leaflet-map" class="absolute inset-0 z-0"></div>
+    <div id="leaflet-map" class="absolute inset-0 z-0" aria-label="インタラクティブマップ"></div>
 
     <!-- ☰ ハンバーガーボタン -->
-    <div class="absolute top-6 left-6 z-10">
-        <button id="menu-open-btn" class="hamburger-btn bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 shadow-lg cursor-pointer hover:bg-slate-800 transition-all">
+    <div class="absolute top-6 left-6 z-10 flex items-center gap-3">
+        <button id="menu-open-btn" aria-label="メニューを開く" class="hamburger-btn bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 shadow-lg cursor-pointer hover:bg-slate-800 transition-all">
             <i class="fa-solid fa-bars text-xl text-white"></i>
         </button>
+        <!-- 📍 GPSステータス表示パネル -->
+        <div id="geo-status-badge" class="bg-slate-900/80 text-xs px-3 py-2 rounded-xl border border-slate-700/50 shadow-lg backdrop-blur-sm flex items-center gap-2">
+            <span id="geo-status-dot" class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+            <span id="geo-status-text" class="text-slate-200">現在地を取得中...</span>
+        </div>
     </div>
 
     <!-- ⬛ メニュー背景オーバーレイ -->
     <div id="menu-overlay" class="fixed inset-0 bg-black/60 z-20 hidden backdrop-blur-sm transition-opacity"></div>
 
     <!-- 📱 サイドメニュー -->
-    <div id="side-menu" class="fixed top-0 left-0 h-full w-64 bg-[#232542] z-30 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-6">
-        <!-- メニューヘッダー -->
+    <aside id="side-menu" class="fixed top-0 left-0 h-full w-64 bg-[#232542] z-30 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-6 shadow-2xl">
         <div class="flex items-center gap-4 pb-4 border-b border-slate-400/40">
-            <button id="menu-close-btn" class="w-8 h-8 flex items-center justify-center border border-slate-300/50 rounded text-slate-200 hover:bg-slate-700/50 cursor-pointer">
+            <button id="menu-close-btn" aria-label="メニューを閉じる" class="w-8 h-8 flex items-center justify-center border border-slate-300/50 rounded text-slate-200 hover:bg-slate-700/50 cursor-pointer">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <span class="text-lg font-medium text-white tracking-wide">メニュー</span>
         </div>
 
-        <!-- ナビゲーション項目 -->
         <nav class="flex flex-col gap-6 pt-6">
             <button id="nav-notice-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
                 お知らせ
             </button>
             <button id="nav-trash-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
-                ごみ一覧
+                ごみ置き場一覧
             </button>
             <button id="nav-notify-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
                 通知
             </button>
         </nav>
-    </div>
-
+    </aside>
 
     <!-- 📄 お知らせ画面 -->
-    <div id="notice-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
-        <div class="p-6">
-            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 p-2 cursor-pointer mb-6">
+    <section id="notice-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+        <div class="p-6 max-w-2xl mx-auto w-full">
+            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 p-2 cursor-pointer mb-6" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-
-            <div class="space-y-10 max-w-2xl mx-auto pt-2">
-                <div class="space-y-3">
-                    <h2 class="text-xl font-bold tracking-tight">ボランティア募集活動募集</h2>
+            <div class="space-y-10 pt-2">
+                <article class="space-y-3">
+                    <h2 class="text-xl font-bold tracking-tight">ボランティア活動募集</h2>
                     <div class="border-b-2 border-slate-400 w-full my-2"></div>
-                    <div class="border-b-2 border-slate-400 w-full my-2"></div>
-                </div>
-
-                <div class="space-y-3">
+                </article>
+                <article class="space-y-3">
                     <h2 class="text-xl font-bold tracking-tight">危険海岸漂着物のお知らせ</h2>
                     <div class="border-b-2 border-slate-400 w-full my-2"></div>
-                    <div class="border-b-2 border-slate-400 w-full my-2"></div>
-                </div>
+                </article>
             </div>
         </div>
-    </div>
+    </section>
 
-
-    <!-- 🖼️ ごみ一覧機能画面 -->
-    <div id="trash-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
-        <div class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
-            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1">
+    <!-- 🖼️ ごみ置き場一覧画面 -->
+    <section id="trash-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+        <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
+            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-            <h1 class="text-lg font-bold text-center flex-1 pr-8">ごみ一覧機能</h1>
+            <h1 class="text-lg font-bold text-center flex-1 pr-8">ごみ置き場一覧（全29箇所）</h1>
+        </header>
+        <div id="trash-list" class="p-6 max-w-2xl mx-auto w-full space-y-6">
+            <div class="text-center text-slate-500 py-10">データを読み込み中...</div>
         </div>
-
-        <div class="p-6 max-w-2xl mx-auto w-full space-y-6">
-            <div class="flex gap-4 pb-6 border-b border-slate-300 items-start">
-                <div class="w-32 h-24 bg-slate-300 border border-slate-400 rounded flex items-center justify-center font-bold text-slate-700 flex-shrink-0">
-                    ゴミ画像
-                </div>
-                <div class="flex-1 space-y-2">
-                    <div class="flex justify-between text-sm text-slate-700">
-                        <span>日時</span>
-                        <span>放置時間</span>
-                    </div>
-                    <div class="space-y-2 pt-1">
-                        <div class="text-sm font-semibold text-slate-800">コメント</div>
-                        <div class="border-b border-slate-400 w-full"></div>
-                        <div class="border-b border-slate-400 w-full"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex gap-4 pb-6 border-b border-slate-300 items-start">
-                <div class="w-32 h-24 bg-slate-300 border border-slate-400 rounded flex items-center justify-center font-bold text-slate-700 flex-shrink-0">
-                    ゴミ画像
-                </div>
-                <div class="flex-1 space-y-2">
-                    <div class="flex justify-between text-sm text-slate-700">
-                        <span>日時</span>
-                        <span>放置時間</span>
-                    </div>
-                    <div class="space-y-2 pt-1">
-                        <div class="text-sm font-semibold text-slate-800">コメント</div>
-                        <div class="border-b border-slate-400 w-full"></div>
-                        <div class="border-b border-slate-400 w-full"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    </section>
 
     <!-- 🔔 通知画面 -->
-    <div id="notify-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
-        <div class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
-            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1">
+    <section id="notify-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+        <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
+            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h1 class="text-lg font-bold text-center flex-1 pr-8">通知機能</h1>
-        </div>
+        </header>
         <div class="p-6 max-w-2xl mx-auto w-full text-center text-slate-500 pt-20">
             （通知画面のデザインは準備中です）
         </div>
-    </div>
-
+    </section>
 
     <!-- ⚙️ スクリプト -->
     <script>
         let map;
+        let userMarker = null; // 現在地マーカー
+        let isInitialPositionSet = false; // 初回ジャンプ用フラグ
+        let isInsideAllowedZone = false; // データベース登録可否フラグ
+
+        // 🎯 対象エリア設定（黄色丸・赤丸）
+        const allowedZones = [
+            { id: 'west', center: [35.3172, 139.3875], radius: 400, color: '#eab308', popup: "<strong>西側エリア</strong><br>ゴミ量: 中" },
+            { id: 'east', center: [35.3168, 139.4010], radius: 600, color: '#ef4444', popup: "<strong>東側エリア</strong><br>ゴミ量: 多 (優先回収エリア)" }
+        ];
 
         function initMap() {
-            const initialLatLng = [35.3168, 139.3940];
+            // 初期地図の作成（位置情報が取れるまでの仮位置）
+            const defaultLatLng = [35.3170, 139.3940];
             
-            // ズームコントロールを一旦初期化で無効化
             map = L.map('leaflet-map', {
                 zoomControl: false, 
                 attributionControl: false 
-            }).setView(initialLatLng, 15);
+            }).setView(defaultLatLng, 14);
 
-            // ズームコントロールを右下に配置
-            L.control.zoom({
-                position: 'bottomright'
-            }).addTo(map);
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
 
+            // 国土地理院写真タイル
             L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg", {
                 maxNativeZoom: 18,
-                minZoom: 11
+                minZoom: 10
             }).addTo(map);
 
-            // 🟡 黄色エリア
-            L.circle([35.3172, 139.3875], {
-                radius: 400, color: '#eab308', fillColor: '#eab308', fillOpacity: 0.5, weight: 2
-            }).addTo(map).bindPopup("<strong>西側エリア</strong><br>ゴミ量: 中");
+            // ゾーン描画（黄色丸・赤丸 ＋ 参考 紫丸）
+            allowedZones.forEach(z => {
+                L.circle(z.center, {
+                    radius: z.radius,
+                    color: z.color,
+                    fillColor: z.color,
+                    fillOpacity: 0.4,
+                    weight: 2
+                }).addTo(map).bindPopup(z.popup);
+            });
 
-            // 🔴 赤エリア
-            L.circle([35.3168, 139.4010], {
-                radius: 600, color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.5, weight: 2
-            }).addTo(map).bindPopup("<strong>東側エリア</strong><br>ゴミ量: 多 (優先回収エリア)");
-
-            // 🟣 紫エリア
+            // 紫丸（注射器注意区域）
             L.circle([35.3168, 139.3985], {
                 radius: 200, color: '#a855f7', fillColor: '#a855f7', fillOpacity: 0.6, weight: 2
             }).addTo(map).bindPopup("<strong>注射器発見要注意区域</strong>");
-            
+
             // ⚠️ 警告マーカー
             L.marker([35.31650, 139.39850], {
                 icon: L.divIcon({
@@ -185,66 +160,189 @@
                 })
             }).addTo(map);
 
+            // 🗑️ KMLデータのロード
+            loadKMLData();
+
+            // 📡 ユーザーの現在地取得＆常時監視（ジオフェンス機能）
+            startGeolocationWatch();
+
             setTimeout(() => { map.invalidateSize(); }, 300);
         }
 
-        // 要素の取得
-        const openBtn = document.getElementById('menu-open-btn');
-        const closeBtn = document.getElementById('menu-close-btn');
+        // KML読み込み
+        function loadKMLData() {
+            const trashListContainer = document.getElementById('trash-list');
+            const customTrashIcon = L.divIcon({
+                className: 'custom-trash-icon',
+                html: '<div class="bg-emerald-600 text-white p-2 rounded-full border-2 border-white shadow-md text-xs flex items-center justify-center w-8 h-8">🗑️</div>',
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
+            });
+
+            const kmlLayer = omnivore.kml('trash.kml')
+                .on('ready', function() {
+                    trashListContainer.innerHTML = '';
+                    
+                    kmlLayer.eachLayer(function(layer) {
+                        if (layer instanceof L.Marker) {
+                            layer.setIcon(customTrashIcon);
+                        }
+
+                        const props = layer.feature.properties || {};
+                        const name = props.name || 'ごみ置き場';
+                        const description = props.description || '捨て方ルール・詳細情報の記載はありません。';
+
+                        layer.bindPopup(`<div class="p-1 max-w-xs"><strong class="text-base text-emerald-800">${name}</strong><div class="mt-2 text-xs leading-relaxed text-slate-700">${description}</div></div>`);
+
+                        const listItem = document.createElement('div');
+                        listItem.className = 'flex gap-4 pb-6 border-b border-slate-300 items-start hover:bg-slate-50 p-2 rounded transition-colors';
+                        listItem.innerHTML = `
+                            <div class="w-28 h-20 bg-emerald-100 border border-emerald-300 rounded flex flex-col items-center justify-center font-bold text-emerald-800 flex-shrink-0 p-2 text-center">
+                                <i class="fa-solid fa-trash-can text-lg mb-1"></i>
+                                <span class="text-xs truncate w-full">${name}</span>
+                            </div>
+                            <div class="flex-1 space-y-1">
+                                <div class="flex justify-between text-xs text-slate-500 font-medium">
+                                    <span>三浦半島沿岸エリア</span>
+                                    <span class="text-emerald-700">置き場ルール</span>
+                                </div>
+                                <div class="text-xs text-slate-700 leading-relaxed pt-1">
+                                    ${description}
+                                </div>
+                            </div>
+                        `;
+                        trashListContainer.appendChild(listItem);
+                    });
+                })
+                .on('error', function(e) {
+                    trashListContainer.innerHTML = '<div class="text-center text-red-500 py-10">KMLファイルの読み込みに失敗しました。</div>';
+                })
+                .addTo(map);
+        }
+
+        // 📍 現在地監視機能（Turf.jsによる距離計算判定）
+        function startGeolocationWatch() {
+            if (!navigator.geolocation) {
+                updateStatusBadge(false, "Geolocation非対応ブラウザ");
+                return;
+            }
+
+            // 現在地用アイコン
+            const userIcon = L.divIcon({
+                className: 'custom-user-icon',
+                html: '<div class="relative"><div class="w-5 h-5 bg-blue-500 rounded-full border-2 border-white shadow-md"></div><div class="absolute -inset-1 rounded-full bg-blue-500/40 animate-ping"></div></div>',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+
+            navigator.geolocation.watchPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+
+                    // 1. マーカー描画 ＆ 初回位置移動
+                    if (!userMarker) {
+                        userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map).bindPopup("現在地");
+                    } else {
+                        userMarker.setLatLng([lat, lng]);
+                    }
+
+                    if (!isInitialPositionSet) {
+                        map.setView([lat, lng], 15);
+                        isInitialPositionSet = true;
+                    }
+
+                    // 2. ジオフェンス判定 (Turf.js で黄色・赤色の円内かチェック)
+                    const userPoint = turf.point([lng, lat]);
+                    isInsideAllowedZone = false;
+
+                    for (const zone of allowedZones) {
+                        const zoneCenter = turf.point([zone.center[1], zone.center[0]]); // [lng, lat]
+                        // 距離計算（メートル）
+                        const distanceMeters = turf.distance(userPoint, zoneCenter, { units: 'meters' });
+                        
+                        if (distanceMeters <= zone.radius) {
+                            isInsideAllowedZone = true;
+                            break;
+                        }
+                    }
+
+                    // 3. UI表示更新 ＆ データベース更新制御
+                    if (isInsideAllowedZone) {
+                        updateStatusBadge(true, "エリア内: DB登録可能");
+                        savePositionToDatabase(lat, lng); // エリア内のみ反映
+                    } else {
+                        updateStatusBadge(false, "エリア外: DB反映除外");
+                    }
+                },
+                (error) => {
+                    updateStatusBadge(false, "位置情報の取得失敗");
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        }
+
+        // ステータスバッジの更新処理
+        function updateStatusBadge(isInside, message) {
+            const dot = document.getElementById('geo-status-dot');
+            const text = document.getElementById('geo-status-text');
+
+            text.innerText = message;
+            if (isInside) {
+                dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse";
+            } else {
+                dot.className = "w-2.5 h-2.5 rounded-full bg-rose-500";
+            }
+        }
+
+        // 💾 データベース送信例（エリア内時のみ実行される）
+        function savePositionToDatabase(lat, lng) {
+            console.log(`[DB反映実行] エエリア内のため位置情報を送信: 緯度=${lat}, 経度=${lng}`);
+            // ※ ここに バックエンド（API）への Fetch リクエスト等を記述します
+        }
+
+        // --- UI制御 ---
         const sideMenu = document.getElementById('side-menu');
         const overlay = document.getElementById('menu-overlay');
+        const pages = [
+            document.getElementById('notice-page'),
+            document.getElementById('trash-page'),
+            document.getElementById('notify-page')
+        ];
 
-        const navNoticeBtn = document.getElementById('nav-notice-btn');
-        const navTrashBtn = document.getElementById('nav-trash-btn');
-        const navNotifyBtn = document.getElementById('nav-notify-btn');
-
-        const noticePage = document.getElementById('notice-page');
-        const trashPage = document.getElementById('trash-page');
-        const notifyPage = document.getElementById('notify-page');
-        const backBtns = document.querySelectorAll('.back-to-map-btn');
-
-        // メニュー開閉
-        function openMenu() {
-            sideMenu.classList.remove('-translate-x-full');
-            overlay.classList.remove('hidden');
+        function toggleMenu(open) {
+            sideMenu.classList.toggle('-translate-x-full', !open);
+            overlay.classList.toggle('hidden', !open);
         }
 
-        function closeMenu() {
-            sideMenu.classList.add('-translate-x-full');
-            overlay.classList.add('hidden');
+        function showPage(targetPage) {
+            toggleMenu(false);
+            pages.forEach(page => page.classList.add('hidden'));
+            targetPage.classList.remove('hidden');
+            targetPage.classList.add('flex');
         }
 
-        openBtn.addEventListener('click', openMenu);
-        closeBtn.addEventListener('click', closeMenu);
-        overlay.addEventListener('click', closeMenu);
-
-        // 各ページへの移動
-        function showPage(pageElement) {
-            closeMenu();
-            pageElement.classList.remove('hidden');
-            pageElement.classList.add('flex');
-        }
-
-        // 地図画面への復帰
         function returnToMap() {
-            noticePage.classList.add('hidden');
-            noticePage.classList.remove('flex');
-
-            trashPage.classList.add('hidden');
-            trashPage.classList.remove('flex');
-
-            notifyPage.classList.add('hidden');
-            notifyPage.classList.remove('flex');
-
-            closeMenu();
+            pages.forEach(page => {
+                page.classList.add('hidden');
+                page.classList.remove('flex');
+            });
+            toggleMenu(false);
         }
 
-        // イベントバインド
-        navNoticeBtn.addEventListener('click', () => showPage(noticePage));
-        navTrashBtn.addEventListener('click', () => showPage(trashPage));
-        navNotifyBtn.addEventListener('click', () => showPage(notifyPage));
+        document.getElementById('menu-open-btn').addEventListener('click', () => toggleMenu(true));
+        document.getElementById('menu-close-btn').addEventListener('click', () => toggleMenu(false));
+        overlay.addEventListener('click', () => toggleMenu(false));
 
-        backBtns.forEach(btn => {
+        document.getElementById('nav-notice-btn').addEventListener('click', () => showPage(pages[0]));
+        document.getElementById('nav-trash-btn').addEventListener('click', () => showPage(pages[1]));
+        document.getElementById('nav-notify-btn').addEventListener('click', () => showPage(pages[2]));
+
+        document.querySelectorAll('.back-to-map-btn').forEach(btn => {
             btn.addEventListener('click', returnToMap);
         });
 
