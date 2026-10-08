@@ -1,54 +1,30 @@
 
-<!DOCTYPE html>
-<html lang="ja">
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f5f5f5;
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+main {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
 
-    <title>写真・位置情報記録</title>
+h1 {
+    font-size: 24px;
+}
 
-    <link rel="stylesheet" href="style.css">
-</head>
+button {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    cursor: pointer;
+}
 
-<body>
-
-    <main>
-
-        <h1>写真・位置情報記録</h1>
-
-        <p>
-            写真を撮影すると、撮影した場所の位置情報と一緒に保存します。
-        </p>
-
-        <!-- カメラ -->
-        <input
-            type="file"
-            id="photo"
-            accept="image/*"
-            capture="environment"
-        >
-
-        <br><br>
-
-        <!-- プレビュー -->
-        <img
-            id="preview"
-            style="max-width:100%; display:none;"
-        >
-
-        <br>
-
-        <button id="sendButton">
-            写真を保存する
-        </button>
-
-        <p id="status"></p>
-
-    </main>
-
-    <script src="script.js"></script>
-
-</body>
-
-</html>
+#status {
+    margin-top: 20px;
+}
