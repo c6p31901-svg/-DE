@@ -1,0 +1,81 @@
+type User @table(name: "users", key: ["userId"]) {
+  userId: UUID! @default(expr: "uuidV4()") @col(name: "user_id")
+  lineUserId: String @col(name: "line_user_id")
+  displayName: String @col(name: "display_name")
+  userType: String @col(name: "user_type")
+  registeredAt: Timestamp @default(expr: "request.time") @col(name: "registered_at")
+}
+
+type GarbageCategory @table(name: "garbage_categories", key: ["categoryId"]) {
+  categoryId: UUID! @default(expr: "uuidV4()") @col(name: "category_id")
+  categoryName: String! @col(name: "category_name")
+  description: String
+}
+
+type GarbagePost @table(name: "garbage_posts", key: ["postId"]) {
+  postId: UUID! @default(expr: "uuidV4()") @col(name: "post_id")
+  user: User!
+  photoUrl: String @col(name: "photo_url")
+  latitude: Float!
+  longitude: Float!
+  comment: String
+  postedAt: Timestamp! @default(expr: "request.time") @col(name: "posted_at")
+  garbageSize: String @col(name: "garbage_size")
+  hazardous: Boolean
+  aiResult: String @col(name: "ai_result")
+  collectionStatus: String @col(name: "collection_status")
+  collectedAt: Timestamp @col(name: "collected_at")
+}
+
+type GarbagePlace @table(name: "garbage_places", key: ["garbagePlaceId"]) {
+  garbagePlaceId: UUID! @default(expr: "uuidV4()") @col(name: "garbage_place_id")
+  placeName: String @col(name: "place_name")
+  latitude: Float
+  longitude: Float
+  address: String
+}
+
+type CollectionStatus @table(name: "collection_statuses", key: ["collectionStatusId"]) {
+  collectionStatusId: UUID! @default(expr: "uuidV4()") @col(name: "collection_status_id")
+  post: GarbagePost!
+  collector: User!
+  collectedAt: Timestamp @col(name: "collected_at")
+  collectionStatus: String @col(name: "collection_status")
+  garbagePlace: GarbagePlace
+  note: String
+}
+
+type GpsActivityRecord @table(name: "gps_activity_records", key: ["activityRecordId"]) {
+  activityRecordId: UUID! @default(expr: "uuidV4()") @col(name: "activity_record_id")
+  user: User!
+  latitude: Float!
+  longitude: Float!
+  recordedAt: Timestamp! @default(expr: "request.time") @col(name: "recorded_at")
+}
+
+type Announcement @table(name: "announcements", key: ["announcementId"]) {
+  announcementId: UUID! @default(expr: "uuidV4()") @col(name: "announcement_id")
+  creator: User!
+  title: String
+  body: String
+  announcementType: String @col(name: "announcement_type")
+  publishedAt: Timestamp @default(expr: "request.time") @col(name: "published_at")
+  publishedUntil: Timestamp @col(name: "published_until")
+}
+
+type Notification @table(name: "notifications", key: ["notificationId"]) {
+  notificationId: UUID! @default(expr: "uuidV4()") @col(name: "notification_id")
+  user: User!
+  post: GarbagePost
+  notificationContent: String @col(name: "notification_content")
+  notifiedAt: Timestamp! @default(expr: "request.time") @col(name: "notified_at")
+}
+
+type VolunteerRequest @table(name: "volunteer_requests", key: ["requestId"]) {
+  requestId: UUID! @default(expr: "uuidV4()") @col(name: "request_id")
+  requester: User!
+  targetUser: User!
+  requestContent: String @col(name: "request_content")
+  requestedAt: Timestamp! @default(expr: "request.time")
+  status: String
+}

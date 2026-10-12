@@ -1,0 +1,127 @@
+query ListUsers @auth(level: PUBLIC) {
+  users {
+    userId
+    lineUserId
+    displayName
+    userType
+    registeredAt
+  }
+}
+
+query ListGarbageCategories @auth(level: PUBLIC) {
+  garbageCategories {
+    categoryId
+    categoryName
+    description
+  }
+}
+
+query ListGarbagePosts @auth(level: PUBLIC) {
+  garbagePosts {
+    postId
+    user {
+      userId
+      displayName
+    }
+    photoUrl
+    latitude
+    longitude
+    comment
+    postedAt
+    garbageSize
+    hazardous
+    aiResult
+    collectionStatus
+    collectedAt
+  }
+}
+
+query ListGarbagePlaces @auth(level: PUBLIC) {
+  garbagePlaces {
+    garbagePlaceId
+    placeName
+    latitude
+    longitude
+    address
+  }
+}
+
+query ListCollectionStatuses @auth(level: PUBLIC) {
+  collectionStatuses {
+    collectionStatusId
+    post {
+      postId
+    }
+    collector {
+      userId
+      displayName
+    }
+    collectedAt
+    collectionStatus
+    garbagePlace {
+      garbagePlaceId
+      placeName
+    }
+    note
+  }
+}
+
+query ListGpsActivityRecords @auth(level: PUBLIC) {
+  gpsActivityRecords {
+    activityRecordId
+    user {
+      userId
+      displayName
+    }
+    latitude
+    longitude
+    recordedAt
+  }
+}
+
+query ListAnnouncements @auth(level: PUBLIC) {
+  announcements {
+    announcementId
+    creator {
+      userId
+      displayName
+    }
+    title
+    body
+    announcementType
+    publishedAt
+    publishedUntil
+  }
+}
+
+query ListNotifications @auth(level: PUBLIC) {
+  notifications {
+    notificationId
+    user {
+      userId
+      displayName
+    }
+    post {
+      postId
+    }
+    notificationContent
+    notifiedAt
+  }
+}
+
+query ListVolunteerRequests @auth(level: PUBLIC) {
+  volunteerRequests {
+    requestId
+    requester {
+      userId
+      displayName
+    }
+    targetUser {
+      userId
+      displayName
+    }
+    requestContent
+    requestedAt
+    status
+  }
+}

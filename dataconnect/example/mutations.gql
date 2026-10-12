@@ -1,0 +1,51 @@
+mutation CreateUser(
+  $lineUserId: String
+  $displayName: String
+  $userType: String
+) @auth(level: PUBLIC) {
+  user_insert(
+    data: {
+      lineUserId: $lineUserId
+      displayName: $displayName
+      userType: $userType
+    }
+  )
+}
+
+mutation CreateGarbageCategory(
+  $categoryName: String!
+  $description: String
+) @auth(level: PUBLIC) {
+  garbageCategory_insert(
+    data: {
+      categoryName: $categoryName
+      description: $description
+    }
+  )
+}
+
+mutation CreateGarbagePost(
+  $userId: UUID!
+  $photoUrl: String
+  $latitude: Float!
+  $longitude: Float!
+  $comment: String
+  $garbageSize: String
+  $hazardous: Boolean
+  $aiResult: String
+  $collectionStatus: String
+) @auth(level: PUBLIC) {
+  garbagePost_insert(
+    data: {
+      user: { userId: $userId }
+      photoUrl: $photoUrl
+      latitude: $latitude
+      longitude: $longitude
+      comment: $comment
+      garbageSize: $garbageSize
+      hazardous: $hazardous
+      aiResult: $aiResult
+      collectionStatus: $collectionStatus
+    }
+  )
+}
