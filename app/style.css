@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* ====================================================
-   全体のレイアウト & マップ調整
+   1. 基本レイアウト & マップ調整
    ==================================================== */
 html, body, #leaflet-map {
     height: 100%;
@@ -10,126 +10,198 @@ html, body, #leaflet-map {
     padding: 0;
 }
 
-/* Leafletの標準ズームコントロール位置をすっきり左上へ */
-.leaflet-top.leaflet-left {
-    top: 20px !important;
-    left: 20px !important;
+/* Leaflet標準ズームコントロール（右下に配置される場合の調整） */
+.leaflet-bottom.leaflet-right {
+    bottom: 20px !important;
+    right: 20px !important;
 }
 
 /* ====================================================
-   🍔 ハンバーガーボタン
+   2. 共通 UI パーツ（ボタン・バッジ）
    ==================================================== */
+/* メニューを開くハンバーガーボタン */
 .hamburger-btn {
-    background-color: rgba(15, 23, 42, 0.9);
-    backdrop-filter: blur(12px);
-    color: rgb(203, 213, 225);
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    color: #ffffff;
     padding: 0.75rem;
-    border-radius: 1rem;
+    border-radius: 0.75rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(51, 65, 85, 0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 3.5rem;
-    height: 3.5rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .hamburger-btn:hover {
-    background-color: rgb(30, 41, 59);
-    color: #ffffff;
+    background-color: rgba(30, 41, 59, 0.9);
 }
 
-.hamburger-btn span {
-    width: 1.5rem;
-    height: 2px;
-    background-color: rgb(203, 213, 225);
-    border-radius: 9999px;
-    display: block;
-    margin: 2px 0;
+/* GPSステータスバッジ */
+.geo-status-badge {
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    border-radius: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* 画面遷移用の戻るボタン */
+.back-to-map-btn {
+    font-size: 1.5rem;
+    color: #000000;
+    padding: 0.25rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    transition: opacity 0.2s ease;
+}
+
+.back-to-map-btn:hover {
+    opacity: 0.7;
 }
 
 /* ====================================================
-   🚪 ドロワーメニュー (モックアップ再現)
+   3. ドロワー（サイドメニュー）
    ==================================================== */
-/* 背景のモヤ */
+/* 暗いオーバーレイ背景 */
 .menu-overlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2000;
-    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 20;
     transition: opacity 0.3s ease;
 }
 
-/* メニュー本体 */
+/* ドロワーメニュー本体 */
 .side-menu-drawer {
-    position: absolute;
+    position: fixed;
     top: 0;
-    width: 16rem; /* 横幅240px相当 */
+    left: 0;
     height: 100%;
-    background-color: #23274e; /* モックアップのネイビーを再現 */
-    border-right: 1px solid rgba(30, 41, 59, 0.4);
-    z-index: 2001;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 16rem; /* 256px */
+    background-color: #232542;
+    z-index: 30;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    user-select: none;
+    padding: 1.5rem;
 }
 
-/* ヘッダーエリア */
+/* 非表示状態（左に隠す） */
+.side-menu-drawer.is-closed {
+    transform: translateX(-100%);
+}
+
+/* メニュー内部のヘッダー */
 .drawer-header {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1rem;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.4);
 }
 
-/* 戻るボタン「＜」 */
+/* メニューを閉じるボタン */
 .drawer-close-btn {
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 0.25rem 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(203, 213, 225, 0.5);
     border-radius: 0.25rem;
-    background-color: rgba(255, 255, 255, 0.05);
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
+    color: #e2e8f0;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .drawer-close-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(51, 65, 85, 0.5);
 }
 
-/* 「メニュー」タイトル文字 */
 .drawer-title {
-    color: #ffffff;
+    font-size: 1.125rem;
     font-weight: 500;
-    letter-spacing: 0.05em;
-    flex-1: 1 1 0%;
-    text-align: center;
-    padding-right: 1.5rem; /* ボタンの分だけ中央に寄せるための調整 */
-    font-size: 1rem;
+    color: #ffffff;
+    letter-spacing: 0.025em;
 }
 
-/* ナビゲーション項目 */
+/* メニューのナビゲーションアイテム */
 .drawer-nav {
-    flex: 1 1 0%;
-    padding: 0.5rem 0;
-    font-size: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
 }
 
 .drawer-item {
-    display: block;
-    padding: 0.75rem 1.5rem;
-    color: rgb(226, 232, 240);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    text-decoration: none;
-    transition: all 0.3s ease;
+    text-align: left;
+    color: #e2e8f0;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
 }
 
 .drawer-item:hover {
-    background-color: rgba(255, 255, 255, 0.05);
     color: #ffffff;
+}
+
+/* ====================================================
+   4. ワイヤーフレーム・各種画面共通設定
+   ==================================================== */
+/* フルスクリーン表示されるコンテンツページ */
+.fullscreen-page {
+    position: fixed;
+    inset: 0;
+    background-color: #ffffff;
+    color: #000000;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* ごみ一覧アイテム */
+.trash-item {
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #0f172a;
+    align-items: flex-start;
+}
+
+/* ごみ画像ダミープレースホルダー */
+.trash-image-placeholder {
+    width: 9rem;
+    height: 7rem;
+    background-color: #cbd5e1;
+    border: 1px solid #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+/* ====================================================
+   5. Leaflet カスタムアイコンの背景・枠線初期化
+   ==================================================== */
+.custom-trash-icon,
+.custom-pin-danger,
+.custom-user-icon {
+    background: transparent !important;
+    border: none !important;
 }
