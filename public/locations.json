@@ -1,0 +1,508 @@
+{
+  "type": "FeatureCollection",
+  "name": "ビーチクリーンごみ置き場",
+  "description": "公益財団法人かながわ海岸美化財団に申し込んだビーチクリーンのごみを置く場所になります。<br>未申請のごみや家庭ごみ等は、回収しませんので、ご注意ください。",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "走水（松﨑）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7KoYQPQe2J0ibussZe_Vta1LivSUhpuddaqfg7rYrXcTDtc6CcyHV1PHMq0xs2-nKlpp23aHuahxbKbhebNEMGsiuJiBdUF0ND2dUP0geP7X9KK_XjJ0TXuxXjez4cf9HHe0QTTktszqROkechxujL-CTnCY2pXvRdTDZaEX6qBOR3WH4GE-YjYuW0rL_pjfgUX4OxXw2TrfQxxuHYFMUZ3Yp8XGabqy2zyEJvyN8O81Nj2QrVzopktuE?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>看板裏に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7KoYQPQe2J0ibussZe_Vta1LivSUhpuddaqfg7rYrXcTDtc6CcyHV1PHMq0xs2-nKlpp23aHuahxbKbhebNEMGsiuJiBdUF0ND2dUP0geP7X9KK_XjJ0TXuxXjez4cf9HHe0QTTktszqROkechxujL-CTnCY2pXvRdTDZaEX6qBOR3WH4GE-YjYuW0rL_pjfgUX4OxXw2TrfQxxuHYFMUZ3Yp8XGabqy2zyEJvyN8O81Nj2QrVzopktuE?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7181784, 35.2634228, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "走水（水源地前）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7k9JNpiRPN8bOQi6J_9iQs13ChEVsjBlsLG5FiABQGknMmPlDx2cMbi_s4W1ArRKxK1Ly1G6INgH8dZ4YGrVKw4UmE8VrYM7OJcxHjBDyzTXAVHjhWSKhwv8hhsrBDqNAmysXDz7u9hNS8Ar19ZfQRPQAb_zR1ha4q_9Ji_syfA58JNt4r72-2YvhYQUSq289VMLpiNxg06KNtl4TdmzsKgbzsLbcAaZP6OYT14JPR89g1ChSDFYqrTaI?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>スロープ横に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7k9JNpiRPN8bOQi6J_9iQs13ChEVsjBlsLG5FiABQGknMmPlDx2cMbi_s4W1ArRKxK1Ly1G6INgH8dZ4YGrVKw4UmE8VrYM7OJcxHjBDyzTXAVHjhWSKhwv8hhsrBDqNAmysXDz7u9hNS8Ar19ZfQRPQAb_zR1ha4q_9Ji_syfA58JNt4r72-2YvhYQUSq289VMLpiNxg06KNtl4TdmzsKgbzsLbcAaZP6OYT14JPR89g1ChSDFYqrTaI?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7230189, 35.2630146, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "旗山崎",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7AmPzBGtRHBH9JYpk-Tt9oJt35M5CyJDHFhe1Ei6j6GsjUIsB0el06lQeo7GB0q94_Zf7ns_nmwEYAQHU0hZjX0-h0AqEmPifzstrcAy4DLCBFtBo5SGkCAsopKNWdDeGJkUOGy8_6EeQqZg4SPbYj-nufcTr4_P83BXL02Y2HUXl7Vs3zuNa72ILYRAR-XGfJ4na9kx0PolZqWeZi4jSMu1F_WRyM60CUdvFOv9L2xIzYcXMv_Opui-A?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>階段横に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7AmPzBGtRHBH9JYpk-Tt9oJt35M5CyJDHFhe1Ei6j6GsjUIsB0el06lQeo7GB0q94_Zf7ns_nmwEYAQHU0hZjX0-h0AqEmPifzstrcAy4DLCBFtBo5SGkCAsopKNWdDeGJkUOGy8_6EeQqZg4SPbYj-nufcTr4_P83BXL02Y2HUXl7Vs3zuNa72ILYRAR-XGfJ4na9kx0PolZqWeZi4jSMu1F_WRyM60CUdvFOv9L2xIzYcXMv_Opui-A?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7303331, 35.2651591, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "観音崎（美術館前）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR475CCAfiNgdZ55S4h384VKG8S-tZ0c-efm9uspRRb3u3eSsBnXdSPNlFw1YnbFnxiuyvp3uVv2HLdYr6kzww6YTGMGcbYcgajM1qlKeh9QKNjLtEWYuyHdpjBiiglsIsEk0vkVZNzlQdG1-wa74pfNuluKi17zeMC-5cjUvVIjFSsNPO3dr16bd1bbohW_uuQJkjVVP3Ja6RxWf66oT14ir_Bb4uYXg29XrUY07mQ93BBYIDeNMf8xlTs?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>階段横にあるカゴの中に入れてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR475CCAfiNgdZ55S4h384VKG8S-tZ0c-efm9uspRRb3u3eSsBnXdSPNlFw1YnbFnxiuyvp3uVv2HLdYr6kzww6YTGMGcbYcgajM1qlKeh9QKNjLtEWYuyHdpjBiiglsIsEk0vkVZNzlQdG1-wa74pfNuluKi17zeMC-5cjUvVIjFSsNPO3dr16bd1bbohW_uuQJkjVVP3Ja6RxWf66oT14ir_Bb4uYXg29XrUY07mQ93BBYIDeNMf8xlTs?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7395772, 35.2599046, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "観音崎（第１駐車場前）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6qZ1HZmsRHy-PzgxwB_Z32uhmprVRQssZfOUOrSJ2-M0lsHNmMO1GPp3O72AeBmXg6Zl62vODNLJlCd_MLbOSgtj7de3kKjfMhwqcMvQBv7ZFYBumy0RJWG_ryFUpkhssfPDpRG7Ho-A9kAWFEhjiUdyBTkGDeJBWw6AB5zgvsqk1bm4fBk6vh9dfYgW7Yax7bxE1YpotdK9QJZdjcpfvtYtnuBALV21VY9EcND0bwH02njmAAVh34bmM?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>端に寄せて置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6qZ1HZmsRHy-PzgxwB_Z32uhmprVRQssZfOUOrSJ2-M0lsHNmMO1GPp3O72AeBmXg6Zl62vODNLJlCd_MLbOSgtj7de3kKjfMhwqcMvQBv7ZFYBumy0RJWG_ryFUpkhssfPDpRG7Ho-A9kAWFEhjiUdyBTkGDeJBWw6AB5zgvsqk1bm4fBk6vh9dfYgW7Yax7bxE1YpotdK9QJZdjcpfvtYtnuBALV21VY9EcND0bwH02njmAAVh34bmM?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7414232, 35.2581473, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "たたら浜",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR60-sTNP2hzcXKWyiNdnC3_PUANeU6Bie_H0-r9CGI7ay8G2XliXEhC9ykCp0CitGUOvoTl4-QA8AD2VQHQRm2xoxvUKsx36L8dp-S58GYaq5D_U5opoJinRCgR6uA2aXiR-y8halyBFMjZ7q-3tWzo8ej06mawmJ81llbep4VEFgUErh3weFpeA4Qtq5ySS-iVy6mhgdfpKa5J7XUnvpze5xVQXmh47YqMh4tVEyFToFS_H2BjgwzFpts?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>階段上に置いてください。<br>※東階段工事期間中の臨時置き場となります。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR60-sTNP2hzcXKWyiNdnC3_PUANeU6Bie_H0-r9CGI7ay8G2XliXEhC9ykCp0CitGUOvoTl4-QA8AD2VQHQRm2xoxvUKsx36L8dp-S58GYaq5D_U5opoJinRCgR6uA2aXiR-y8halyBFMjZ7q-3tWzo8ej06mawmJ81llbep4VEFgUErh3weFpeA4Qtq5ySS-iVy6mhgdfpKa5J7XUnvpze5xVQXmh47YqMh4tVEyFToFS_H2BjgwzFpts?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7410905, 35.2517386, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "鴨居",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6nkvIi7-2HUtomXwR2zCwX_l40WyDamDHxlfpjPC5pJdk5vc_l3b4KCbGG4g3EurZfRWeR3-ZOajWvCZF60lSrEMOhDSMQTV26Zfpl5y6aZnjWc7wWlaLxXHzNomjzjBmOM8k15kW5u_S96Mc0sT67SjLoMWDzHlWYsbGjTywM3QQNV2PPmLQDd7sQepJLjq4ytSrs-V1UPfyLtQBBocKRJAWWgWftefnHXxYhR1Tv-8v2bLVs01L2vy0?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>放送塔の前あたりに置いてください。<br><br><img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR52Xz2ISJ9TWRcEzcNpsyUNZuYnonaZC1sHXZ94bwmuc1GSmfLnSHdzzr7oBXBv2ZbUzbv-GOugD-ZYrIo3fzwz8fN8dma52igqQwZUxO8fONHfuEIlU9JNMrwnz_5vbjLsQanRK0-l7lsn9906ctpEukUA4bC57b6k5GUcf8JmKG3iVlmzkkXgwIA-fgKQ5aTohaqQGu_OSappJBN2s6hnHrs8lMKOS88nd-fhUCX0lmkV4CU_fFTqScU?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" />",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6nkvIi7-2HUtomXwR2zCwX_l40WyDamDHxlfpjPC5pJdk5vc_l3b4KCbGG4g3EurZfRWeR3-ZOajWvCZF60lSrEMOhDSMQTV26Zfpl5y6aZnjWc7wWlaLxXHzNomjzjBmOM8k15kW5u_S96Mc0sT67SjLoMWDzHlWYsbGjTywM3QQNV2PPmLQDd7sQepJLjq4ytSrs-V1UPfyLtQBBocKRJAWWgWftefnHXxYhR1Tv-8v2bLVs01L2vy0?authuser=1&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR52Xz2ISJ9TWRcEzcNpsyUNZuYnonaZC1sHXZ94bwmuc1GSmfLnSHdzzr7oBXBv2ZbUzbv-GOugD-ZYrIo3fzwz8fN8dma52igqQwZUxO8fONHfuEIlU9JNMrwnz_5vbjLsQanRK0-l7lsn9906ctpEukUA4bC57b6k5GUcf8JmKG3iVlmzkkXgwIA-fgKQ5aTohaqQGu_OSappJBN2s6hnHrs8lMKOS88nd-fhUCX0lmkV4CU_fFTqScU?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7345584, 35.2485779, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "燈明堂",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4aYm7mYKNzDJuVuyUhLqJKUCEQCfcdQNF_E-ybKj1ozx9ppBK-J-thrvAiE4lmg9S0T1bAqd9DgVYx6-mbwvXqa7ZdwaY_nvrORVL3KCpOkF_76h4PsLmjY4aBXcok5mv1yOoi0MBkRcM3YNm2DvsUyP5cQqGlySaJ8OvV5E0_kAhZBNRcW3vcTi_9UzChkHqHgjLCqrJMXgGdW9J5rQQ8KY58utsYE5aG2fIFJbKP3T-nkT4ybXLyeLU?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>砂浜に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4aYm7mYKNzDJuVuyUhLqJKUCEQCfcdQNF_E-ybKj1ozx9ppBK-J-thrvAiE4lmg9S0T1bAqd9DgVYx6-mbwvXqa7ZdwaY_nvrORVL3KCpOkF_76h4PsLmjY4aBXcok5mv1yOoi0MBkRcM3YNm2DvsUyP5cQqGlySaJ8OvV5E0_kAhZBNRcW3vcTi_9UzChkHqHgjLCqrJMXgGdW9J5rQQ8KY58utsYE5aG2fIFJbKP3T-nkT4ybXLyeLU?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7289728, 35.2329341, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "久里浜",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5d5zebab5zGIuco7_MCccpNrbrfdPd7U7eDvr-cC9Ix8F_cjtJlrgiIxHogx1VI8KxdQ99f9IF79QlPLbRPxyWJqeBhuD49rFGZ3jYyI-ZliXEkuhgsu9wTvFnj9oz4lEcFJV7rwfFXl91FO6iN7kcyzehRCJ2VM4nVR961mbghLHHh0Tf04Gd_Zuey3c5B-YwES1zkQNrob52eC0u2eSdqJQt3UGZnUn4Lnpcej2CmJJXgmgkM954YGo?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>フェンス側に寄せて置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5d5zebab5zGIuco7_MCccpNrbrfdPd7U7eDvr-cC9Ix8F_cjtJlrgiIxHogx1VI8KxdQ99f9IF79QlPLbRPxyWJqeBhuD49rFGZ3jYyI-ZliXEkuhgsu9wTvFnj9oz4lEcFJV7rwfFXl91FO6iN7kcyzehRCJ2VM4nVR961mbghLHHh0Tf04Gd_Zuey3c5B-YwES1zkQNrob52eC0u2eSdqJQt3UGZnUn4Lnpcej2CmJJXgmgkM954YGo?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7126792, 35.2237579, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（老人ホーム前）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6bZnEh_4H8kHnSgR3t-dTx_d-dThmE8uxFyaGSSrtdVBtnAoOnZHPuRiUwLv2FE37rGbDuVM9AHtmwiNnVxgvDptdg4_nlJ3ZCakkSe2zB0lCgGfmLiBO9gElWgBpaq3rFulPfdakxuO2_wlkpB4XQsKSmNaKjdblg-nv6NyS_GlLnVkfiFKyjDdop6Qiy0UypaxFR-54dd2C4IKn7iVIU6rlxQYCNPFtzBc_Gior3RaNEcbfuFQxeDSc?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6bZnEh_4H8kHnSgR3t-dTx_d-dThmE8uxFyaGSSrtdVBtnAoOnZHPuRiUwLv2FE37rGbDuVM9AHtmwiNnVxgvDptdg4_nlJ3ZCakkSe2zB0lCgGfmLiBO9gElWgBpaq3rFulPfdakxuO2_wlkpB4XQsKSmNaKjdblg-nv6NyS_GlLnVkfiFKyjDdop6Qiy0UypaxFR-54dd2C4IKn7iVIU6rlxQYCNPFtzBc_Gior3RaNEcbfuFQxeDSc?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7094639, 35.2112969, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（久里浜医療センター東）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR46l4z4SDlXGY9WW1Ji7R8qBy-rNJsXI8HBmOYf-nQdk_OT8op47y0PwJiRnY-mjpdsddCtgwlJNVPynzQ6SBO_LwJYk4sJZFuJygozUT4X9ZVMYp6A4zOKxAxZvoP766tRWYcureGQV3Mfyh9EF8_K1dyLKRXm27F-r6pa2TnOSXNGbqNFBhhUx-0YK0INLUOSbDIywpgHRKEdaaLpwYFAjU22uh05zxzOu6OCRAUolYsuIe3AVt27WLE?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう歩道上に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR46l4z4SDlXGY9WW1Ji7R8qBy-rNJsXI8HBmOYf-nQdk_OT8op47y0PwJiRnY-mjpdsddCtgwlJNVPynzQ6SBO_LwJYk4sJZFuJygozUT4X9ZVMYp6A4zOKxAxZvoP766tRWYcureGQV3Mfyh9EF8_K1dyLKRXm27F-r6pa2TnOSXNGbqNFBhhUx-0YK0INLUOSbDIywpgHRKEdaaLpwYFAjU22uh05zxzOu6OCRAUolYsuIe3AVt27WLE?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.7032584, 35.2104301, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（サニーステージ野比弐番館前）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6lFOs5g39oZI26_5cCtq5wGxy2d_gAW19u7YzjpQUVfyKuZ3eHQjWWCXi__yNF6rx5aWXSni2zeF5LdkPvbI44xpP-CW7KNPvaNqTGJrX5KgB89qu-cfECgvzLlTtN_0Elvo7HisXf94Ryt6lpV_w1cpcNXk-if4WztltIc3zLuMM3LAJE1OWv9lrofRkkM3_OGWtMsK98rAP5SveEPVHnayleYdynDbLczmQjhoptigepPopXEtLNr7o?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう置いてください。通路はふさがないようお願いします。<br><br><img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5b4VZFWIB1ODUFdQwGNlSrmomZAHjJiQJWGo3TizFdpNld3BJJR6qdRB8QPJa4dh9BegbfTBZ4KGBmS7LKDk3pDbnjAlJsG022Q2UbNS7tRi9rJu7-j1VI0AVEoflpgPc9Tlx3PpgD9rwso4qn2Dyihae9CQmv6iSUFuQ6TwaltBEcd_Efp6OWEKc6ZzeZxtZ13Q65VfelqI-Eph7S3J9DNcgH4vg7uVyqI6mXAdUUzjomhY4W7Te_whg?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" />",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6lFOs5g39oZI26_5cCtq5wGxy2d_gAW19u7YzjpQUVfyKuZ3eHQjWWCXi__yNF6rx5aWXSni2zeF5LdkPvbI44xpP-CW7KNPvaNqTGJrX5KgB89qu-cfECgvzLlTtN_0Elvo7HisXf94Ryt6lpV_w1cpcNXk-if4WztltIc3zLuMM3LAJE1OWv9lrofRkkM3_OGWtMsK98rAP5SveEPVHnayleYdynDbLczmQjhoptigepPopXEtLNr7o?authuser=1&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5b4VZFWIB1ODUFdQwGNlSrmomZAHjJiQJWGo3TizFdpNld3BJJR6qdRB8QPJa4dh9BegbfTBZ4KGBmS7LKDk3pDbnjAlJsG022Q2UbNS7tRi9rJu7-j1VI0AVEoflpgPc9Tlx3PpgD9rwso4qn2Dyihae9CQmv6iSUFuQ6TwaltBEcd_Efp6OWEKc6ZzeZxtZ13Q65VfelqI-Eph7S3J9DNcgH4vg7uVyqI6mXAdUUzjomhY4W7Te_whg?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.700394, 35.2103169, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（サニーステージ東）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6rHC6hRR0-Feq2As63ghCiW6vHttrqzOwVcsaZm8NVQSmIaq_WDwO-T4U6zqpYX5SYcfm_tW5Xvk4OnXkyTCP8Zj65Xnaab4wjCK7U3bJhkgvfPoru75S37UqZOG2FKCnzZlt4kcp3V6MY1iX6QGXCmak8VvSpAXvOLKgBrdp6dxdgL3S1iyw8GVi1uoy6-FOcZVItidOpYJ-BfZJ2le7ZRiAUHXAO1PWq-xJXmid97Y_xpOsAOZW25Nw?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう歩道上に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6rHC6hRR0-Feq2As63ghCiW6vHttrqzOwVcsaZm8NVQSmIaq_WDwO-T4U6zqpYX5SYcfm_tW5Xvk4OnXkyTCP8Zj65Xnaab4wjCK7U3bJhkgvfPoru75S37UqZOG2FKCnzZlt4kcp3V6MY1iX6QGXCmak8VvSpAXvOLKgBrdp6dxdgL3S1iyw8GVi1uoy6-FOcZVItidOpYJ-BfZJ2le7ZRiAUHXAO1PWq-xJXmid97Y_xpOsAOZW25Nw?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6964538, 35.2102025, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（サニーステージ西）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5zl0ar1O7Hh9hnljOGDUGLxykS_rlTWtc_1Wrna_RY7JukRa6y7HR-NDPn34BzexxRONaBGhQksRr8zByirc-1YV1gm10XQ-S2d5t94yd14BPv19P-hP14SPXuwdEal3l01le_-3loEpAhuaZOkZMe70UL8DGdVRkwLvvcR6E5j65anpm9lHGozd-9BJMaTVO_vbF18lK5i93BLBBPAmopqPOiMTom3n-3Veu109fBPJRbX5rh0qwQSiY?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう看板の裏に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5zl0ar1O7Hh9hnljOGDUGLxykS_rlTWtc_1Wrna_RY7JukRa6y7HR-NDPn34BzexxRONaBGhQksRr8zByirc-1YV1gm10XQ-S2d5t94yd14BPv19P-hP14SPXuwdEal3l01le_-3loEpAhuaZOkZMe70UL8DGdVRkwLvvcR6E5j65anpm9lHGozd-9BJMaTVO_vbF18lK5i93BLBBPAmopqPOiMTom3n-3Veu109fBPJRbX5rh0qwQSiY?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6954774, 35.2100672, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（シーサイドポケット下）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5GgF910aG5-xi92KlyXuwTU40Ds9XQTzqzrSDPA_SJOiyV3V8GPpVAvICikiXyE58aU8XvB98S47JE0jBGKHDzV3E5QDkkLgqNISgKYn7OVqJPxcRVOsUjjVJ0o99RSOnUxO-D_mb5LITrON5u_p7B4cQ9w7AkKiU-SjNks8bzcNISLNillNui42IlMY4YHCkIHxG-l2x0EUNOKMBvlyyCjZF-0P9guWFOmPPz9fRVIRr90ZG4marR0to?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風に飛ばされないよう歩道上に置いてください。<br><br><img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR40Pu20lki8etLAwrdgsc9ev007MM_4d_FgI-An-mfSXKVHjRNItz05jNbFbDDNR1LtqVMW_qXwCXSdSg0H_7TQA_dPmc74vmlqrvZG4JhCZgF-f15oMzsWhntMTnFGZwxMqkuQ_zlB3_NB9lrHgvgZIZl8r41uyNQ7ydpkpepR9o22wVbFf13Arz5SgLDEP5VM136_X-Gjeea4yMLO6wzZKsCvTlur01O692p07RC7ohhxolAGaRKHtG8?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" />",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5GgF910aG5-xi92KlyXuwTU40Ds9XQTzqzrSDPA_SJOiyV3V8GPpVAvICikiXyE58aU8XvB98S47JE0jBGKHDzV3E5QDkkLgqNISgKYn7OVqJPxcRVOsUjjVJ0o99RSOnUxO-D_mb5LITrON5u_p7B4cQ9w7AkKiU-SjNks8bzcNISLNillNui42IlMY4YHCkIHxG-l2x0EUNOKMBvlyyCjZF-0P9guWFOmPPz9fRVIRr90ZG4marR0to?authuser=1&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR40Pu20lki8etLAwrdgsc9ev007MM_4d_FgI-An-mfSXKVHjRNItz05jNbFbDDNR1LtqVMW_qXwCXSdSg0H_7TQA_dPmc74vmlqrvZG4JhCZgF-f15oMzsWhntMTnFGZwxMqkuQ_zlB3_NB9lrHgvgZIZl8r41uyNQ7ydpkpepR9o22wVbFf13Arz5SgLDEP5VM136_X-Gjeea4yMLO6wzZKsCvTlur01O692p07RC7ohhxolAGaRKHtG8?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6945669, 35.2099419, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（マンション東）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6AO7yhH-tHcbFeFQeE21v5DAR0Btyenk1GmCWZNrccliyj79A6y00ausYhE4S-A-XZxIzWrqybaRA6AVXGfdkOFo91cHDr5s8mvry0dTIljN0G_Ui52t7aGoxraBPBXogh4Sys4VqGT0H6IV2OVwyJt9LkcJJ2VVaZ2obA9dQS-wMbKurxyY8s9UrTlN9enYoYFm00akz3eM-XZd-DrS1QQR1g5_TpTaaxqmRnIhRWuPD5CPF_iKEX6TA?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう歩道上に置いてください。<br><br><img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5qJ0qMuEFvKopMqdPve0SK-7pCpjkqgxxq0vSI6j1CJAH8oWse4OJoCmYHbxeLSfw8dO2Uk_OizvrWBckJBBC0RMauhP9Pj5qLlawlWrwBLpl5In9PHZONkIsmJAM2b0dgiU8GzuQ0QzdbGEPdjMBOZnk0zKBJb7wUPqz-ju86oTn0liadsknlQs6mCIsMuFhi8xqYgiRlNB44O_u2sv-jIZ2hDQRaEGCfQOIhvNCt7d6uKCOomxDm2Ko?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" />",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6AO7yhH-tHcbFeFQeE21v5DAR0Btyenk1GmCWZNrccliyj79A6y00ausYhE4S-A-XZxIzWrqybaRA6AVXGfdkOFo91cHDr5s8mvry0dTIljN0G_Ui52t7aGoxraBPBXogh4Sys4VqGT0H6IV2OVwyJt9LkcJJ2VVaZ2obA9dQS-wMbKurxyY8s9UrTlN9enYoYFm00akz3eM-XZd-DrS1QQR1g5_TpTaaxqmRnIhRWuPD5CPF_iKEX6TA?authuser=1&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5qJ0qMuEFvKopMqdPve0SK-7pCpjkqgxxq0vSI6j1CJAH8oWse4OJoCmYHbxeLSfw8dO2Uk_OizvrWBckJBBC0RMauhP9Pj5qLlawlWrwBLpl5In9PHZONkIsmJAM2b0dgiU8GzuQ0QzdbGEPdjMBOZnk0zKBJb7wUPqz-ju86oTn0liadsknlQs6mCIsMuFhi8xqYgiRlNB44O_u2sv-jIZ2hDQRaEGCfQOIhvNCt7d6uKCOomxDm2Ko?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6934177, 35.2097259, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（マンション西）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5ddA4BUcO3vbAB-3r7FOSxAV-vW3mirkwrlw7QiMTft4--D30efMk-nLIVBhMUbRP-ahsV3bv7dF80hJdYTNJVV6CpJJmqwOve7rKwEiDwv4tIbHxdxpGHn9fKwj_eL8Zsv901GQ-LhZZLjc_M-NBeL5_nIwxWB0L1EicUFJalMMnAenzy7m3gBF1tFrtz83kt6YvHN4M-p_TgeUC_jUYd_VPqjYKSewq_A_3IjwZb4RBMiYkTkgKGlQ8?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう歩道上に置いてください。<br><br><img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7a5LUSQr11xBv_RIqLXuRS9zpWEmciX0RpVdNgK4qVPPni6BYtLDDi6nYH19ytemGJEqJHIMrn39Iblapd1aALU00ohfSa6wg7_zwpuPU6Phz6kfbGFm2jBvg4OvmKKLzdJEtxgp2YyLJ_XgBfhaRejVy3zabgX5-Px6CqmvKTNiKrNRxzZJzBj6sVJ6yQpBFPU_baokoubpw7cXmdEP19G_UcDihc7-Kpnuy7m6K8W7g4T45vtdzroDo?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" />",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5ddA4BUcO3vbAB-3r7FOSxAV-vW3mirkwrlw7QiMTft4--D30efMk-nLIVBhMUbRP-ahsV3bv7dF80hJdYTNJVV6CpJJmqwOve7rKwEiDwv4tIbHxdxpGHn9fKwj_eL8Zsv901GQ-LhZZLjc_M-NBeL5_nIwxWB0L1EicUFJalMMnAenzy7m3gBF1tFrtz83kt6YvHN4M-p_TgeUC_jUYd_VPqjYKSewq_A_3IjwZb4RBMiYkTkgKGlQ8?authuser=1&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7a5LUSQr11xBv_RIqLXuRS9zpWEmciX0RpVdNgK4qVPPni6BYtLDDi6nYH19ytemGJEqJHIMrn39Iblapd1aALU00ohfSa6wg7_zwpuPU6Phz6kfbGFm2jBvg4OvmKKLzdJEtxgp2YyLJ_XgBfhaRejVy3zabgX5-Px6CqmvKTNiKrNRxzZJzBj6sVJ6yQpBFPU_baokoubpw7cXmdEP19G_UcDihc7-Kpnuy7m6K8W7g4T45vtdzroDo?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6922134, 35.2095068, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（火の鳥西）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR65XRiZ-x9qDouKLJ8zwgT0bW7L7S_1dwBAmQSnXuZP2zgVBKbhKPaZBmptIfZ5fzLzgiJw4F3RzHifowBTrf-Xh7r_InhxoetnZ1rsAd8EHrmwQ6gPFvpGPw8nDWihlQ-VtMU9TSnt7rRf6WXMrK9muIK2dAzucaaEnsxMGQMEL9N-muznGXPvBFz8PKSEBjeXO_BIn1QyaJq6OXQCYj5bgAu8V28b7qRodf_I1KyUpw14nHCQBXU8WDY?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう歩道上に置いてください。<br><br><img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR61I3iJW8UD6PZJj33dfBk0zTQUC6rAnAKDaPe0yPOjeB2baPLmy6IRv3cBxqP4l16IPOJkiUTvYZnw50x8ioXzVARDB-gyXyaLIpk3VpMCSjOUav11uTzzaF9sTen1k3T9kowLCUlXbwhL6Q6SXzSDpTx_jeGW8L5IB8_TH8Ssv2JtmDGIFH45s-Mfy1evbarMcuPB39MJb6ofuNFl5lHNN1W2v3rRhq7k7Yh7ZSYgkgvp44JKLBB-d2E?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" />",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR65XRiZ-x9qDouKLJ8zwgT0bW7L7S_1dwBAmQSnXuZP2zgVBKbhKPaZBmptIfZ5fzLzgiJw4F3RzHifowBTrf-Xh7r_InhxoetnZ1rsAd8EHrmwQ6gPFvpGPw8nDWihlQ-VtMU9TSnt7rRf6WXMrK9muIK2dAzucaaEnsxMGQMEL9N-muznGXPvBFz8PKSEBjeXO_BIn1QyaJq6OXQCYj5bgAu8V28b7qRodf_I1KyUpw14nHCQBXU8WDY?authuser=1&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR61I3iJW8UD6PZJj33dfBk0zTQUC6rAnAKDaPe0yPOjeB2baPLmy6IRv3cBxqP4l16IPOJkiUTvYZnw50x8ioXzVARDB-gyXyaLIpk3VpMCSjOUav11uTzzaF9sTen1k3T9kowLCUlXbwhL6Q6SXzSDpTx_jeGW8L5IB8_TH8Ssv2JtmDGIFH45s-Mfy1evbarMcuPB39MJb6ofuNFl5lHNN1W2v3rRhq7k7Yh7ZSYgkgvp44JKLBB-d2E?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6900996, 35.2090636, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "野比（公園横）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5bcCJbQqvnPOXLN12FCl_9x7QujGjK80flO6cPYF52X7ds86CO7m1kp5WlWF1le62wl_v_9VfEld53App6smNr3hT6y27Hy5RYVM9xcO8LsTPHOdkRAryGbSbczxut3fNIfaULkXOhSGnOBqs5ZcLDLEJd5uuD9kgoW7XVQh5sNHk_7FriivMCNQqDOu6xjBmFcDZkbjnDi8S0N-pxwS6Alc1iG3H4jrXM3aKd-AbYpieB-ATGi_JNRdE?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう歩道上に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5bcCJbQqvnPOXLN12FCl_9x7QujGjK80flO6cPYF52X7ds86CO7m1kp5WlWF1le62wl_v_9VfEld53App6smNr3hT6y27Hy5RYVM9xcO8LsTPHOdkRAryGbSbczxut3fNIfaULkXOhSGnOBqs5ZcLDLEJd5uuD9kgoW7XVQh5sNHk_7FriivMCNQqDOu6xjBmFcDZkbjnDi8S0N-pxwS6Alc1iG3H4jrXM3aKd-AbYpieB-ATGi_JNRdE?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6892209, 35.208765, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "長沢（若山牧水歌碑横）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6fRoWICqU7H-B0-6iKUTXoYz4_Vqx5h-19CPjQQWo51XaDlGv2Ifs5vAva2F4spaX14wNNWiPMTXOQXKTqRJ6HnXLqaIx_hbfARRzq8s9drs7cdHrGupVAi18rl1BU2hzdcqYBTfWpPVNR5H5642aO2XWuIziwE8BoMLt7xnBO-qIFJyhJq7rfWDyA5XVgjZdRlg_vRxulBbnN89Dy0Py2UVorQpeUW67bKNLIBF3G0GCN6D22lnoDogo?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>階段下に置いてあるネットの中に入れてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6fRoWICqU7H-B0-6iKUTXoYz4_Vqx5h-19CPjQQWo51XaDlGv2Ifs5vAva2F4spaX14wNNWiPMTXOQXKTqRJ6HnXLqaIx_hbfARRzq8s9drs7cdHrGupVAi18rl1BU2hzdcqYBTfWpPVNR5H5642aO2XWuIziwE8BoMLt7xnBO-qIFJyhJq7rfWDyA5XVgjZdRlg_vRxulBbnN89Dy0Py2UVorQpeUW67bKNLIBF3G0GCN6D22lnoDogo?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6817598, 35.2053066, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "長沢（北下浦コミュニティーセンター前）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7B-HCjaZ31IS4m1a7nrzkBSaVyTj51am8FTqr1Jqf-p7qxU-_ZSRZrqAk1Fxnf_jsRa6ZgkcTAECw9ecxo_i-v7cP6QJ5Ie6A9vfSCKVTkSUXhJjERS58yVpwFQuMvWFzYFasD2w7ik-iGtw1mtkS1cUnldq3RePM3y6pveoIDQbEvluj_OfW2gMTwAkZJCRprRN0lgrSxhfXJ0SXTtCICNKHHYsJmiT0P-s2KVfWCrAFbPYhWtua7V_o?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>草陰にある石組みの中に置いてください。<br><br><img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6hf7PpH_0qDUYmoUD0BFr2mk1b95ak68ZREtNqxJoaOYytGGDTyGhUkORvFZnyBpYkqxBj7Qj7miOxQKJexoezXjGVpl2qQnDOgYGyCMHhz1zIR5n3lqfTgL-srx7Db2cfyCI5qAhY4naOt4ai6n2GBCJi0EoC4vv95CF8pGTPUjipH2ymLz4LShJEJhoaCqU0P8Xe3Ys6AoKBsp1lHwZ_teTMd2FcSLnJlts8sivkRiHqOPstX3n3uWU?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" />",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7B-HCjaZ31IS4m1a7nrzkBSaVyTj51am8FTqr1Jqf-p7qxU-_ZSRZrqAk1Fxnf_jsRa6ZgkcTAECw9ecxo_i-v7cP6QJ5Ie6A9vfSCKVTkSUXhJjERS58yVpwFQuMvWFzYFasD2w7ik-iGtw1mtkS1cUnldq3RePM3y6pveoIDQbEvluj_OfW2gMTwAkZJCRprRN0lgrSxhfXJ0SXTtCICNKHHYsJmiT0P-s2KVfWCrAFbPYhWtua7V_o?authuser=1&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6hf7PpH_0qDUYmoUD0BFr2mk1b95ak68ZREtNqxJoaOYytGGDTyGhUkORvFZnyBpYkqxBj7Qj7miOxQKJexoezXjGVpl2qQnDOgYGyCMHhz1zIR5n3lqfTgL-srx7Db2cfyCI5qAhY4naOt4ai6n2GBCJi0EoC4vv95CF8pGTPUjipH2ymLz4LShJEJhoaCqU0P8Xe3Ys6AoKBsp1lHwZ_teTMd2FcSLnJlts8sivkRiHqOPstX3n3uWU?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6793205, 35.2036556, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "津久井浜",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4H4J1EbQS8n5_-uYyZBNElP8PQ0uJ491J97XrxtWmpGGA8Fyh37Dx8eBZptC_j3s78a2mb1IQAJ96taBSfzrl9ESKXnieGSTyTpJvk5Mmk1p9o3HTooEBFW1W8xuyeYtFwGNGDOZzg6IWNGPtd61FJJVnF3FZM-O8DrqRsa9rlpr6RB4PQ_D9Ia6TT3uqD6Ax3VJJweyDw3itlYJym02cKXSQua-DyJpWwlDdCs3St7u_xW67DQugOzMU?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風で飛ばされないよう歩道上に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4H4J1EbQS8n5_-uYyZBNElP8PQ0uJ491J97XrxtWmpGGA8Fyh37Dx8eBZptC_j3s78a2mb1IQAJ96taBSfzrl9ESKXnieGSTyTpJvk5Mmk1p9o3HTooEBFW1W8xuyeYtFwGNGDOZzg6IWNGPtd61FJJVnF3FZM-O8DrqRsa9rlpr6RB4PQ_D9Ia6TT3uqD6Ax3VJJweyDw3itlYJym02cKXSQua-DyJpWwlDdCs3St7u_xW67DQugOzMU?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6648144, 35.1936715, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "三浦（インフォメーション前トイレ脇）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7IezOwKk_yHofdnlwa0Rtfw3iWRwK9hQI4iGEPZLKBTjRVnHukvxP_mXJRKiPOm62OI89U-Jh6bD2O8M-bs-aOk24kABbG-FVXn1QQIpoHextHlbMS1aYar6JQCrVf4DysOrjejeLogjUg_j6ee6sMQDg-X-zfKBQwF1jsKqyp5l35FklZrpzV7frKxP6xQTabsU2JC-3guzVW0TwVhupemtE428-I5WryRjaJ57549UP4uhVJc60iISM?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>トイレの横に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7IezOwKk_yHofdnlwa0Rtfw3iWRwK9hQI4iGEPZLKBTjRVnHukvxP_mXJRKiPOm62OI89U-Jh6bD2O8M-bs-aOk24kABbG-FVXn1QQIpoHextHlbMS1aYar6JQCrVf4DysOrjejeLogjUg_j6ee6sMQDg-X-zfKBQwF1jsKqyp5l35FklZrpzV7frKxP6xQTabsU2JC-3guzVW0TwVhupemtE428-I5WryRjaJ57549UP4uhVJc60iISM?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.657064, 35.1874819, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "三浦（ファミマ前トイレ脇）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5T-GQWL-rHly1Bl0k81Qlm7539ec6E8nlS2T9v-8ykDYi_XRA6WHSngKE2r_N7lla4FisUReGjqNWzAxknaSQ76ka5Jep5SktfMeha5nVgWqAN-R030VI6-DM_3QKC_z-jTS8lN3L5gtXVWSwN7drH9QsiyzGk800P7-TxUXSkFDQvQZag7fSoMb88jN9Y_lq7USkVWu-fwlvOeNASnhFJ7WUxpRcCl5KwFGpCFpg1LEUtMdtWCJpt9rE?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>トイレとスロープの間に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5T-GQWL-rHly1Bl0k81Qlm7539ec6E8nlS2T9v-8ykDYi_XRA6WHSngKE2r_N7lla4FisUReGjqNWzAxknaSQ76ka5Jep5SktfMeha5nVgWqAN-R030VI6-DM_3QKC_z-jTS8lN3L5gtXVWSwN7drH9QsiyzGk800P7-TxUXSkFDQvQZag7fSoMb88jN9Y_lq7USkVWu-fwlvOeNASnhFJ7WUxpRcCl5KwFGpCFpg1LEUtMdtWCJpt9rE?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6547039, 35.1830153, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "菊名（伊豆島前）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR49GElHing7BZVsAjIuY3wDQx8ruWMtEzgIvW_J_9HHe0wYZLR9VV7Fwpmc8cj5E9_xwS_QeRHsoPcsgw_RacTcXxTf2LXmbFJB2G0wf6TDvDiBm2Mfo5p8yigYwIDBjVqBCtf9d233EMhogVFvPvxgHEPE5f2mXPmr3JyDK1vURt9IolMskm149FTwaq5OTx_i3rjUFcuIxFeknkLW-T80-LW17O64XJ9pDkNuQWSwyMUONh26r-_rAZs?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>駐車車両等に気を付けて隅に寄せて置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR49GElHing7BZVsAjIuY3wDQx8ruWMtEzgIvW_J_9HHe0wYZLR9VV7Fwpmc8cj5E9_xwS_QeRHsoPcsgw_RacTcXxTf2LXmbFJB2G0wf6TDvDiBm2Mfo5p8yigYwIDBjVqBCtf9d233EMhogVFvPvxgHEPE5f2mXPmr3JyDK1vURt9IolMskm149FTwaq5OTx_i3rjUFcuIxFeknkLW-T80-LW17O64XJ9pDkNuQWSwyMUONh26r-_rAZs?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6543119, 35.179587, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "菊名（菊名川南トイレ前）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7m6I8dO65o9QEjApFgN6ViswORVb3i5AJbz7iICdQPXK5_fd6hCGy2iKxxiw7LiYAOWlnSfitwfMMdLsGwrbYu8eQAIfT7FomCYYpF8m3aLey8ncOCgUl7I9dCNzL4kGhaZvVf7wPotYIcLETre_H4CAoBK_NzCuuscoFRyII-0_cDT9q5uHYDqEEoXesSJf_PzoU4KRL8D_QhSUec4Ue8gb3zWg4mTkiimCkZCBseR3K43DVqqNDL9z8?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>トイレの裏（海岸側）に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7m6I8dO65o9QEjApFgN6ViswORVb3i5AJbz7iICdQPXK5_fd6hCGy2iKxxiw7LiYAOWlnSfitwfMMdLsGwrbYu8eQAIfT7FomCYYpF8m3aLey8ncOCgUl7I9dCNzL4kGhaZvVf7wPotYIcLETre_H4CAoBK_NzCuuscoFRyII-0_cDT9q5uHYDqEEoXesSJf_PzoU4KRL8D_QhSUec4Ue8gb3zWg4mTkiimCkZCBseR3K43DVqqNDL9z8?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6544732, 35.1767064, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "菊名（高抜南下浦小学校下）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4ahhbPNEt5wqgtiDQvkHP35N_ytg2ZuZIJnP0vc3j6w6RSJvARBGySzQi1EdKRIlG28ZJrhhLL2vtDhd4gCKA78T-IPqKYEbUH6wZsdKvsMA8YscX0sdyd_2WplHfxWLOxFGXDBMHJaMcAp7kZyICTRivvcjxUqVS9Yczccl2sI_-X3WIFOEZTsu9YB-n0vnjDKhtkFomhaEHITYW_d8TsfmHPE7bLr-XgF2MLoVM581GM642ifvfV2Kw?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>スロープ左側に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4ahhbPNEt5wqgtiDQvkHP35N_ytg2ZuZIJnP0vc3j6w6RSJvARBGySzQi1EdKRIlG28ZJrhhLL2vtDhd4gCKA78T-IPqKYEbUH6wZsdKvsMA8YscX0sdyd_2WplHfxWLOxFGXDBMHJaMcAp7kZyICTRivvcjxUqVS9Yczccl2sI_-X3WIFOEZTsu9YB-n0vnjDKhtkFomhaEHITYW_d8TsfmHPE7bLr-XgF2MLoVM581GM642ifvfV2Kw?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6552912, 35.1733016, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "金田（役場下）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6u1QJGYuczAc_K97MduKoxAZla8dyfe7d_UYt-Qw0uYPvfz-Mwm9uu1Gh6G1fb1MgXs5Pk_LukiVY-a7S9Hdin_dyftkSMJtZkcVDSSUCxlLs4Yk8ic-eyr1kckLyLdsiuelmxANMxD5X1ReNPD5CnmvHsMtPmLeOZlzmK71wFPN_7ZEmajDVezk96zrlS--oWyXigt_r7faeJ9oN7eJPcikQYi1Urw9dsch8-3iAP2FfhKNmYJMOSS30?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>風に飛ばされないよう階段上フェンス際に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6u1QJGYuczAc_K97MduKoxAZla8dyfe7d_UYt-Qw0uYPvfz-Mwm9uu1Gh6G1fb1MgXs5Pk_LukiVY-a7S9Hdin_dyftkSMJtZkcVDSSUCxlLs4Yk8ic-eyr1kckLyLdsiuelmxANMxD5X1ReNPD5CnmvHsMtPmLeOZlzmK71wFPN_7ZEmajDVezk96zrlS--oWyXigt_r7faeJ9oN7eJPcikQYi1Urw9dsch8-3iAP2FfhKNmYJMOSS30?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6595375, 35.1699545, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "金田（唐池）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7scurf9-P9l5bbE-f2dugz3ikjIJZ_Ij7IWR2ZVGmj6enr_-Pl1A8hSjOsSQGR1Mu3b1umYqad4l6fGT5Rg6g9_hvXQ1PMlEEhrA_3MKqAE-zGWqBwGxj1XOev9IlcZShVs3lWf-9O68w6UdpZLMYXbDcmmAQaFpnAjCQVolaT3ClFqpUsjdVewz-7yJF6eDu1Hbr-5RBJ3yWOLN-BHxXzc8Dzcm9dOagQrx1gBYTOKYPI7lqLbozEoYU?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>岸壁側に寄せて置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7scurf9-P9l5bbE-f2dugz3ikjIJZ_Ij7IWR2ZVGmj6enr_-Pl1A8hSjOsSQGR1Mu3b1umYqad4l6fGT5Rg6g9_hvXQ1PMlEEhrA_3MKqAE-zGWqBwGxj1XOev9IlcZShVs3lWf-9O68w6UdpZLMYXbDcmmAQaFpnAjCQVolaT3ClFqpUsjdVewz-7yJF6eDu1Hbr-5RBJ3yWOLN-BHxXzc8Dzcm9dOagQrx1gBYTOKYPI7lqLbozEoYU?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6626623, 35.1596984, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "遠津・郷平",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4l_JAiAgJe0kzj19fB1BNTfRCvG94SJECQkhCwPSGaBV9tR7_KyjgoPNLqvm10PLoX6068tA3GNMJMXRxBcDRqMnRQ73MBMgQf0qYREOfhvBULaPis09jOWS9f3ARm5RcdEh-FUpYTQ9avoSDeJ60Pzm7ZW28AYzTHoVJoDdb7T8lUS2r9V7ILprar3mGMQCr-DYSG9XHoPxuvLmmI_El1PTljP9YO9Fj-6Y3-B6fr4QYnvE-NKSN-RvE?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>駐車車両等に気を付けて置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4l_JAiAgJe0kzj19fB1BNTfRCvG94SJECQkhCwPSGaBV9tR7_KyjgoPNLqvm10PLoX6068tA3GNMJMXRxBcDRqMnRQ73MBMgQf0qYREOfhvBULaPis09jOWS9f3ARm5RcdEh-FUpYTQ9avoSDeJ60Pzm7ZW28AYzTHoVJoDdb7T8lUS2r9V7ILprar3mGMQCr-DYSG9XHoPxuvLmmI_El1PTljP9YO9Fj-6Y3-B6fr4QYnvE-NKSN-RvE?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.67968, 35.1503722, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "大浦",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR77A1vuk2ltBkHgkgmdoKSBNbNYiQpvmajTF97m6IDJVKwSjJT9wVGPqM_oe_8dZLFH_tZdhT8_6pMmkABR7w-LTyOipi3duxPabgKVkZtQiKgdb5HNwZHDMNxmLLRW3X8Di2sNPYWdWMkx97qM1Q3fa7NwkiA3jomEO66PfeDG1T-YiU3M61kAssHyLVAL7xuvbcl2EW72lbJ4OsQg1DeTF8D4M78kpWYFIQBBkSU_pyAJ0wV2hyULAGg?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>砂浜に降りる階段右側に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR77A1vuk2ltBkHgkgmdoKSBNbNYiQpvmajTF97m6IDJVKwSjJT9wVGPqM_oe_8dZLFH_tZdhT8_6pMmkABR7w-LTyOipi3duxPabgKVkZtQiKgdb5HNwZHDMNxmLLRW3X8Di2sNPYWdWMkx97qM1Q3fa7NwkiA3jomEO66PfeDG1T-YiU3M61kAssHyLVAL7xuvbcl2EW72lbJ4OsQg1DeTF8D4M78kpWYFIQBBkSU_pyAJ0wV2hyULAGg?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6788785, 35.1479488, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "剱崎（舟河原）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4EpnhiU4fBN0VmHRThr7D0Nylc3LazQMmeohIUQB3XneSsI7qzDRhf-coSlqDvcutvrBcxVlzeL3UDBjop5zuNAvt0qTBBw-zC2uIpJqzUaWb8wEGsTGaLtu4wMqyH3iWZ02pBx_-Hl6STE9GeMTvdeFCuGz9phnXigFy9oGD5jdhzTh5BB48zDdnAySCMk6Gy9syBYAQFln6woYXStDW6-E_ylfIKXJwqEsgWAYLHFqfd5x0TUn4Mn1g?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>看板の下に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4EpnhiU4fBN0VmHRThr7D0Nylc3LazQMmeohIUQB3XneSsI7qzDRhf-coSlqDvcutvrBcxVlzeL3UDBjop5zuNAvt0qTBBw-zC2uIpJqzUaWb8wEGsTGaLtu4wMqyH3iWZ02pBx_-Hl6STE9GeMTvdeFCuGz9phnXigFy9oGD5jdhzTh5BB48zDdnAySCMk6Gy9syBYAQFln6woYXStDW6-E_ylfIKXJwqEsgWAYLHFqfd5x0TUn4Mn1g?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6773391, 35.1416842, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "剱崎（足倉・片谷浜）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4eE2L9sRAn_hlwSkpZGEhFuQdsnmBR1p_80ef58fJuls9c-aZRDTec18dmMglTB03vauOmViNaTp6a8Oa2UnySzkIIZ0qFTw0XEzsJ6AiEAIw_2Y05UZO9T9-pkSM8kRKXXKUCmtsm8KEKBUq7YDUCFkuni_HXpRJHD1uviL3UgocnPUedmYhJQdxIrjrT2oW2Eua72X9bu0KEKxqHZc2dn_WPEECMvLsQfNoDDhSQ_G6u8tI2DAbj5d8?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>通行を妨げないよう隅に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4eE2L9sRAn_hlwSkpZGEhFuQdsnmBR1p_80ef58fJuls9c-aZRDTec18dmMglTB03vauOmViNaTp6a8Oa2UnySzkIIZ0qFTw0XEzsJ6AiEAIw_2Y05UZO9T9-pkSM8kRKXXKUCmtsm8KEKBUq7YDUCFkuni_HXpRJHD1uviL3UgocnPUedmYhJQdxIrjrT2oW2Eua72X9bu0KEKxqHZc2dn_WPEECMvLsQfNoDDhSQ_G6u8tI2DAbj5d8?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6735913, 35.1427928, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "剱崎（大畑・高磯・片谷浜）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6qx5bqAJYQQpsmotmAr6RMBWST3zJL4F_svei60Bms6RhHQNn9ILrgjsyFtUtm7njKOrTl-ohIAyipxKwp3PfGBqQAKGrVp1BwTSoc3VR7sBC2JY4_PuQobHLMNWd23xwpvMUlQmQwtEPpVPtCMIZhDInJ88Wo_MvjPicFjNbLIZdW8wpio_YxNt93jvJSw2PtrK7mMRXeglGNc74p-O50GtinpoFXsmn1Kz4FobvxlT5eua9HRfgTr6o?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>端に固めて置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6qx5bqAJYQQpsmotmAr6RMBWST3zJL4F_svei60Bms6RhHQNn9ILrgjsyFtUtm7njKOrTl-ohIAyipxKwp3PfGBqQAKGrVp1BwTSoc3VR7sBC2JY4_PuQobHLMNWd23xwpvMUlQmQwtEPpVPtCMIZhDInJ88Wo_MvjPicFjNbLIZdW8wpio_YxNt93jvJSw2PtrK7mMRXeglGNc74p-O50GtinpoFXsmn1Kz4FobvxlT5eua9HRfgTr6o?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6692299, 35.1427066, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "江奈湾",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7i9jiTWlT0GFQCZXLAkJfu_FFGxX4yeiIowVmbjLNQW6cTazteH8MS1taHTafX-UT_B4tfT8syPeJqs2J7wcWvpjW-JVAPhQw3va_GcMcBHmF-U2mQyqjNSf0wrNDoXrWg5VRGjDkV5ZwjGk_TCa380I0lUIby_gXmTdMJhiUko6T8Sgde7x9YT1zRR_-Nw_DQXFVwZbXSuqdpKgvl-duLVkJaokspC041YiJP4spLH3IwCb_Db70nKfg?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>歩道下の草むらに置いてください。<br><br><img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR53QzYfj3fSbnZN_tQDQViqVVjbw3lxg_Gtl5FKSCNfuCADZTb6vq9QeoRz-rwk1JBzT6u5br4ldWeeztxQzdFd3hiuS24srHzbCxMTVNsjXSpvB_U4jMDbWE_w6g5ut4liVQwp9wp2CASWwPxuIdYDFVaQ4gXeTLK1LhQE-Xx0kI920aJjkyUP7Cy8TqsIqYQUgP1v9UwAtJdhlF8FIfRsJ2YI1gmd4E-5p-2ipZvlxemJ2VVqXEftgDs?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" />",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7i9jiTWlT0GFQCZXLAkJfu_FFGxX4yeiIowVmbjLNQW6cTazteH8MS1taHTafX-UT_B4tfT8syPeJqs2J7wcWvpjW-JVAPhQw3va_GcMcBHmF-U2mQyqjNSf0wrNDoXrWg5VRGjDkV5ZwjGk_TCa380I0lUIby_gXmTdMJhiUko6T8Sgde7x9YT1zRR_-Nw_DQXFVwZbXSuqdpKgvl-duLVkJaokspC041YiJP4spLH3IwCb_Db70nKfg?authuser=1&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR53QzYfj3fSbnZN_tQDQViqVVjbw3lxg_Gtl5FKSCNfuCADZTb6vq9QeoRz-rwk1JBzT6u5br4ldWeeztxQzdFd3hiuS24srHzbCxMTVNsjXSpvB_U4jMDbWE_w6g5ut4liVQwp9wp2CASWwPxuIdYDFVaQ4gXeTLK1LhQE-Xx0kI920aJjkyUP7Cy8TqsIqYQUgP1v9UwAtJdhlF8FIfRsJ2YI1gmd4E-5p-2ipZvlxemJ2VVqXEftgDs?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6629944, 35.1446116, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "毘沙門（毘沙門天）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5mxtY9tf1VhiLLIAFO1UF8gOlhQQKttkfe8NfIWPDXP4PIq63-XsmDKeBw9Ifj-tkdldfduPTv7R6ePU0DmvNbzbBPO4kQpR92NxhN0a_KIb-hl76aPKje4n1pV_Ke65-U_dezA2z39s-bIr9OkdzcQq2vDnHHu9-cwD1TXiuqCjRH5ai-r7k3M0eDrA1tMUjoFu6wMj8P7hqj3G1wcQ5cC8HwuGaGKkE7A8G93A_Qe_trLkCAfhcMxig?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>看板の裏に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5mxtY9tf1VhiLLIAFO1UF8gOlhQQKttkfe8NfIWPDXP4PIq63-XsmDKeBw9Ifj-tkdldfduPTv7R6ePU0DmvNbzbBPO4kQpR92NxhN0a_KIb-hl76aPKje4n1pV_Ke65-U_dezA2z39s-bIr9OkdzcQq2vDnHHu9-cwD1TXiuqCjRH5ai-r7k3M0eDrA1tMUjoFu6wMj8P7hqj3G1wcQ5cC8HwuGaGKkE7A8G93A_Qe_trLkCAfhcMxig?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6608076, 35.140562, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "宮川",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4_Fw9kI9xGMdJDdYMLTO6kH0P5sSi5iLoZ4zesexQ-fpaabg6--3B7luEiPLoldKMEw2XbfnD2yStK_MVkAs4nOKZe2ICcQw1Ngdp8vPYtWJwXhGdZy6cwyFQUjqs_zVNVcrmNdSiyG5wjxUX7gVQm9BubQ9pumTOYCYyQmCbAa33dE5tBL6b4oi19hnkvwkFershe9MYf1Puxloez4mgpnsLKAvjYujQMCLl9DxavACJ6w65FWVkJoOw?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>料金所の人に声をかけてください。漁港内のものはごみも含め触らないようにしてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4_Fw9kI9xGMdJDdYMLTO6kH0P5sSi5iLoZ4zesexQ-fpaabg6--3B7luEiPLoldKMEw2XbfnD2yStK_MVkAs4nOKZe2ICcQw1Ngdp8vPYtWJwXhGdZy6cwyFQUjqs_zVNVcrmNdSiyG5wjxUX7gVQm9BubQ9pumTOYCYyQmCbAa33dE5tBL6b4oi19hnkvwkFershe9MYf1Puxloez4mgpnsLKAvjYujQMCLl9DxavACJ6w65FWVkJoOw?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6371347, 35.1421784, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "通り矢",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6jvmABSxb348adRm1wilau_mdI6nQYYpj0qM1hhYm0zuQ3R90Zhk3CY2vbQDBlfnE0lj1cjEkU81JG299R-oqi71bylZho1-FpuIXk7Y6GyI4STbqa5FOqsuRXuEHbIUC8UJUGOR4pNu0EMelG0mQMvB7z8DmDVPjv4IkxalKPUdYXmA2s6MyQEEHcs0NT_w8RzA-N43yYOAityTCT0pdlb_S8-YqMVhWHeTm_h7NkkuBeW_Qx29h9eeU?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>壁側に寄せて置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6jvmABSxb348adRm1wilau_mdI6nQYYpj0qM1hhYm0zuQ3R90Zhk3CY2vbQDBlfnE0lj1cjEkU81JG299R-oqi71bylZho1-FpuIXk7Y6GyI4STbqa5FOqsuRXuEHbIUC8UJUGOR4pNu0EMelG0mQMvB7z8DmDVPjv4IkxalKPUdYXmA2s6MyQEEHcs0NT_w8RzA-N43yYOAityTCT0pdlb_S8-YqMVhWHeTm_h7NkkuBeW_Qx29h9eeU?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6286692, 35.138203, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "城ヶ島（赤羽根）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR48O9xYTxemgy_nXjCzpg_gkmHWcsKUDOi7qiuinj33gwH5OQfz8g3giyYO6UAvyVLJTapLFQrPVmzD12UPVnnYBjtV5Jua-X-qP27cGhuLW6bulTy3qrLsTR9JBnZSM3U3dGNgE3277ktq7zdKaVwz14qDU0wUDwCTLlJrz2CNYs3byBVznG71Zl36FfVeUFMWJaee_KMh8kT-asQ8hcO2teGf4GtgyNjlkM_-Axa5RoAfM94DS-hq62w?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>海岸降りて右側の岩場に置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR48O9xYTxemgy_nXjCzpg_gkmHWcsKUDOi7qiuinj33gwH5OQfz8g3giyYO6UAvyVLJTapLFQrPVmzD12UPVnnYBjtV5Jua-X-qP27cGhuLW6bulTy3qrLsTR9JBnZSM3U3dGNgE3277ktq7zdKaVwz14qDU0wUDwCTLlJrz2CNYs3byBVznG71Zl36FfVeUFMWJaee_KMh8kT-asQ8hcO2teGf4GtgyNjlkM_-Axa5RoAfM94DS-hq62w?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6192996, 35.1317177, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "城ヶ島（長津呂）",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR52B5Nhba6GzBz7Dx2RIdLkurwY01pHwppyFCUrR2PBeL3VvXgvGzZiRvuEz3JcHbWAHTZ5bkrz_F5cHzXGGsk_7U_CWT5iATANV0qanq1lLrKQld0jQMl0z2STKDIoWBUWJTTNX438wLPFDYmNr6tMgxfQY4qqDKRQCduGClthMzkwvPrpkbwEMk7vnCS4eYTca6kZA3cMzxo_yV_MfBMKAHoAhe0mMUeXHx3rHCzPAG1uUk-Ga4hJ3-A?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>隅に寄せて置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR52B5Nhba6GzBz7Dx2RIdLkurwY01pHwppyFCUrR2PBeL3VvXgvGzZiRvuEz3JcHbWAHTZ5bkrz_F5cHzXGGsk_7U_CWT5iATANV0qanq1lLrKQld0jQMl0z2STKDIoWBUWJTTNX438wLPFDYmNr6tMgxfQY4qqDKRQCduGClthMzkwvPrpkbwEMk7vnCS4eYTca6kZA3cMzxo_yV_MfBMKAHoAhe0mMUeXHx3rHCzPAG1uUk-Ga4hJ3-A?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6121121, 35.1342039, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "諸磯・浜諸磯",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4yk-AuQMJDjm0hMBmrF4wAdsW9wVlu5XnwWi2Uk_bprLzdrQ-yS7GztCT_R1vqBwDVUmV4guxlCuZWtdDsYYDrYb3TiYcO3i8RpDftSqAeIUKcAdxUk39KAFoWyXq8Jiz6wib3U0DVdjoC4hWWTNqCrPPHT3llzxixlcpZamIg5dUMYW9giLSh8EC2ma-I4wYiLUkAB3C9Lp9V-5ZXK6NJbvbTY4XaQjOcNrLLFd5MukOQoWdfHogW8E8?authuser=1&fife=s16383\" height=\"200\" width=\"auto\" /><br><br>壁側に寄せて置いてください。",
+        "gx_media_links": "https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4yk-AuQMJDjm0hMBmrF4wAdsW9wVlu5XnwWi2Uk_bprLzdrQ-yS7GztCT_R1vqBwDVUmV4guxlCuZWtdDsYYDrYb3TiYcO3i8RpDftSqAeIUKcAdxUk39KAFoWyXq8Jiz6wib3U0DVdjoC4hWWTNqCrPPHT3llzxixlcpZamIg5dUMYW9giLSh8EC2ma-I4wYiLUkAB3C9Lp9V-5ZXK6NJbvbTY4XaQjOcNrLLFd5MukOQoWdfHogW8E8?authuser=1&fife=s16383"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6089439, 35.1550714, 0.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "荒井浜",
+        "description": "<img src=\"https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7iETRtzGDULNw8vL0zhA6FIo7PdhvMrPAcgZ_S0kDfG2tkdm6zGywSKsx1vJKJEfAKN83rpIAxYhZtMXBpX-nM8LacNBLcjKcd-_8rFACKiqKx77",
+        "gx_media_links": null
+      },
+      "geometry": null
+    }
+  ]
+}

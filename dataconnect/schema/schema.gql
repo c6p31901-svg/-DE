@@ -1,10 +1,13 @@
+
 type User @table(name: "users", key: ["userId"]) {
   userId: UUID! @default(expr: "uuidV4()") @col(name: "user_id")
   lineUserId: String @col(name: "line_user_id")
   displayName: String @col(name: "display_name")
   userType: String @col(name: "user_type")
   registeredAt: Timestamp @default(expr: "request.time") @col(name: "registered_at")
+  firebaseUid: String @col(name: "firebase_uid")
 }
+
 
 type GarbageCategory @table(name: "garbage_categories", key: ["categoryId"]) {
   categoryId: UUID! @default(expr: "uuidV4()") @col(name: "category_id")

@@ -10,59 +10,53 @@
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- Leaflet Omnivore (KML読み込みプラグイン) -->
-    <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js"></script>
     <!-- Turf.js (円領域などの判定用) -->
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 外部CSSの読み込み -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-slate-950 font-sans text-slate-100 overflow-hidden">
 
     <!-- 🗺️ 地図エリア -->
     <div id="leaflet-map" class="absolute inset-0 z-0" aria-label="インタラクティブマップ"></div>
 
-    <!-- ☰ ハンバーガーボタン -->
+    <!-- ☰ ハンバーガーボタン & GPSステータス-->
     <div class="absolute top-6 left-6 z-10 flex items-center gap-3">
-        <button id="menu-open-btn" aria-label="メニューを開く" class="hamburger-btn bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 shadow-lg cursor-pointer hover:bg-slate-800 transition-all">
-            <i class="fa-solid fa-bars text-xl text-white"></i>
+        <button id="menu-open-btn" aria-label="メニューを開く" class="hamburger-btn">
+            <i class="fa-solid fa-bars text-xl"></i>
         </button>
         <!-- 📍 GPSステータス表示パネル -->
-        <div id="geo-status-badge" class="bg-slate-900/80 text-xs px-3 py-2 rounded-xl border border-slate-700/50 shadow-lg backdrop-blur-sm flex items-center gap-2">
+        <div id="geo-status-badge" class="geo-status-badge">
             <span id="geo-status-dot" class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
             <span id="geo-status-text" class="text-slate-200">現在地を取得中...</span>
         </div>
     </div>
 
     <!-- ⬛ メニュー背景オーバーレイ -->
-    <div id="menu-overlay" class="fixed inset-0 bg-black/60 z-20 hidden backdrop-blur-sm transition-opacity"></div>
+    <div id="menu-overlay" class="menu-overlay hidden"></div>
 
     <!-- 📱 サイドメニュー -->
-    <aside id="side-menu" class="fixed top-0 left-0 h-full w-64 bg-[#232542] z-30 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-6 shadow-2xl">
-        <div class="flex items-center gap-4 pb-4 border-b border-slate-400/40">
-            <button id="menu-close-btn" aria-label="メニューを閉じる" class="w-8 h-8 flex items-center justify-center border border-slate-300/50 rounded text-slate-200 hover:bg-slate-700/50 cursor-pointer">
+    <aside id="side-menu" class="side-menu-drawer is-closed">
+        <div class="drawer-header">
+            <button id="menu-close-btn" aria-label="メニューを閉じる" class="drawer-close-btn">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-            <span class="text-lg font-medium text-white tracking-wide">メニュー</span>
+            <span class="drawer-title">メニュー</span>
         </div>
 
-        <nav class="flex flex-col gap-6 pt-6">
-            <button id="nav-notice-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
-                お知らせ
-            </button>
-            <button id="nav-trash-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
-                ごみ一覧
-            </button>
-            <button id="nav-notify-btn" class="text-left text-slate-200 hover:text-white text-base font-normal tracking-wider transition-colors cursor-pointer">
-                通知
-            </button>
+        <nav class="drawer-nav">
+            <button id="nav-notice-btn" class="drawer-item">お知らせ</button>
+            <button id="nav-trash-btn" class="drawer-item">ごみ一覧</button>
+            <button id="nav-notify-btn" class="drawer-item">通知</button>
         </nav>
     </aside>
 
     <!-- 📄 お知らせ画面 -->
-    <section id="notice-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+     <section id="notice-page" class="fullscreen-page hidden">
         <div class="p-6 max-w-2xl mx-auto w-full">
-            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 p-2 cursor-pointer mb-6" aria-label="マップに戻る">
+            <button class="back-to-map-btn mb-6" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <div class="space-y-10 pt-2">
@@ -78,29 +72,39 @@
         </div>
     </section>
 
-    <!-- 🖼️ ごみ一覧機能画面（ワイヤーフレームをそのまま再現した仮UI） -->
-    <section id="trash-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+    <!-- 🖼️ ごみ一覧機能画面（DB連携版） -->
+    <section id="trash-page"
+        class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+
         <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-300 sticky top-0 bg-white z-10">
-            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1" aria-label="マップに戻る">
+            <button
+                class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1"
+                aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-            <h1 class="text-lg font-bold text-center flex-1 pr-8">ごみ一覧機能</h1>
+
+            <h1 class="text-lg font-bold text-center flex-1 pr-8">
+                ごみ一覧機能
+            </h1>
         </header>
 
-        <!-- 画像のワイヤーフレームを完全に再現した要素リスト -->
+        <!-- データベースから取得した投稿を表示する領域 -->
         <div id="trash-list" class="p-6 max-w-2xl mx-auto w-full space-y-6">
-          <p class="text-slate-600">投稿を読み込んでいます...</p>
+            <p class="text-slate-600">投稿を読み込んでいます...</p>
         </div>
+
     </section>
 
+    
     <!-- 🔔 通知画面 -->
-    <section id="notify-page" class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
+    <section id="notify-page" class="fullscreen-page hidden">
         <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
-            <button class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1" aria-label="マップに戻る">
+            <button class="back-to-map-btn text-black p-1" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h1 class="text-lg font-bold text-center flex-1 pr-8">通知機能</h1>
         </header>
+
         <div class="p-6 max-w-2xl mx-auto w-full text-center text-slate-500 pt-20">
             （通知画面のデザインは準備中です）
         </div>
@@ -108,19 +112,16 @@
 
     <!-- ⚙️ スクリプト -->
     <script>
-        let map;
-        let userMarker = null; // 現在地マーカー
-        let isInitialPositionSet = false; // 初回ジャンプ用フラグ
-        let isInsideAllowedZone = false; // データベース登録可否フラグ
+        let userMarker = null;
+        let isInitialPositionSet = false;
+        let isInsideAllowedZone = false;
 
-        // 🎯 対象エリア設定（黄色丸・赤丸）
         const allowedZones = [
             { id: 'west', center: [35.3172, 139.3875], radius: 400, color: '#eab308', popup: "<strong>西側エリア</strong><br>ゴミ量: 中" },
             { id: 'east', center: [35.3168, 139.4010], radius: 600, color: '#ef4444', popup: "<strong>東側エリア</strong><br>ゴミ量: 多 (優先回収エリア)" }
         ];
 
         function initMap() {
-            // 三浦半島沿岸全体が見える初期表示位置
             const defaultLatLng = [35.2100, 139.6500];
             
             map = L.map('leaflet-map', {
@@ -130,13 +131,11 @@
 
             L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-            // 国土地理院写真タイル
             L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg", {
                 maxNativeZoom: 18,
                 minZoom: 10
             }).addTo(map);
 
-            // ゾーン描画（黄色丸・赤丸）
             allowedZones.forEach(z => {
                 L.circle(z.center, {
                     radius: z.radius,
@@ -147,12 +146,10 @@
                 }).addTo(map).bindPopup(z.popup);
             });
 
-            // 紫丸（注射器注意区域）
             L.circle([35.3168, 139.3985], {
                 radius: 200, color: '#a855f7', fillColor: '#a855f7', fillOpacity: 0.6, weight: 2
             }).addTo(map).bindPopup("<strong>注射器発見要注意区域</strong>");
 
-            // ⚠️ 警告マーカー
             L.marker([35.31650, 139.39850], {
                 icon: L.divIcon({
                     className: 'custom-pin-danger',
@@ -162,17 +159,15 @@
                 })
             }).addTo(map);
 
-            // 🗑️ KMLデータを地図上にピンとして読み込み表示
-            loadKMLOnMap();
-
-            // 📡 ユーザーの現在地取得＆常時監視（ジオフェンス機能）
+            loadGeoJSONOnMap();
+            
             startGeolocationWatch();
 
             setTimeout(() => { map.invalidateSize(); }, 300);
         }
 
-        // KMLデータをマップ上にのみピン表示する処理
-        function loadKMLOnMap() {
+        // JSONファイル（locations.json）からGeoJSONデータを読み込みマップ上に表示
+        function loadGeoJSONOnMap() {
             const customTrashIcon = L.divIcon({
                 className: 'custom-trash-icon',
                 html: '<div class="bg-emerald-600 text-white p-2 rounded-full border-2 border-white shadow-md text-xs flex items-center justify-center w-8 h-8">🗑️</div>',
@@ -180,40 +175,45 @@
                 iconAnchor: [16, 16]
             });
 
-            // 「trash.kml」ファイルを地図上にプロット
-            omnivore.kml('trash.kml')
-                .on('ready', function() {
-                    this.eachLayer(function(layer) {
-                        if (layer instanceof L.Marker) {
-                            layer.setIcon(customTrashIcon);
+            fetch('/locations.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    L.geoJSON(data, {
+                        pointToLayer: function (feature, latlng) {
+                            return L.marker(latlng, { icon: customTrashIcon });
+                        },
+                        onEachFeature: function (feature, layer) {
+                            const props = feature.properties || {};
+                            const name = props.name || 'ごみ置き場';
+                            const description = props.description || '詳細情報なし';
+
+                            layer.bindPopup(`
+                                <div class="p-1 max-w-xs text-slate-900">
+                                    <strong class="text-base text-emerald-800">${name}</strong>
+                                    <div class="mt-2 text-xs leading-relaxed overflow-hidden">${description}</div>
+                                </div>
+                            `);
                         }
-
-                        const props = layer.feature.properties || {};
-                        const name = props.name || 'ごみ置き場';
-                        const description = props.description || '詳細情報なし';
-
-                        layer.bindPopup(`
-                            <div class="p-1 max-w-xs">
-                                <strong class="text-base text-emerald-800">${name}</strong>
-                                <div class="mt-2 text-xs leading-relaxed text-slate-700">${description}</div>
-                            </div>
-                        `);
-                    });
+                    }).addTo(map);
                 })
-                .on('error', function(e) {
-                    console.error('KML読み込みエラー: 地図上にゴミ置き場ピンを表示できませんでした。', e);
-                })
-                .addTo(map);
+                .catch(error => {
+                    console.error('GeoJSONの読み込み中にエラーが発生しました:', error);
+                });
         }
 
-        // 📍 現在地監視機能（Turf.jsによる距離計算判定）
+        
         function startGeolocationWatch() {
             if (!navigator.geolocation) {
                 updateStatusBadge(false, "Geolocation非対応ブラウザ");
                 return;
             }
 
-            // 現在地用アイコン
+            
             const userIcon = L.divIcon({
                 className: 'custom-user-icon',
                 html: '<div class="relative"><div class="w-5 h-5 bg-blue-500 rounded-full border-2 border-white shadow-md"></div><div class="absolute -inset-1 rounded-full bg-blue-500/40 animate-ping"></div></div>',
@@ -226,7 +226,7 @@
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
 
-                    // 1. マーカー描画 ＆ 初回位置移動
+                    
                     if (!userMarker) {
                         userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map).bindPopup("現在地");
                     } else {
@@ -238,13 +238,12 @@
                         isInitialPositionSet = true;
                     }
 
-                    // 2. ジオフェンス判定 (Turf.js で黄色・赤色の円内かチェック)
+                    
                     const userPoint = turf.point([lng, lat]);
                     isInsideAllowedZone = false;
 
                     for (const zone of allowedZones) {
-                        const zoneCenter = turf.point([zone.center[1], zone.center[0]]); // [lng, lat]
-                        // 距離計算（メートル）
+                        const zoneCenter = turf.point([zone.center[1], zone.center[0]]);
                         const distanceMeters = turf.distance(userPoint, zoneCenter, { units: 'meters' });
                         
                         if (distanceMeters <= zone.radius) {
@@ -253,10 +252,10 @@
                         }
                     }
 
-                    // 3. UI表示更新 ＆ データベース更新制御
+                    
                     if (isInsideAllowedZone) {
                         updateStatusBadge(true, "エリア内: DB登録可能");
-                        savePositionToDatabase(lat, lng); // エリア内のみ反映
+                        savePositionToDatabase(lat, lng);
                     } else {
                         updateStatusBadge(false, "エリア外: DB反映除外");
                     }
@@ -264,15 +263,11 @@
                 (error) => {
                     updateStatusBadge(false, "位置情報の取得失敗");
                 },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 10000,
-                    maximumAge: 0
-                }
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
             );
         }
 
-        // ステータスバッジの更新処理
+        
         function updateStatusBadge(isInside, message) {
             const dot = document.getElementById('geo-status-dot');
             const text = document.getElementById('geo-status-text');
@@ -285,9 +280,9 @@
             }
         }
 
-        // 💾 データベース送信例
+        
         function savePositionToDatabase(lat, lng) {
-            console.log(`[DB反映実行] エリア内のため位置情報を送信: 緯度=${lat}, 経度=${lng}`);
+            console.log(`[DB反映実行] 緯度=${lat}, 経度=${lng}`);
         }
 
         // --- UI制御 ---
@@ -300,7 +295,7 @@
         ];
 
         function toggleMenu(open) {
-            sideMenu.classList.toggle('-translate-x-full', !open);
+            sideMenu.classList.toggle('is-closed', !open);
             overlay.classList.toggle('hidden', !open);
         }
 
@@ -308,14 +303,10 @@
             toggleMenu(false);
             pages.forEach(page => page.classList.add('hidden'));
             targetPage.classList.remove('hidden');
-            targetPage.classList.add('flex');
         }
 
         function returnToMap() {
-            pages.forEach(page => {
-                page.classList.add('hidden');
-                page.classList.remove('flex');
-            });
+            pages.forEach(page => page.classList.add('hidden'));
             toggleMenu(false);
         }
 
