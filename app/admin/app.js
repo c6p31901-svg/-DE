@@ -104,7 +104,6 @@ const reports = [
  {id:1,date:"2026/10/12 09:42",place:"藤沢市・海岸西側",type:"注射器のような物",comment:"砂浜に落ちている。直接触れていない。",priority:"高",status:"未対応",danger:true,age:"12分前",icon:"⚠"},
  {id:2,date:"2026/10/12 09:18",place:"茅ヶ崎市・中央付近",type:"漂着プラスチック",comment:"ペットボトルや包装材がまとまっている。",priority:"中",status:"未対応",danger:false,age:"36分前",icon:"♻"},
  {id:3,date:"2026/10/12 08:55",place:"平塚市・東側",type:"ごみ袋の集積",comment:"指定置き場に袋が4つあります。",priority:"中",status:"対応中",danger:false,age:"59分前",icon:"▤"},
- {id:4,date:"2026/10/12 08:31",place:"鎌倉市・海岸付近",type:"毒性生物の疑い",comment:"青い生物が複数打ち上がっている。",priority:"高",status:"未対応",danger:true,age:"1時間23分前",icon:"⚠"},
  {id:5,date:"2026/10/11 16:20",place:"逗子市・海岸中央",type:"流木・大型ごみ",comment:"人力での回収が難しそうです。",priority:"中",status:"未対応",danger:false,age:"昨日",icon:"🪵"},
  {id:6,date:"2026/10/11 14:05",place:"大磯町・西側",type:"空き缶・包装材",comment:"少量の散乱ごみです。",priority:"低",status:"回収済み",danger:false,age:"昨日",icon:"♻"}
 ];
@@ -112,7 +111,6 @@ let bags = [
  {id:1,date:"2026/10/12 08:50",place:"茅ヶ崎市・第3置き場",count:4,reporter:"ビーチクリーン湘南",status:"未回収"},
  {id:2,date:"2026/10/12 08:15",place:"藤沢市・第2置き場",count:7,reporter:"個人ボランティア",status:"未回収"},
  {id:3,date:"2026/10/11 15:40",place:"平塚市・第1置き場",count:3,reporter:"湘南美化グループ",status:"未回収"},
- {id:4,date:"2026/10/11 11:20",place:"鎌倉市・第4置き場",count:5,reporter:"海岸清掃チーム",status:"回収済み"}
 ];
 let notices = [
  {title:"危険な漂着生物に注意",category:"安全情報",body:"海岸に毒性のある生物が漂着している可能性があります。見つけても触れず、位置と写真を報告してください。",date:"2026/10/12"},
