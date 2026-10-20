@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <!-- 外部CSSの読み込み -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -22,7 +23,7 @@
     <!-- 🗺️ 地図エリア -->
     <div id="leaflet-map" class="absolute inset-0 z-0" aria-label="インタラクティブマップ"></div>
 
-    <!-- ☰ ハンバーガーボタン & GPSステータス-->
+    <!-- ☰ ハンバーガーボタン & GPSステータス -->
     <div class="absolute top-6 left-6 z-10 flex items-center gap-3">
         <button id="menu-open-btn" aria-label="メニューを開く" class="hamburger-btn">
             <i class="fa-solid fa-bars text-xl"></i>
@@ -54,7 +55,7 @@
     </aside>
 
     <!-- 📄 お知らせ画面 -->
-     <section id="notice-page" class="fullscreen-page hidden">
+    <section id="notice-page" class="fullscreen-page hidden">
         <div class="p-6 max-w-2xl mx-auto w-full">
             <button class="back-to-map-btn mb-6" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
@@ -72,39 +73,89 @@
         </div>
     </section>
 
-    <!-- 🖼️ ごみ一覧機能画面（DB連携版） -->
-    <section id="trash-page"
-        class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
-
+    <!-- 🖼️ ごみ一覧機能画面 -->
+    <section id="trash-page" class="fullscreen-page hidden">
         <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-300 sticky top-0 bg-white z-10">
-            <button
-                class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1"
-                aria-label="マップに戻る">
+            <button class="back-to-map-btn" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-
-            <h1 class="text-lg font-bold text-center flex-1 pr-8">
-                ごみ一覧機能
-            </h1>
+            <h1 class="text-lg font-bold text-center flex-1 pr-8">ごみ一覧機能</h1>
         </header>
 
-        <!-- データベースから取得した投稿を表示する領域 -->
-        <div id="trash-list" class="p-6 max-w-2xl mx-auto w-full space-y-6">
-            <p class="text-slate-600">投稿を読み込んでいます...</p>
-        </div>
+        <div class="p-6 max-w-2xl mx-auto w-full space-y-6">
+            <!-- アイテム 1〜5 -->
+            <div class="trash-item">
+                <div class="trash-image-placeholder">ゴミ画像</div>
+                <div class="flex-1 space-y-2 pt-1">
+                    <div class="flex justify-between text-base text-slate-900 font-normal">
+                        <span>日時</span>
+                        <span>放置時間</span>
+                    </div>
+                    <div class="pt-2 space-y-3">
+                        <div class="text-center font-normal text-slate-900">コメント</div>
+                        <div class="border-b border-slate-900 w-full"></div>
+                        <div class="border-b border-slate-900 w-full"></div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="trash-item">
+                <div class="trash-image-placeholder">ゴミ画像</div>
+                <div class="flex-1 space-y-2 pt-1">
+                    <div class="text-base text-slate-900 font-normal">日時</div>
+                    <div class="pt-2 space-y-3">
+                        <div class="text-center font-normal text-slate-900">コメント</div>
+                        <div class="border-b border-slate-900 w-full"></div>
+                        <div class="border-b border-slate-900 w-full"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trash-item">
+                <div class="trash-image-placeholder">ゴミ画像</div>
+                <div class="flex-1 space-y-2 pt-1">
+                    <div class="text-base text-slate-900 font-normal">日時</div>
+                    <div class="pt-2 space-y-3">
+                        <div class="text-center font-normal text-slate-900">コメント</div>
+                        <div class="border-b border-slate-900 w-full"></div>
+                        <div class="border-b border-slate-900 w-full"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trash-item">
+                <div class="trash-image-placeholder">ゴミ画像</div>
+                <div class="flex-1 space-y-2 pt-1">
+                    <div class="text-base text-slate-900 font-normal">日時</div>
+                    <div class="pt-2 space-y-3">
+                        <div class="text-center font-normal text-slate-900">コメント</div>
+                        <div class="border-b border-slate-900 w-full"></div>
+                        <div class="border-b border-slate-900 w-full"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trash-item">
+                <div class="trash-image-placeholder">ゴミ画像</div>
+                <div class="flex-1 space-y-2 pt-1">
+                    <div class="text-base text-slate-900 font-normal">日時</div>
+                    <div class="pt-2 space-y-3">
+                        <div class="border-b border-slate-900 w-full"></div>
+                        <div class="text-center font-normal text-slate-900">コメント</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    
     <!-- 🔔 通知画面 -->
     <section id="notify-page" class="fullscreen-page hidden">
         <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
-            <button class="back-to-map-btn text-black p-1" aria-label="マップに戻る">
+            <button class="back-to-map-btn" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h1 class="text-lg font-bold text-center flex-1 pr-8">通知機能</h1>
         </header>
-
         <div class="p-6 max-w-2xl mx-auto w-full text-center text-slate-500 pt-20">
             （通知画面のデザインは準備中です）
         </div>
@@ -112,6 +163,7 @@
 
     <!-- ⚙️ スクリプト -->
     <script>
+        let map;
         let userMarker = null;
         let isInitialPositionSet = false;
         let isInsideAllowedZone = false;
@@ -160,13 +212,12 @@
             }).addTo(map);
 
             loadGeoJSONOnMap();
-            
             startGeolocationWatch();
 
             setTimeout(() => { map.invalidateSize(); }, 300);
         }
 
-        // JSONファイル（locations.json）からGeoJSONデータを読み込みマップ上に表示
+        // フォルダ内の Untitled.geojson から GeoJSON データを読み込みマップ上に表示
         function loadGeoJSONOnMap() {
             const customTrashIcon = L.divIcon({
                 className: 'custom-trash-icon',
@@ -175,7 +226,8 @@
                 iconAnchor: [16, 16]
             });
 
-            fetch('/locations.json')
+            // 読み込み先を実際のファイル名（Untitled.geojson）に指定
+            fetch('Untitled.geojson')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -183,14 +235,19 @@
                     return response.json();
                 })
                 .then(data => {
-                    L.geoJSON(data, {
+                    const geoJsonLayer = L.geoJSON(data, {
                         pointToLayer: function (feature, latlng) {
                             return L.marker(latlng, { icon: customTrashIcon });
                         },
                         onEachFeature: function (feature, layer) {
                             const props = feature.properties || {};
                             const name = props.name || 'ごみ置き場';
-                            const description = props.description || '詳細情報なし';
+                            
+                            // descriptionがオブジェクト形式（{@type: 'html', value: '...'}）か文字列かを判定
+                            let description = '詳細情報なし';
+                            if (props.description) {
+                                description = typeof props.description === 'object' ? (props.description.value || '') : props.description;
+                            }
 
                             layer.bindPopup(`
                                 <div class="p-1 max-w-xs text-slate-900">
@@ -200,20 +257,23 @@
                             `);
                         }
                     }).addTo(map);
+
+                    // 読み込んだピンの範囲に合わせて自動ズーム・移動
+                    if (geoJsonLayer.getBounds().isValid()) {
+                        map.fitBounds(geoJsonLayer.getBounds());
+                    }
                 })
                 .catch(error => {
                     console.error('GeoJSONの読み込み中にエラーが発生しました:', error);
                 });
         }
 
-        
         function startGeolocationWatch() {
             if (!navigator.geolocation) {
                 updateStatusBadge(false, "Geolocation非対応ブラウザ");
                 return;
             }
 
-            
             const userIcon = L.divIcon({
                 className: 'custom-user-icon',
                 html: '<div class="relative"><div class="w-5 h-5 bg-blue-500 rounded-full border-2 border-white shadow-md"></div><div class="absolute -inset-1 rounded-full bg-blue-500/40 animate-ping"></div></div>',
@@ -226,7 +286,6 @@
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
 
-                    
                     if (!userMarker) {
                         userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map).bindPopup("現在地");
                     } else {
@@ -238,7 +297,6 @@
                         isInitialPositionSet = true;
                     }
 
-                    
                     const userPoint = turf.point([lng, lat]);
                     isInsideAllowedZone = false;
 
@@ -252,7 +310,6 @@
                         }
                     }
 
-                    
                     if (isInsideAllowedZone) {
                         updateStatusBadge(true, "エリア内: DB登録可能");
                         savePositionToDatabase(lat, lng);
@@ -267,7 +324,6 @@
             );
         }
 
-        
         function updateStatusBadge(isInside, message) {
             const dot = document.getElementById('geo-status-dot');
             const text = document.getElementById('geo-status-text');
@@ -280,7 +336,6 @@
             }
         }
 
-        
         function savePositionToDatabase(lat, lng) {
             console.log(`[DB反映実行] 緯度=${lat}, 経度=${lng}`);
         }
@@ -325,7 +380,5 @@
         window.addEventListener('DOMContentLoaded', initMap);
         window.addEventListener('resize', () => { if (map) map.invalidateSize(); });
     </script>
-    
-    <script type="module" src="./trash-list.js"></script>
 </body>
 </html>
