@@ -131,7 +131,7 @@ function updateStats(){
  $("#nav-report-count").textContent=reports.filter(r=>r.status==="未対応").length;
 }
 function reportRow(r,compact=false){
- return `<tr><td>${r.date}</td><td><span class="table-place">${r.place}</span><span class="table-sub">デモ位置情報</span></td><td><span class="table-tag">${r.icon} ${r.type}</span></td><td>${priorityPill(r.priority)}</td><td>${statusPill(r.status)}</td><td><button class="mini-btn" data-detail="${r.id}">詳細・対応</button></td></tr>`;
+ return `<tr><td>${r.date}</td><td><span class="table-place">${r.place}</span><span class="table-sub"></span></td><td><span class="table-tag">${r.icon} ${r.type}</span></td><td>${priorityPill(r.priority)}</td><td>${statusPill(r.status)}</td><td><button class="mini-btn" data-detail="${r.id}">詳細・対応</button></td></tr>`;
 }
 function renderRecent(){ $("#recent-table").innerHTML=reports.slice(0,4).map(r=>reportRow(r,true)).join("");}
 function renderReports(){
