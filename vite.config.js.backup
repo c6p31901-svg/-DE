@@ -1,0 +1,16 @@
+
+import { defineConfig } from "vite";
+import { resolve } from "node:path";
+
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      input: {
+        index: resolve(import.meta.dirname, "index.html"),
+        app: resolve(import.meta.dirname, "app/index.html"),
+        camera: resolve(import.meta.dirname, "camera/camera.html"),
+        admin: resolve(import.meta.dirname, "app/admin/kannri_index.html"),
+      },
+    },
+  },
+});

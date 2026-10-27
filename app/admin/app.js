@@ -1,4 +1,22 @@
 // 投稿マップ（アップロードされた地図コードの主要レイヤーを利用）
+import { initializeApp } from "firebase/app";
+import { getDataConnect } from "firebase/data-connect";
+import {
+  connectorConfig,
+  listGarbagePosts
+} from "../../src/dataconnect-generated/esm/index.esm.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCYDC_CEmV1ElV6gFqph5ieGS9akQ8v9tg",
+  authDomain: "beach-cleanup-14fd4.firebaseapp.com",
+  projectId: "beach-cleanup-14fd4",
+  storageBucket: "beach-cleanup-14fd4.firebasestorage.app",
+  messagingSenderId: "415491442995",
+  appId: "1:415491442995:web:f354f5aceb67c4c5a75646"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const dataConnect = getDataConnect(firebaseApp, connectorConfig);
 let postMap = null;
 let postMapGeoJsonLayer = null;
 const originalMapZones = [
@@ -199,4 +217,52 @@ $("#export-btn").addEventListener("click",()=>{
  const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="kaigan_reports_demo.csv";a.click();URL.revokeObjectURL(url);showToast("投稿一覧のCSVを書き出しました");
 });
 $("#today-label").textContent=new Date().toLocaleDateString("ja-JP",{year:"numeric",month:"long",day:"numeric",weekday:"short"});
-refresh();renderNotices();initPostMap();
+refresh();
+renderNotices();
+initPostMap();
+loadRealReports();
+
+async function loadRealReports() {
+  console.log("[Data Connect] 投稿取得を開始");
+
+  try {
+    const result = await listGarbagePosts(dataConnect);
+    const posts = result.data?.garbagePosts ?? [];
+
+    console.log("[Data Connect] 取得件数:", posts.length);
+    console.log("[Data Connect] 取得データ:", posts);
+
+    reports.splice(
+      0,
+      reports.length,
+      ...posts.map((p, index) => ({
+        id: index + 1,
+        dbPostId: p.postId,
+        date: p.postedAt
+          ? new Date(p.postedAt).toLocaleString("ja-JP")
+          : "",
+        place: `${Number(p.latitude).toFixed(5)}, ${Number(p.longitude).toFixed(5)}`,
+        type: p.aiResult || "ごみ投稿",
+        comment: p.comment || "",
+        priority: p.hazardous ? "高" : "中",
+        status: p.collectionStatus === "回収済み"
+          ? "回収済み"
+          : p.collectionStatus === "対応中"
+            ? "対応中"
+            : "未対応",
+        danger: Boolean(p.hazardous),
+        age: p.user?.displayName || "投稿者不明",
+        icon: p.hazardous ? "⚠" : "🗑️",
+        photoUrl: p.photoUrl,
+        latitude: p.latitude,
+        longitude: p.longitude
+      }))
+    );
+
+    refresh();
+    showToast(`実際の投稿を ${posts.length} 件読み込みました`);
+  } catch (error) {
+    console.error("[Data Connect] 投稿取得エラー:", error);
+    showToast("投稿データを読み込めませんでした。");
+  }
+}

@@ -1,9 +1,13 @@
+
 import { initializeApp } from "firebase/app";
 import { getDataConnect } from "firebase/data-connect";
-import { connectorConfig, createUser } from "./src/dataconnect-generated/esm/index.esm.js";
+import {
+  connectorConfig,
+  listGarbagePosts
+} from "./src/dataconnect-generated/esm/index.esm.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCYDC_cEmV1ElV6gFqph5ieGS9akQ8v9tg",
+  apiKey: "AIzaSyCYDC_CEmV1ElV6gFqph5ieGS9akQ8v9tg",
   authDomain: "beach-cleanup-14fd4.firebaseapp.com",
   projectId: "beach-cleanup-14fd4",
   storageBucket: "beach-cleanup-14fd4.firebasestorage.app",
@@ -15,12 +19,11 @@ const app = initializeApp(firebaseConfig);
 const dc = getDataConnect(app, connectorConfig);
 
 try {
-  const result = await createUser(dc, {
-    lineUserId: "test-user-001",
-    displayName: "test-user",
-    userType: "volunteer"
-  });
-  console.log("登録結果:", result);
+  const result = await listGarbagePosts(dc);
+
+  console.log("ごみ投稿の取得に成功しました。");
+  console.log(JSON.stringify(result.data, null, 2));
 } catch (error) {
-  console.error("登録エラー:", error);
+  console.error("ごみ投稿の取得に失敗しました。");
+  console.error(error);
 }

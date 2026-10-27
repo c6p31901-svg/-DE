@@ -15,7 +15,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- 外部CSSの読み込み -->
-    <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body class="bg-slate-950 font-sans text-slate-100 overflow-hidden">
 
@@ -160,6 +161,8 @@
             }).addTo(map);
 
             loadGeoJSONOnMap();
+
+            window.loadGarbagePostsOnMap?.(map);
             
             startGeolocationWatch();
 
@@ -167,44 +170,88 @@
         }
 
         // JSONファイル（locations.json）からGeoJSONデータを読み込みマップ上に表示
-        function loadGeoJSONOnMap() {
-            const customTrashIcon = L.divIcon({
-                className: 'custom-trash-icon',
-                html: '<div class="bg-emerald-600 text-white p-2 rounded-full border-2 border-white shadow-md text-xs flex items-center justify-center w-8 h-8">🗑️</div>',
-                iconSize: [32, 32],
-                iconAnchor: [16, 16]
-            });
+        
+function loadGeoJSONOnMap() {
+    const customTrashIcon = L.divIcon({
+        className: 'custom-trash-icon',
+        html: '<div class="bg-emerald-600 text-white p-2 rounded-full border-2 border-white shadow-md text-xs flex items-center justify-center w-8 h-8">🗑️</div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+    });
 
-            fetch('/locations.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    L.geoJSON(data, {
-                        pointToLayer: function (feature, latlng) {
-                            return L.marker(latlng, { icon: customTrashIcon });
-                        },
-                        onEachFeature: function (feature, layer) {
-                            const props = feature.properties || {};
-                            const name = props.name || 'ごみ置き場';
-                            const description = props.description || '詳細情報なし';
-
-                            layer.bindPopup(`
-                                <div class="p-1 max-w-xs text-slate-900">
-                                    <strong class="text-base text-emerald-800">${name}</strong>
-                                    <div class="mt-2 text-xs leading-relaxed overflow-hidden">${description}</div>
-                                </div>
-                            `);
-                        }
-                    }).addTo(map);
-                })
-                .catch(error => {
-                    console.error('GeoJSONの読み込み中にエラーが発生しました:', error);
-                });
+    // GeoJSONのマーカーを地図に追加する共通処理
+    function addGeoJSONLayer(data, sourceName) {
+        if (!data || !data.features) {
+            console.error(`${sourceName}: GeoJSON形式ではありません。`);
+            return;
         }
+
+        const layer = L.geoJSON(data, {
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {
+                    icon: customTrashIcon
+                });
+            },
+            onEachFeature: function (feature, layer) {
+                const props = feature.properties || {};
+                const name = props.name || 'ごみ置き場';
+                const description =
+                    props.description || '詳細情報なし';
+
+                const popupContent = document.createElement('div');
+                popupContent.className = 'p-1 max-w-xs text-slate-900';
+
+                const title = document.createElement('strong');
+                title.className = 'text-base text-emerald-800';
+                title.textContent = name;
+
+                const detail = document.createElement('div');
+                detail.className =
+                    'mt-2 text-xs leading-relaxed overflow-hidden';
+                detail.textContent = description;
+
+                popupContent.appendChild(title);
+                popupContent.appendChild(detail);
+
+                layer.bindPopup(popupContent);
+            }
+        });
+
+        layer.addTo(map);
+
+        console.log(
+            `${sourceName}から追加したマーカー数：`,
+            layer.getLayers().length
+        );
+    }
+
+    // 既存のごみ置き場データ
+    fetch('/locations.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => addGeoJSONLayer(data, 'locations.json'))
+        .catch(error => {
+            console.error('locations.jsonの読み込み失敗:', error);
+        });
+
+    // 追加のごみ置き場データ
+    fetch('/app/Untitled.geojson')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => addGeoJSONLayer(data, 'Untitled.geojson'))
+        .catch(error => {
+            console.error('Untitled.geojsonの読み込み失敗:', error);
+        });
+}
+
 
         
         function startGeolocationWatch() {
@@ -325,7 +372,6 @@
         window.addEventListener('DOMContentLoaded', initMap);
         window.addEventListener('resize', () => { if (map) map.invalidateSize(); });
     </script>
-    
     <script type="module" src="./trash-list.js"></script>
 </body>
 </html>

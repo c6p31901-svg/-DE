@@ -22,9 +22,50 @@ const dataConnect = getDataConnect(app, connectorConfig);
 const photoInput = document.getElementById("photo");
 const preview = document.getElementById("preview");
 const sendButton = document.getElementById("sendButton");
+
 const status = document.getElementById("status");
+const loginStatus = document.getElementById("loginStatus");
+
+const LIFF_ID = "ここにLIFF_IDを入力";
 
 let compressedDataUrl = null;
+let lineProfile = null;
+let loginReady = false;
+
+
+async function initializeLineLogin() {
+  sendButton.disabled = true;
+
+  try {
+    await liff.init({ liffId: LIFF_ID });
+
+    if (!liff.isLoggedIn()) {
+      liff.login({
+        redirectUri: window.location.href
+      });
+      return;
+    }
+
+    lineProfile = await liff.getProfile();
+
+    loginStatus.textContent =
+      `${lineProfile.displayName} としてログイン中`;
+
+    loginReady = true;
+    sendButton.disabled = false;
+
+  } catch (error) {
+    console.error("LINEログインエラー:", error);
+
+    loginStatus.textContent =
+      "LINEログインに失敗しました。設定を確認してください。";
+
+    sendButton.disabled = true;
+  }
+}
+
+initializeLineLogin();
+
 
 function compressPhoto(file) {
   return new Promise((resolve, reject) => {
@@ -113,28 +154,50 @@ function getCurrentPosition() {
   });
 }
 
+
 sendButton.addEventListener("click", async () => {
   if (sendButton.disabled) return;
+
   sendButton.disabled = true;
 
   try {
-    if (!compressedDataUrl) {
-      throw new Error("先に写真を選択してください。");
+    // LINEログインの確認
+    if (!loginReady || !lineProfile) {
+      throw new Error("LINEログインが完了していません。");
     }
 
+    // 写真の確認
+    if (!compressedDataUrl) {
+      throw new Error("先に写真を撮影してください。");
+    }
+
+    // 大きさの選択を取得
+    const sizeInput = document.querySelector(
+      'input[name="objectSize"]:checked'
+    );
+
+    if (!sizeInput) {
+      throw new Error("大きさを選択してください。");
+    }
+
+    const selectedSize = sizeInput.value;
+
+    // 位置情報の取得
     status.textContent = "位置情報を取得しています…";
     const coords = await getCurrentPosition();
 
-    status.textContent = "テスト用ユーザーを登録しています…";
+    // LINEユーザー情報でユーザー登録
+    status.textContent = "ユーザー情報を登録しています…";
 
     const userResult = await createUser(dataConnect, {
-      lineUserId: `photo-test-${Date.now()}`,
-      displayName: "写真保存テスト",
+      lineUserId: lineProfile.userId,
+      displayName: lineProfile.displayName,
       userType: "volunteer"
     });
 
     const userId = userResult.data.user_insert.userId;
 
+    // 写真・位置情報の保存
     status.textContent = "写真をデータベースに保存しています…";
 
     const postResult = await createGarbagePost(dataConnect, {
@@ -142,7 +205,7 @@ sendButton.addEventListener("click", async () => {
       photoUrl: compressedDataUrl,
       latitude: coords.latitude,
       longitude: coords.longitude,
-      comment: "Base64画像保存テスト",
+      comment: `対象物の大きさ：${selectedSize}`,
       collectionStatus: "未回収"
     });
 
@@ -150,16 +213,27 @@ sendButton.addEventListener("click", async () => {
       "投稿を保存できました。投稿ID：" +
       postResult.data.garbagePost_insert.postId;
 
+    // 保存後に入力内容をリセット
     photoInput.value = "";
     compressedDataUrl = null;
     preview.removeAttribute("src");
     preview.style.display = "none";
+
+    document.querySelectorAll(
+      'input[name="objectSize"]'
+    ).forEach(input => {
+      input.checked = false;
+    });
+
   } catch (error) {
     console.error("投稿保存エラー:", error);
+
     status.textContent =
       "保存に失敗しました：" +
       (error.message || "原因不明のエラー");
+
   } finally {
-    sendButton.disabled = false;
+    // ログインが完了している場合だけ保存ボタンを有効にする
+    sendButton.disabled = !loginReady;
   }
 });

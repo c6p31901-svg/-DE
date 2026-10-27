@@ -1,0 +1,125 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>海岸美化財団 管理者ダッシュボード</title>
+  <!-- 投稿マップで使用するLeafletの地図ライブラリ -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <style>#priority-list{display:none!important}</style>
+  <script type="module" crossorigin src="/assets/app/admin/kannri_index-Bo9pfMhY.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index.esm-DT7gI91q.js">
+  <link rel="stylesheet" crossorigin href="/assets/kannri_index-Cp4Yzyo5.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div><h2>海岸美化財団</h2><small></small></div>
+    </div>
+    <nav>
+      <button class="nav-item active" data-view="dashboard"><span>▦</span>ホーム</button>
+      <button class="nav-item" data-view="reports"><span>📍</span> ごみ投稿管理 <b id="nav-report-count"></b></button>
+      <button class="nav-item" data-view="danger"><span>⚠</span> 危険物確認</button>
+      <button class="nav-item" data-view="bags"><span>▤</span> ごみ袋回収管理</button>
+      <button class="nav-item" data-view="notices"><span>✉</span> お知らせ管理</button>
+      <button class="nav-item" data-view="cleaning"><span>⌖</span> 清掃計画</button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow"></p>
+        <h1 id="page-title">ホーム</h1>
+      </div>
+      <div class="top-actions">
+        <span class="today" id="today-label"></span>
+        <div class="admin-label"><strong>財団管理者画面</strong><small></small></div>
+      </div>
+    </header>
+
+    <section id="dashboard-view" class="view">
+      <div class="stat-grid">
+        <article class="stat-card"><div class="stat-top"><span>未対応の投稿</span><span class="stat-icon blue">📍</span></div><strong id="stat-open"></strong><small></small></article>
+        <article class="stat-card"><div class="stat-top"><span>危険物の疑い</span><span class="stat-icon red">⚠</span></div><strong id="stat-danger"></strong><small></small></article>
+        <article class="stat-card"><div class="stat-top"><span>未回収のごみ袋</span><span class="stat-icon amber">▤</span></div><strong id="stat-bags"></strong><small></small></article>
+        <article class="stat-card"><div class="stat-top"><span>本日の投稿</span><span class="stat-icon green">↗</span></div><strong id="stat-today"></strong><small></small></article>
+      </div>
+
+      <div class="content-grid">
+        <section class="panel map-panel">
+          <div class="panel-heading"><div><h3>投稿マップ</h3><p></p></div><button class="text-button" data-goto="reports"><!--文字を入れる--></button></div>
+          <div class="post-map-shell">
+            <!-- index (1)(1).html のLeaflet地図を投稿マップ内に表示 -->
+            <div id="post-map" class="post-map" role="application" aria-label="湘南・三浦海岸の投稿マップ"></div>
+            <div class="map-legend post-map-legend">
+              <span><i class="legend-dot yellow-dot"></i>ごみ量：中</span>
+              <span><i class="legend-dot red-dot"></i>ごみ量：多</span>
+              <span><i class="legend-dot purple-dot"></i>危険物注意区域</span>
+              <span><i class="legend-dot green-dot"></i>GeoJSON地点</span>
+            </div>
+          </div>
+          <p id="post-map-status" class="demo-note">地図データを読み込み中です。</p>
+          <div id="priority-list" class="priority-list"></div>
+        </section>
+      </div>
+
+      <section class="panel table-panel">
+        <div class="panel-heading"><div><h3>最新のごみ投稿</h3><p></p></div><button class="text-button" data-goto="reports">すべて見る →</button></div>
+        <div class="table-wrap"><table><thead><tr><th>投稿日時</th><th>場所</th><th>ごみ情報</th><th>優先度</th><th>状態</th><th></th></tr></thead><tbody id="recent-table"></tbody></table></div>
+      </section>
+    </section>
+
+    <section id="reports-view" class="view hidden">
+      <div class="page-intro"><div><h2>ごみ投稿管理</h2><p>投稿された写真・位置・コメントを確認し、回収状況を更新します。</p></div><button class="outline" id="export-btn">CSVを書き出す</button></div>
+      <div class="toolbar"><input id="report-search" type="search" placeholder="場所・ごみの種類で検索"><select id="status-filter"><option value="all">すべての状態</option><option value="未対応">未対応</option><option value="対応中">対応中</option><option value="回収済み">回収済み</option></select><select id="priority-filter"><option value="all">すべての優先度</option><option value="高">高</option><option value="中">中</option><option value="低">低</option></select></div>
+      <section class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>投稿日時</th><th>場所</th><th>投稿内容</th><th>優先度</th><th>状態</th><th>操作</th></tr></thead><tbody id="reports-table"></tbody></table></div></section>
+    </section>
+
+    <section id="danger-view" class="view hidden">
+      <div class="page-intro"><div><h2>危険物確認</h2><p>AI判定は参考情報です。安全確認と対応判断は財団職員が行ってください。</p></div></div>
+      <div class="notice warning"><strong>⚠ 安全上の注意</strong><span>注射器・毒性のある漂着生物などは、素手で触れず、必要に応じて関係機関へ連絡してください。</span></div>
+      <div id="danger-cards" class="danger-grid"></div>
+    </section>
+
+    <section id="bags-view" class="view hidden">
+      <div class="page-intro"><div><h2>ごみ袋回収管理</h2><p>ボランティアが集積したごみ袋と指定置き場の回収状況を管理します。</p></div></div>
+      <section class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>報告日時</th><th>指定置き場</th><th>袋数</th><th>報告者</th><th>状態</th><th>操作</th></tr></thead><tbody id="bags-table"></tbody></table></div></section>
+    </section>
+
+    <section id="notices-view" class="view hidden">
+      <div class="page-intro"><div><h2>お知らせ管理</h2><p>危険情報やボランティア募集などのお知らせを作成します。</p></div></div>
+      <div class="content-grid notice-layout">
+        <section class="panel">
+          <h3>お知らせを作成</h3>
+          <form id="notice-form">
+            <label>タイトル<input id="notice-title" required maxlength="80" placeholder="例：高波に注意してください"></label>
+            <label>カテゴリ<select id="notice-category"><option>安全情報</option><option>ボランティア募集</option><option>清掃活動</option><option>その他</option></select></label>
+            <label>本文<textarea id="notice-body" required rows="5" maxlength="500" placeholder="お知らせ内容を入力してください"></textarea></label>
+            <button class="primary" type="submit">お知らせを追加</button>
+          </form>
+          <p class="demo-note">※ このデモでは画面内に追加されます。LINEへの実送信は行いません。</p>
+        </section>
+        <section class="panel"><div class="panel-heading"><div><h3>登録済みのお知らせ</h3><p>新しい順</p></div></div><div id="notice-list" class="notice-list"></div></section>
+      </div>
+    </section>
+
+    <section id="cleaning-view" class="view hidden">
+      <div class="page-intro"><div><h2>清掃計画</h2><p>投稿状況を参考に、確認・清掃を優先する区域を整理します。</p></div></div>
+      <div class="notice info"><strong>計画案について</strong><span>下記はデモ用の仮データです。実際の清掃区域は、職員の現地確認と安全判断を経て決定してください。</span></div>
+      <div class="plan-grid">
+        <article class="plan-card"><span class="priority-pill high">優先度 高</span><h3>藤沢・海岸西側（仮）</h3><p>危険物の疑いがある投稿を確認。まず現地の安全を確認。</p><div class="plan-meta">関連投稿：2件　/　推奨：職員確認</div><button class="outline" data-goto="danger">危険物を確認</button></article>
+        <article class="plan-card"><span class="priority-pill medium">優先度 中</span><h3>茅ヶ崎・中央付近（仮）</h3><p>漂着ごみの投稿が複数。回収状況を確認して清掃を検討。</p><div class="plan-meta">関連投稿：3件　/　推奨：状況確認</div><button class="outline" data-goto="reports">関連投稿を見る</button></article>
+        <article class="plan-card"><span class="priority-pill low">優先度 低</span><h3>平塚・東側（仮）</h3><p>現時点では緊急性の低い投稿。次回巡回時に確認。</p><div class="plan-meta">関連投稿：1件　/　推奨：次回巡回</div><button class="outline" data-goto="reports">関連投稿を見る</button></article>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="detail-dialog" class="detail-dialog">
+    <form method="dialog"><button class="dialog-close" aria-label="閉じる">×</button></form>
+    <div id="detail-content"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status"></div>
+</body>
+</html>
