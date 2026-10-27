@@ -28,3 +28,55 @@ button {
 #status {
     margin-top: 20px;
 }
+
+
+.size-selection {
+    margin-top: 24px;
+}
+
+.size-selection h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.size-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.size-options label {
+    cursor: pointer;
+}
+
+.size-options input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.size-options span {
+    display: block;
+    padding: 16px 8px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: white;
+}
+
+.size-options input:checked + span {
+    border: 2px solid #06C755;
+    background: #eafff0;
+    font-weight: bold;
+}
+
+.size-options input:focus-visible + span {
+    outline: 2px solid #06C755;
+    outline-offset: 2px;
+}
+
+.login-section {
+    margin-top: 16px;
+    font-size: 14px;
+}
