@@ -3,27 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>湘南・三浦海岸美化 Web GIS Dashboard</title>
+    <title>海岸美化 Web GIS Dashboard</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- Turf.js (円領域などの判定用) -->
+    <!-- Turf.js (円およびポリゴン判定用) -->
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- 外部CSSの読み込み -->
-
-  <link rel="stylesheet" href="./style.css">
+    
+    <style>
+        .side-menu-drawer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 280px;
+            background-color: #0f172a;
+            z-index: 50;
+            transition: transform 0.3s ease-in-out;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .side-menu-drawer.is-closed {
+            transform: translateX(-100%);
+        }
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+        }
+        .fullscreen-page {
+            position: fixed;
+            inset: 0;
+            background-color: #0f172a;
+            z-index: 30;
+            overflow-y: auto;
+            color: #f8fafc;
+        }
+        .hamburger-btn, .drawer-close-btn, .back-to-map-btn {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .geo-status-badge {
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 1rem;
+        }
+        .drawer-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .drawer-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .drawer-item {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+        .drawer-item:hover {
+            background-color: #1e293b;
+        }
+        .trash-item {
+            background-color: #ffffff;
+            color: #0f172a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            gap: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .trash-image-placeholder {
+            width: 80px;
+            height: 80px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+    </style>
 </head>
 <body class="bg-slate-950 font-sans text-slate-100 overflow-hidden">
 
     <!-- 🗺️ 地図エリア -->
     <div id="leaflet-map" class="absolute inset-0 z-0" aria-label="インタラクティブマップ"></div>
 
-    <!-- ☰ ハンバーガーボタン & GPSステータス-->
+    <!-- ☰ ハンバーガーボタン & GPSステータス -->
     <div class="absolute top-6 left-6 z-10 flex items-center gap-3">
         <button id="menu-open-btn" aria-label="メニューを開く" class="hamburger-btn">
             <i class="fa-solid fa-bars text-xl"></i>
@@ -55,7 +153,7 @@
     </aside>
 
     <!-- 📄 お知らせ画面 -->
-     <section id="notice-page" class="fullscreen-page hidden">
+    <section id="notice-page" class="fullscreen-page hidden">
         <div class="p-6 max-w-2xl mx-auto w-full">
             <button class="back-to-map-btn mb-6" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
@@ -73,57 +171,96 @@
         </div>
     </section>
 
-    <!-- 🖼️ ごみ一覧機能画面（DB連携版） -->
-    <section id="trash-page"
-        class="fixed inset-0 bg-white text-black z-50 hidden flex-col overflow-y-auto">
-
-        <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-300 sticky top-0 bg-white z-10">
-            <button
-                class="back-to-map-btn text-2xl text-black hover:opacity-70 cursor-pointer p-1"
-                aria-label="マップに戻る">
+    <!-- 🖼️ ごみ一覧機能画面 -->
+    <section id="trash-page" class="fullscreen-page hidden">
+        <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-700 sticky top-0 bg-slate-900 z-10">
+            <button class="back-to-map-btn" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-
-            <h1 class="text-lg font-bold text-center flex-1 pr-8">
-                ごみ一覧機能
-            </h1>
+            <h1 class="text-lg font-bold text-center flex-1 pr-8">ごみ一覧機能</h1>
         </header>
 
-        <!-- データベースから取得した投稿を表示する領域 -->
-        <div id="trash-list" class="p-6 max-w-2xl mx-auto w-full space-y-6">
-            <p class="text-slate-600">投稿を読み込んでいます...</p>
+        <div class="p-6 max-w-2xl mx-auto w-full space-y-6">
+            <div class="trash-item">
+                <div class="trash-image-placeholder">ゴミ画像</div>
+                <div class="flex-1 space-y-2 pt-1">
+                    <div class="flex justify-between text-base text-slate-900 font-normal">
+                        <span>日時: 2026/11/03</span>
+                        <span>放置時間: 2時間</span>
+                    </div>
+                    <div class="pt-2 space-y-3">
+                        <div class="font-normal text-slate-900">エリア19付近 プラスチックゴミ多数</div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </section>
 
-    
     <!-- 🔔 通知画面 -->
     <section id="notify-page" class="fullscreen-page hidden">
-        <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
-            <button class="back-to-map-btn text-black p-1" aria-label="マップに戻る">
+        <header class="flex items-center gap-4 px-6 py-4 border-b border-slate-700 sticky top-0 bg-slate-900 z-10">
+            <button class="back-to-map-btn" aria-label="マップに戻る">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h1 class="text-lg font-bold text-center flex-1 pr-8">通知機能</h1>
         </header>
-
-        <div class="p-6 max-w-2xl mx-auto w-full text-center text-slate-500 pt-20">
+        <div class="p-6 max-w-2xl mx-auto w-full text-center text-slate-400 pt-20">
             （通知画面のデザインは準備中です）
         </div>
     </section>
 
     <!-- ⚙️ スクリプト -->
     <script>
+        let map;
         let userMarker = null;
         let isInitialPositionSet = false;
-        let isInsideAllowedZone = false;
 
+        // 🟡 従来の円領域（一様円）設定データ
         const allowedZones = [
-            { id: 'west', center: [35.3172, 139.3875], radius: 400, color: '#eab308', popup: "<strong>西側エリア</strong><br>ゴミ量: 中" },
-            { id: 'east', center: [35.3168, 139.4010], radius: 600, color: '#ef4444', popup: "<strong>東側エリア</strong><br>ゴミ量: 多 (優先回収エリア)" }
+            { id: 'west', name: '西側エリア', center: [35.3172, 139.3875], radius: 400, color: '#eab308', popup: "<strong>西側エリア</strong><br>ゴミ量: 中" },
+            { id: 'east', name: '東側エリア', center: [35.3168, 139.4010], radius: 600, color: '#ef4444', popup: "<strong>東側エリア</strong><br>ゴミ量: 多 (優先回収エリア)" }
         ];
 
+        // 🔷 今回追加した全31エリアの海岸ポリゴンデータ
+        const coastalZonesGeoJSON = {
+            "type": "FeatureCollection",
+            "features": [
+                { "type": "Feature", "properties": { "id": 1, "name": "エリア 1" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141753, 35.150004], [139.142071, 35.149952], [139.141416, 35.151909], [139.141159, 35.151839], [139.141753, 35.150004]]] } },
+                { "type": "Feature", "properties": { "id": 2, "name": "エリア 2" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141416, 35.151909], [139.142071, 35.149952], [139.143242, 35.150771], [139.142436, 35.152347], [139.141416, 35.151909]]] } },
+                { "type": "Feature", "properties": { "id": 3, "name": "エリア 3" }, "geometry": { "type": "Polygon", "coordinates": [[[139.142436, 35.152347], [139.143242, 35.150771], [139.144186, 35.151419], [139.143521, 35.153022], [139.142436, 35.152347]]] } },
+                { "type": "Feature", "properties": { "id": 4, "name": "エリア 4" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143521, 35.153022], [139.144186, 35.151419], [139.144572, 35.151752], [139.144465, 35.152331], [139.144980, 35.152839], [139.144637, 35.153400], [139.144004, 35.153409], [139.143521, 35.153022]]] } },
+                { "type": "Feature", "properties": { "id": 5, "name": "エリア 5" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143521, 35.153022], [139.144004, 35.153409], [139.143500, 35.153600], [139.143521, 35.153022]]] } },
+                { "type": "Feature", "properties": { "id": 6, "name": "エリア 6" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143500, 35.153600], [139.144004, 35.153409], [139.144500, 35.154000], [139.143800, 35.154200], [139.143500, 35.153600]]] } },
+                { "type": "Feature", "properties": { "id": 7, "name": "エリア 7" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143800, 35.154200], [139.144500, 35.154000], [139.144900, 35.154800], [139.144100, 35.155000], [139.143800, 35.154200]]] } },
+                { "type": "Feature", "properties": { "id": 8, "name": "エリア 8" }, "geometry": { "type": "Polygon", "coordinates": [[[139.144100, 35.155000], [139.144900, 35.154800], [139.144560, 35.154004], [139.144222, 35.153938], [139.144100, 35.155000]]] } },
+                { "type": "Feature", "properties": { "id": 9, "name": "エリア 9" }, "geometry": { "type": "Polygon", "coordinates": [[[139.144222, 35.153938], [139.144560, 35.154004], [139.144367, 35.156429], [139.144029, 35.156398], [139.144222, 35.153938]]] } },
+                { "type": "Feature", "properties": { "id": 10, "name": "エリア 10" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143895, 35.156644], [139.143675, 35.156587], [139.143584, 35.156995], [139.143793, 35.157025], [139.143895, 35.156644]]] } },
+                { "type": "Feature", "properties": { "id": 11, "name": "エリア 11" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143375, 35.157447], [139.143723, 35.157363], [139.143814, 35.157740], [139.143525, 35.157762], [139.143375, 35.157447]]] } },
+                { "type": "Feature", "properties": { "id": 12, "name": "エリア 12" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141636, 35.160841], [139.141508, 35.160556], [139.139995, 35.161315], [139.140424, 35.161477], [139.141636, 35.160841]]] } },
+                { "type": "Feature", "properties": { "id": 13, "name": "エリア 13" }, "geometry": { "type": "Polygon", "coordinates": [[[139.139995, 35.161402], [139.139829, 35.162499], [139.140124, 35.162968], [139.140376, 35.162964], [139.140129, 35.162429], [139.140472, 35.161508], [139.139995, 35.161402]]] } },
+                { "type": "Feature", "properties": { "id": 14, "name": "エリア 14" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141808, 35.164735], [139.142060, 35.164494], [139.145531, 35.167774], [139.145316, 35.167985], [139.141808, 35.164735]]] } },
+                { "type": "Feature", "properties": { "id": 15, "name": "エリア 15" }, "geometry": { "type": "Polygon", "coordinates": [[[139.145472, 35.168213], [139.145064, 35.168134], [139.142967, 35.172835], [139.143525, 35.172861], [139.145472, 35.168213]]] } },
+                { "type": "Feature", "properties": { "id": 16, "name": "エリア 16" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143053, 35.172778], [139.143353, 35.172936], [139.142902, 35.173615], [139.142527, 35.173532], [139.143053, 35.172778]]] } },
+                { "type": "Feature", "properties": { "id": 17, "name": "エリア 17" }, "geometry": { "type": "Polygon", "coordinates": [[[139.142554, 35.173545], [139.142661, 35.173729], [139.141030, 35.174606], [139.141223, 35.174817], [139.142554, 35.173545]]] } },
+                { "type": "Feature", "properties": { "id": 18, "name": "エリア 18" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141164, 35.174786], [139.141057, 35.174659], [139.138885, 35.175882], [139.139013, 35.175983], [139.141164, 35.174786]]] } },
+                { "type": "Feature", "properties": { "id": 19, "name": "エリア 19" }, "geometry": { "type": "Polygon", "coordinates": [[[139.138654, 35.175966], [139.138831, 35.176031], [139.138445, 35.177382], [139.138101, 35.177338], [139.138654, 35.175966]]] } },
+                { "type": "Feature", "properties": { "id": 20, "name": "エリア 20" }, "geometry": { "type": "Polygon", "coordinates": [[[139.137554, 35.177654], [139.135720, 35.180938], [139.136154, 35.181096], [139.138101, 35.177790], [139.137554, 35.177654]]] } },
+                { "type": "Feature", "properties": { "id": 21, "name": "エリア 21" }, "geometry": { "type": "Polygon", "coordinates": [[[139.135789, 35.181135], [139.136138, 35.181166], [139.135977, 35.182600], [139.135618, 35.182679], [139.135789, 35.181135]]] } },
+                { "type": "Feature", "properties": { "id": 22, "name": "エリア 22" }, "geometry": { "type": "Polygon", "coordinates": [[[139.135935, 35.182705], [139.135600, 35.182721], [139.136633, 35.185089], [139.136868, 35.184979], [139.135935, 35.182705]]] } },
+                { "type": "Feature", "properties": { "id": 23, "name": "エリア 23" }, "geometry": { "type": "Polygon", "coordinates": [[[139.136868, 35.184979], [139.136660, 35.185116], [139.139127, 35.187423], [139.139416, 35.187210], [139.136868, 35.184979]]] } },
+                { "type": "Feature", "properties": { "id": 24, "name": "エリア 24" }, "geometry": { "type": "Polygon", "coordinates": [[[139.139503, 35.187210], [139.139168, 35.187363], [139.139798, 35.189374], [139.140227, 35.189670], [139.139503, 35.187210]]] } },
+                { "type": "Feature", "properties": { "id": 25, "name": "エリア 25" }, "geometry": { "type": "Polygon", "coordinates": [[[139.140227, 35.189670], [139.139825, 35.189522], [139.138303, 35.191292], [139.138584, 35.191457], [139.140227, 35.189670]]] } },
+                { "type": "Feature", "properties": { "id": 26, "name": "エリア 26" }, "geometry": { "type": "Polygon", "coordinates": [[[139.138363, 35.191298], [139.139503, 35.192273], [139.139261, 35.192476], [139.137820, 35.191544], [139.138363, 35.191298]]] } },
+                { "type": "Feature", "properties": { "id": 27, "name": "エリア 27" }, "geometry": { "type": "Polygon", "coordinates": [[[139.137833, 35.191462], [139.138142, 35.191566], [139.137719, 35.192334], [139.137384, 35.192350], [139.137833, 35.191462]]] } },
+                { "type": "Feature", "properties": { "id": 28, "name": "エリア 28" }, "geometry": { "type": "Polygon", "coordinates": [[[139.137416, 35.192496], [139.137718, 35.192496], [139.138388, 35.194469], [139.138087, 35.194458], [139.137416, 35.192496]]] } },
+                { "type": "Feature", "properties": { "id": 29, "name": "エリア 29" }, "geometry": { "type": "Polygon", "coordinates": [[[139.138127, 35.194469], [139.138422, 35.194507], [139.138536, 35.196814], [139.138134, 35.196841], [139.138127, 35.194469]]] } },
+                { "type": "Feature", "properties": { "id": 30, "name": "エリア 30" }, "geometry": { "type": "Polygon", "coordinates": [[[139.138214, 35.196929], [139.138509, 35.196956], [139.138254, 35.199208], [139.137771, 35.199236], [139.138214, 35.196929]]] } },
+                { "type": "Feature", "properties": { "id": 31, "name": "エリア 31" }, "geometry": { "type": "Polygon", "coordinates": [[[139.137731, 35.199384], [139.138268, 35.199307], [139.141486, 35.203575], [139.140648, 35.203921], [139.137731, 35.199384]]] } }
+            ]
+        };
+
         function initMap() {
-            const defaultLatLng = [35.2100, 139.6500];
+            const defaultLatLng = [35.1750, 139.1390];
             
             map = L.map('leaflet-map', {
                 zoomControl: false, 
@@ -132,11 +269,13 @@
 
             L.control.zoom({ position: 'bottomright' }).addTo(map);
 
+            // 国土地理院 シームレス写真タイル
             L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg", {
                 maxNativeZoom: 18,
                 minZoom: 10
             }).addTo(map);
 
+            // 🟡 一様円（allowedZones）の描画表示
             allowedZones.forEach(z => {
                 L.circle(z.center, {
                     radius: z.radius,
@@ -147,6 +286,7 @@
                 }).addTo(map).bindPopup(z.popup);
             });
 
+            // ⚠️ 注射器発見要注意区域（パープル円＆アイコン）
             L.circle([35.3168, 139.3985], {
                 radius: 200, color: '#a855f7', fillColor: '#a855f7', fillOpacity: 0.6, weight: 2
             }).addTo(map).bindPopup("<strong>注射器発見要注意区域</strong>");
@@ -160,107 +300,76 @@
                 })
             }).addTo(map);
 
-            loadGeoJSONOnMap();
+            // 🔷 全31エリアの海岸ポリゴンの描画表示
+            const polygonLayer = L.geoJSON(coastalZonesGeoJSON, {
+                style: function(feature) {
+                    return {
+                        color: '#06b6d4',      // シアン系枠線
+                        fillColor: '#0891b2',  // 塗りつぶし
+                        fillOpacity: 0.35,
+                        weight: 2
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    const props = feature.properties;
+                    layer.bindPopup(`
+                        <div class="p-1 text-slate-900">
+                            <strong class="text-sm font-bold">${props.name}</strong><br>
+                            <span class="text-xs text-slate-600">海岸管理ジオフェンス区域</span>
+                        </div>
+                    `);
+                }
+            }).addTo(map);
 
-            window.loadGarbagePostsOnMap?.(map);
-            
+            // 全エリアが収まるように表示範囲を調整
+            if (polygonLayer.getBounds().isValid()) {
+                map.fitBounds(polygonLayer.getBounds(), { padding: [30, 30] });
+            }
+
+            loadGeoJSONOnMap();
             startGeolocationWatch();
 
             setTimeout(() => { map.invalidateSize(); }, 300);
         }
 
-        // JSONファイル（locations.json）からGeoJSONデータを読み込みマップ上に表示
-        
-function loadGeoJSONOnMap() {
-    const customTrashIcon = L.divIcon({
-        className: 'custom-trash-icon',
-        html: '<div class="bg-emerald-600 text-white p-2 rounded-full border-2 border-white shadow-md text-xs flex items-center justify-center w-8 h-8">🗑️</div>',
-        iconSize: [32, 32],
-        iconAnchor: [16, 16]
-    });
+        // 外部の Untitled.geojson 読み込み（ごみ置き場ピン等）
+        function loadGeoJSONOnMap() {
+            const customTrashIcon = L.divIcon({
+                className: 'custom-trash-icon',
+                html: '<div class="bg-emerald-600 text-white p-2 rounded-full border-2 border-white shadow-md text-xs flex items-center justify-center w-8 h-8">🗑️</div>',
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
+            });
 
-    // GeoJSONのマーカーを地図に追加する共通処理
-    function addGeoJSONLayer(data, sourceName) {
-        if (!data || !data.features) {
-            console.error(`${sourceName}: GeoJSON形式ではありません。`);
-            return;
+            fetch('Untitled.geojson')
+                .then(response => response.ok ? response.json() : null)
+                .then(data => {
+                    if (!data) return;
+                    L.geoJSON(data, {
+                        pointToLayer: (feature, latlng) => L.marker(latlng, { icon: customTrashIcon }),
+                        onEachFeature: (feature, layer) => {
+                            const props = feature.properties || {};
+                            const name = props.name || 'ごみ置き場';
+                            let description = props.description ? (typeof props.description === 'object' ? (props.description.value || '') : props.description) : '詳細情報なし';
+                            layer.bindPopup(`
+                                <div class="p-1 max-w-xs text-slate-900">
+                                    <strong class="text-base text-emerald-800">${name}</strong>
+                                    <div class="mt-2 text-xs leading-relaxed overflow-hidden">${description}</div>
+                                </div>
+                            `);
+                        }
+                    }).addTo(map);
+                })
+                .catch(error => console.warn('Untitled.geojsonの読み込みをスキップしました:', error));
         }
 
-        const layer = L.geoJSON(data, {
-            pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {
-                    icon: customTrashIcon
-                });
-            },
-            onEachFeature: function (feature, layer) {
-                const props = feature.properties || {};
-                const name = props.name || 'ごみ置き場';
-                const description =
-                    props.description || '詳細情報なし';
-
-                const popupContent = document.createElement('div');
-                popupContent.className = 'p-1 max-w-xs text-slate-900';
-
-                const title = document.createElement('strong');
-                title.className = 'text-base text-emerald-800';
-                title.textContent = name;
-
-                const detail = document.createElement('div');
-                detail.className =
-                    'mt-2 text-xs leading-relaxed overflow-hidden';
-                detail.textContent = description;
-
-                popupContent.appendChild(title);
-                popupContent.appendChild(detail);
-
-                layer.bindPopup(popupContent);
-            }
-        });
-
-        layer.addTo(map);
-
-        console.log(
-            `${sourceName}から追加したマーカー数：`,
-            layer.getLayers().length
-        );
-    }
-
-    // 既存のごみ置き場データ
-    fetch('/locations.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => addGeoJSONLayer(data, 'locations.json'))
-        .catch(error => {
-            console.error('locations.jsonの読み込み失敗:', error);
-        });
-
-    // 追加のごみ置き場データ
-    fetch('/app/Untitled.geojson')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => addGeoJSONLayer(data, 'Untitled.geojson'))
-        .catch(error => {
-            console.error('Untitled.geojsonの読み込み失敗:', error);
-        });
-}
-
-
-        
+        // 📍 現在地判定（一様円 ＋ 海岸ポリゴンの両方で判定）
         function startGeolocationWatch() {
             if (!navigator.geolocation) {
                 updateStatusBadge(false, "Geolocation非対応ブラウザ");
                 return;
             }
 
-            
             const userIcon = L.divIcon({
                 className: 'custom-user-icon',
                 html: '<div class="relative"><div class="w-5 h-5 bg-blue-500 rounded-full border-2 border-white shadow-md"></div><div class="absolute -inset-1 rounded-full bg-blue-500/40 animate-ping"></div></div>',
@@ -273,7 +382,6 @@ function loadGeoJSONOnMap() {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
 
-                    
                     if (!userMarker) {
                         userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map).bindPopup("現在地");
                     } else {
@@ -285,24 +393,33 @@ function loadGeoJSONOnMap() {
                         isInitialPositionSet = true;
                     }
 
-                    
                     const userPoint = turf.point([lng, lat]);
-                    isInsideAllowedZone = false;
+                    let detectedZoneName = null;
 
+                    // 1️⃣ 一様円（allowedZones）のエリア内チェック
                     for (const zone of allowedZones) {
                         const zoneCenter = turf.point([zone.center[1], zone.center[0]]);
                         const distanceMeters = turf.distance(userPoint, zoneCenter, { units: 'meters' });
-                        
                         if (distanceMeters <= zone.radius) {
-                            isInsideAllowedZone = true;
+                            detectedZoneName = zone.name;
                             break;
                         }
                     }
 
-                    
-                    if (isInsideAllowedZone) {
-                        updateStatusBadge(true, "エリア内: DB登録可能");
-                        savePositionToDatabase(lat, lng);
+                    // 2️⃣ 31エリア海岸ポリゴンのエリア内チェック（一様円で未検出の場合）
+                    if (!detectedZoneName) {
+                        for (const feature of coastalZonesGeoJSON.features) {
+                            if (turf.booleanPointInPolygon(userPoint, feature)) {
+                                detectedZoneName = feature.properties.name;
+                                break;
+                            }
+                        }
+                    }
+
+                    // 🎯 判定結果の更新
+                    if (detectedZoneName) {
+                        updateStatusBadge(true, `${detectedZoneName}: DB登録可能`);
+                        savePositionToDatabase(lat, lng, detectedZoneName);
                     } else {
                         updateStatusBadge(false, "エリア外: DB反映除外");
                     }
@@ -314,7 +431,6 @@ function loadGeoJSONOnMap() {
             );
         }
 
-        
         function updateStatusBadge(isInside, message) {
             const dot = document.getElementById('geo-status-dot');
             const text = document.getElementById('geo-status-text');
@@ -327,9 +443,8 @@ function loadGeoJSONOnMap() {
             }
         }
 
-        
-        function savePositionToDatabase(lat, lng) {
-            console.log(`[DB反映実行] 緯度=${lat}, 経度=${lng}`);
+        function savePositionToDatabase(lat, lng, zoneName) {
+            console.log(`[DB反映実行] 判定エリア=${zoneName}, 緯度=${lat}, 経度=${lng}`);
         }
 
         // --- UI制御 ---
@@ -372,6 +487,5 @@ function loadGeoJSONOnMap() {
         window.addEventListener('DOMContentLoaded', initMap);
         window.addEventListener('resize', () => { if (map) map.invalidateSize(); });
     </script>
-    <script type="module" src="./trash-list.js"></script>
 </body>
 </html>
