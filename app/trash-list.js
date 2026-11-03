@@ -102,10 +102,21 @@ async function loadTrashPosts() {
 
                     <div class="flex-1 min-w-0 space-y-2 text-slate-900">
                         <p>
-                            <strong>投稿日時：</strong>
-                            ${escapeHtml(formatDate(post.postedAt))}
+                            <strong>撮影日時：</strong>
+                            ${escapeHtml(formatDate(post.postedAt))}    
                         </p>
 
+                        <p>
+                        　<strong>経過時間：</strong>
+                          <span
+                        　　class="elapsed-time"
+                        　　data-posted-at="${escapeHtml(post.postedAt ?? "")}"
+                          >
+                          　　${escapeHtml(formatElapsedTime(post.postedAt))}
+                         </span>
+                        
+                        </p>
+                        
                         <p>
                             <strong>投稿者：</strong>
                             ${escapeHtml(post.user?.displayName || "投稿者不明")}
@@ -132,6 +143,8 @@ async function loadTrashPosts() {
                 </article>
             `;
         }).join("");
+
+        updateElapsedTimes();
 
     } catch (error) {
         console.error("投稿一覧の取得に失敗しました:", error);
@@ -250,8 +263,14 @@ async function loadGarbagePostsOnMap(map) {
             popupContent.appendChild(title);
 
             const date = document.createElement("p");
-            date.textContent = `投稿日時：${formatDate(post.postedAt)}`;
+            date.textContent = `撮影日時：${formatDate(post.postedAt)}`;
             popupContent.appendChild(date);
+
+            const elapsed = document.createElement("p");
+            elapsed.className = "elapsed-time";
+            elapsed.dataset.postedAt = post.postedAt ?? "";
+            elapsed.textContent = formatElapsedTime(post.postedAt);
+            popupContent.appendChild(elapsed);
 
             const poster = document.createElement("p");
             poster.textContent = `投稿者：${post.user?.displayName || "投稿者不明"}`;
@@ -321,3 +340,9 @@ window.loadGarbagePostsOnMap = loadGarbagePostsOnMap;
  */
 document.getElementById("nav-trash-btn")
     ?.addEventListener("click", loadTrashPosts);
+
+
+/**
+ * 経過時間を1分ごとに更新
+ */
+setInterval(updateElapsedTimes, 60000);
