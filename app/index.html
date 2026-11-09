@@ -10,7 +10,7 @@
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- Turf.js (円およびポリゴン判定用) -->
+    <!-- Turf.js (円およびポリゴン/ライン判定用) -->
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -213,7 +213,6 @@
     <script>
         let map;
         let userMarker = null;
-        let isInitialPositionSet = false;
 
         // 🟡 従来の円領域（一様円）設定データ
         const allowedZones = [
@@ -221,58 +220,23 @@
             { id: 'east', name: '東側エリア', center: [35.3168, 139.4010], radius: 600, color: '#ef4444', popup: "<strong>東側エリア</strong><br>ゴミ量: 多 (優先回収エリア)" }
         ];
 
-        // 🔷 今回追加した全31エリアの海岸ポリゴンデータ
-        const coastalZonesGeoJSON = {
-            "type": "FeatureCollection",
-            "features": [
-                { "type": "Feature", "properties": { "id": 1, "name": "エリア 1" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141753, 35.150004], [139.142071, 35.149952], [139.141416, 35.151909], [139.141159, 35.151839], [139.141753, 35.150004]]] } },
-                { "type": "Feature", "properties": { "id": 2, "name": "エリア 2" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141416, 35.151909], [139.142071, 35.149952], [139.143242, 35.150771], [139.142436, 35.152347], [139.141416, 35.151909]]] } },
-                { "type": "Feature", "properties": { "id": 3, "name": "エリア 3" }, "geometry": { "type": "Polygon", "coordinates": [[[139.142436, 35.152347], [139.143242, 35.150771], [139.144186, 35.151419], [139.143521, 35.153022], [139.142436, 35.152347]]] } },
-                { "type": "Feature", "properties": { "id": 4, "name": "エリア 4" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143521, 35.153022], [139.144186, 35.151419], [139.144572, 35.151752], [139.144465, 35.152331], [139.144980, 35.152839], [139.144637, 35.153400], [139.144004, 35.153409], [139.143521, 35.153022]]] } },
-                { "type": "Feature", "properties": { "id": 5, "name": "エリア 5" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143521, 35.153022], [139.144004, 35.153409], [139.143500, 35.153600], [139.143521, 35.153022]]] } },
-                { "type": "Feature", "properties": { "id": 6, "name": "エリア 6" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143500, 35.153600], [139.144004, 35.153409], [139.144500, 35.154000], [139.143800, 35.154200], [139.143500, 35.153600]]] } },
-                { "type": "Feature", "properties": { "id": 7, "name": "エリア 7" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143800, 35.154200], [139.144500, 35.154000], [139.144900, 35.154800], [139.144100, 35.155000], [139.143800, 35.154200]]] } },
-                { "type": "Feature", "properties": { "id": 8, "name": "エリア 8" }, "geometry": { "type": "Polygon", "coordinates": [[[139.144100, 35.155000], [139.144900, 35.154800], [139.144560, 35.154004], [139.144222, 35.153938], [139.144100, 35.155000]]] } },
-                { "type": "Feature", "properties": { "id": 9, "name": "エリア 9" }, "geometry": { "type": "Polygon", "coordinates": [[[139.144222, 35.153938], [139.144560, 35.154004], [139.144367, 35.156429], [139.144029, 35.156398], [139.144222, 35.153938]]] } },
-                { "type": "Feature", "properties": { "id": 10, "name": "エリア 10" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143895, 35.156644], [139.143675, 35.156587], [139.143584, 35.156995], [139.143793, 35.157025], [139.143895, 35.156644]]] } },
-                { "type": "Feature", "properties": { "id": 11, "name": "エリア 11" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143375, 35.157447], [139.143723, 35.157363], [139.143814, 35.157740], [139.143525, 35.157762], [139.143375, 35.157447]]] } },
-                { "type": "Feature", "properties": { "id": 12, "name": "エリア 12" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141636, 35.160841], [139.141508, 35.160556], [139.139995, 35.161315], [139.140424, 35.161477], [139.141636, 35.160841]]] } },
-                { "type": "Feature", "properties": { "id": 13, "name": "エリア 13" }, "geometry": { "type": "Polygon", "coordinates": [[[139.139995, 35.161402], [139.139829, 35.162499], [139.140124, 35.162968], [139.140376, 35.162964], [139.140129, 35.162429], [139.140472, 35.161508], [139.139995, 35.161402]]] } },
-                { "type": "Feature", "properties": { "id": 14, "name": "エリア 14" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141808, 35.164735], [139.142060, 35.164494], [139.145531, 35.167774], [139.145316, 35.167985], [139.141808, 35.164735]]] } },
-                { "type": "Feature", "properties": { "id": 15, "name": "エリア 15" }, "geometry": { "type": "Polygon", "coordinates": [[[139.145472, 35.168213], [139.145064, 35.168134], [139.142967, 35.172835], [139.143525, 35.172861], [139.145472, 35.168213]]] } },
-                { "type": "Feature", "properties": { "id": 16, "name": "エリア 16" }, "geometry": { "type": "Polygon", "coordinates": [[[139.143053, 35.172778], [139.143353, 35.172936], [139.142902, 35.173615], [139.142527, 35.173532], [139.143053, 35.172778]]] } },
-                { "type": "Feature", "properties": { "id": 17, "name": "エリア 17" }, "geometry": { "type": "Polygon", "coordinates": [[[139.142554, 35.173545], [139.142661, 35.173729], [139.141030, 35.174606], [139.141223, 35.174817], [139.142554, 35.173545]]] } },
-                { "type": "Feature", "properties": { "id": 18, "name": "エリア 18" }, "geometry": { "type": "Polygon", "coordinates": [[[139.141164, 35.174786], [139.141057, 35.174659], [139.138885, 35.175882], [139.139013, 35.175983], [139.141164, 35.174786]]] } },
-                { "type": "Feature", "properties": { "id": 19, "name": "エリア 19" }, "geometry": { "type": "Polygon", "coordinates": [[[139.138654, 35.175966], [139.138831, 35.176031], [139.138445, 35.177382], [139.138101, 35.177338], [139.138654, 35.175966]]] } },
-                { "type": "Feature", "properties": { "id": 20, "name": "エリア 20" }, "geometry": { "type": "Polygon", "coordinates": [[[139.137554, 35.177654], [139.135720, 35.180938], [139.136154, 35.181096], [139.138101, 35.177790], [139.137554, 35.177654]]] } },
-                { "type": "Feature", "properties": { "id": 21, "name": "エリア 21" }, "geometry": { "type": "Polygon", "coordinates": [[[139.135789, 35.181135], [139.136138, 35.181166], [139.135977, 35.182600], [139.135618, 35.182679], [139.135789, 35.181135]]] } },
-                { "type": "Feature", "properties": { "id": 22, "name": "エリア 22" }, "geometry": { "type": "Polygon", "coordinates": [[[139.135935, 35.182705], [139.135600, 35.182721], [139.136633, 35.185089], [139.136868, 35.184979], [139.135935, 35.182705]]] } },
-                { "type": "Feature", "properties": { "id": 23, "name": "エリア 23" }, "geometry": { "type": "Polygon", "coordinates": [[[139.136868, 35.184979], [139.136660, 35.185116], [139.139127, 35.187423], [139.139416, 35.187210], [139.136868, 35.184979]]] } },
-                { "type": "Feature", "properties": { "id": 24, "name": "エリア 24" }, "geometry": { "type": "Polygon", "coordinates": [[[139.139503, 35.187210], [139.139168, 35.187363], [139.139798, 35.189374], [139.140227, 35.189670], [139.139503, 35.187210]]] } },
-                { "type": "Feature", "properties": { "id": 25, "name": "エリア 25" }, "geometry": { "type": "Polygon", "coordinates": [[[139.140227, 35.189670], [139.139825, 35.189522], [139.138303, 35.191292], [139.138584, 35.191457], [139.140227, 35.189670]]] } },
-                { "type": "Feature", "properties": { "id": 26, "name": "エリア 26" }, "geometry": { "type": "Polygon", "coordinates": [[[139.138363, 35.191298], [139.139503, 35.192273], [139.139261, 35.192476], [139.137820, 35.191544], [139.138363, 35.191298]]] } },
-                { "type": "Feature", "properties": { "id": 27, "name": "エリア 27" }, "geometry": { "type": "Polygon", "coordinates": [[[139.137833, 35.191462], [139.138142, 35.191566], [139.137719, 35.192334], [139.137384, 35.192350], [139.137833, 35.191462]]] } },
-                { "type": "Feature", "properties": { "id": 28, "name": "エリア 28" }, "geometry": { "type": "Polygon", "coordinates": [[[139.137416, 35.192496], [139.137718, 35.192496], [139.138388, 35.194469], [139.138087, 35.194458], [139.137416, 35.192496]]] } },
-                { "type": "Feature", "properties": { "id": 29, "name": "エリア 29" }, "geometry": { "type": "Polygon", "coordinates": [[[139.138127, 35.194469], [139.138422, 35.194507], [139.138536, 35.196814], [139.138134, 35.196841], [139.138127, 35.194469]]] } },
-                { "type": "Feature", "properties": { "id": 30, "name": "エリア 30" }, "geometry": { "type": "Polygon", "coordinates": [[[139.138214, 35.196929], [139.138509, 35.196956], [139.138254, 35.199208], [139.137771, 35.199236], [139.138214, 35.196929]]] } },
-                { "type": "Feature", "properties": { "id": 31, "name": "エリア 31" }, "geometry": { "type": "Polygon", "coordinates": [[[139.137731, 35.199384], [139.138268, 35.199307], [139.141486, 35.203575], [139.140648, 35.203921], [139.137731, 35.199384]]] } }
-            ]
-        };
+        // 🔷 外部GeoJSONデータ保存用変数
+        let loadedCoastalZones = null;
 
         function initMap() {
-            const defaultLatLng = [35.1750, 139.1390];
+            const defaultLatLng = [35.2500, 139.5500];
             
             map = L.map('leaflet-map', {
                 zoomControl: false, 
                 attributionControl: false 
-            }).setView(defaultLatLng, 12);
+            }).setView(defaultLatLng, 11);
 
             L.control.zoom({ position: 'bottomright' }).addTo(map);
 
             // 国土地理院 シームレス写真タイル
             L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg", {
                 maxNativeZoom: 18,
-                minZoom: 10
+                minZoom: 9
             }).addTo(map);
 
             // 🟡 一様円（allowedZones）の描画表示
@@ -300,31 +264,40 @@
                 })
             }).addTo(map);
 
-            // 🔷 全31エリアの海岸ポリゴンの描画表示
-            const polygonLayer = L.geoJSON(coastalZonesGeoJSON, {
-                style: function(feature) {
-                    return {
-                        color: '#06b6d4',      // シアン系枠線
-                        fillColor: '#0891b2',  // 塗りつぶし
-                        fillOpacity: 0.35,
-                        weight: 2
-                    };
-                },
-                onEachFeature: function(feature, layer) {
-                    const props = feature.properties;
-                    layer.bindPopup(`
-                        <div class="p-1 text-slate-900">
-                            <strong class="text-sm font-bold">${props.name}</strong><br>
-                            <span class="text-xs text-slate-600">海岸管理ジオフェンス区域</span>
-                        </div>
-                    `);
-                }
-            }).addTo(map);
+            // 🔷 coastal_zones.geojson の読み込み・描画 ＆ エリア自動フィット
+            fetch('./coastal_zones.geojson')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    loadedCoastalZones = data;
+                    const polygonLayer = L.geoJSON(data, {
+                        style: function(feature) {
+                            return {
+                                color: '#06b6d4',      // シアン系枠線
+                                fillColor: '#0891b2',  // 塗りつぶしの色
+                                fillOpacity: 0.35,     // 透過表示
+                                weight: 2
+                            };
+                        },
+                        onEachFeature: function(feature, layer) {
+                            const id = feature.properties.id || '海岸エリア';
+                            layer.bindPopup(`
+                                <div class="p-1 text-slate-900">
+                                    <strong class="text-sm font-bold">${id}</strong><br>
+                                    <span class="text-xs text-slate-600">海岸管理ジオフェンス区域</span>
+                                </div>
+                            `);
+                        }
+                    }).addTo(map);
 
-            // 全エリアが収まるように表示範囲を調整
-            if (polygonLayer.getBounds().isValid()) {
-                map.fitBounds(polygonLayer.getBounds(), { padding: [30, 30] });
-            }
+                    // ★ 読み込み時、砂浜海岸データ全体にカメラを自動フィット
+                    if (polygonLayer.getBounds().isValid()) {
+                        map.fitBounds(polygonLayer.getBounds(), { padding: [50, 50] });
+                    }
+                })
+                .catch(error => console.error('海岸線 GeoJSON (coastal_zones.geojson) の読み込みに失敗しました:', error));
 
             loadGeoJSONOnMap();
             startGeolocationWatch();
@@ -363,7 +336,7 @@
                 .catch(error => console.warn('Untitled.geojsonの読み込みをスキップしました:', error));
         }
 
-        // 📍 現在地判定（一様円 ＋ 海岸ポリゴンの両方で判定）
+        // 📍 現在地判定（一様円 ＋ 砂浜バッファーエリアの両方で判定）
         function startGeolocationWatch() {
             if (!navigator.geolocation) {
                 updateStatusBadge(false, "Geolocation非対応ブラウザ");
@@ -388,10 +361,7 @@
                         userMarker.setLatLng([lat, lng]);
                     }
 
-                    if (!isInitialPositionSet) {
-                        map.setView([lat, lng], 15);
-                        isInitialPositionSet = true;
-                    }
+                    // ※ 現在地への強制ズーム移動（map.setView）は削除し、全体表示を優先させています
 
                     const userPoint = turf.point([lng, lat]);
                     let detectedZoneName = null;
@@ -406,12 +376,21 @@
                         }
                     }
 
-                    // 2️⃣ 31エリア海岸ポリゴンのエリア内チェック（一様円で未検出の場合）
-                    if (!detectedZoneName) {
-                        for (const feature of coastalZonesGeoJSON.features) {
-                            if (turf.booleanPointInPolygon(userPoint, feature)) {
-                                detectedZoneName = feature.properties.name;
-                                break;
+                    // 2️⃣ 読み込んだ coastal_zones.geojson (Polygon/MultiPolygon) のエリア内チェック
+                    if (!detectedZoneName && loadedCoastalZones && loadedCoastalZones.features) {
+                        for (const feature of loadedCoastalZones.features) {
+                            const geomType = feature.geometry.type;
+                            if (geomType === 'Polygon' || geomType === 'MultiPolygon') {
+                                if (turf.booleanPointInPolygon(userPoint, feature)) {
+                                    detectedZoneName = feature.properties.id || '砂浜エリア';
+                                    break;
+                                }
+                            } else if (geomType === 'LineString' || geomType === 'MultiLineString') {
+                                const distanceKm = turf.pointToLineDistance(userPoint, feature, { units: 'kilometers' });
+                                if (distanceKm <= 0.08) { // 80m以内
+                                    detectedZoneName = feature.properties.id || '海岸沿い';
+                                    break;
+                                }
                             }
                         }
                     }
