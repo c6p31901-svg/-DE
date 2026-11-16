@@ -1,3 +1,4 @@
+
 query ListUsers @auth(level: PUBLIC) {
   users {
     userId

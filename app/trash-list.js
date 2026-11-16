@@ -38,6 +38,11 @@ function escapeHtml(value) {
 /**
  * 日時を日本語形式にする
  */
+
+
+/**
+ * 日時を日本語形式にする
+ */
 function formatDate(value) {
     if (!value) return "日時不明";
 
@@ -47,6 +52,48 @@ function formatDate(value) {
         ? "日時不明"
         : date.toLocaleString("ja-JP");
 }
+
+
+/**
+ * 投稿日時から経過時間を計算する
+ */
+function formatElapsedTime(postedAt) {
+    if (!postedAt) return "日時不明";
+
+    const postedDate = new Date(postedAt);
+
+    if (Number.isNaN(postedDate.getTime())) {
+        return "日時不明";
+    }
+
+    const elapsed = Math.max(0, Date.now() - postedDate.getTime());
+
+    const minutes = Math.floor(elapsed / 60000);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+        return `${days}日${hours % 24}時間`;
+    }
+
+    if (hours > 0) {
+        return `${hours}時間${minutes % 60}分`;
+    }
+
+    return `${minutes}分`;
+}
+
+/**
+ * 表示中の経過時間を更新する
+ */
+function updateElapsedTimes() {
+    document.querySelectorAll(".elapsed-time").forEach(element => {
+        element.textContent = formatElapsedTime(
+            element.dataset.postedAt
+        );
+    });
+}
+
 
 /**
  * ごみ投稿一覧を表示する
@@ -100,10 +147,21 @@ async function loadTrashPosts() {
                         ${photo}
                     </div>
 
-                    <div class="flex-1 min-w-0 space-y-2 text-slate-900">
+                    <div class="flex-1 min-w-0 space-y-2 text-white">
                         <p>
-                            <strong>投稿日時：</strong>
+                            <strong>撮影日時：</strong>
                             ${escapeHtml(formatDate(post.postedAt))}
+                        </p>
+
+                        <p>
+                            <strong>経過時間：</strong>
+                          <span
+                            class="elapsed-time"
+                            data-posted-at="${escapeHtml(post.postedAt ?? "")}"
+                          >
+                          ${escapeHtml(formatElapsedTime(post.postedAt))}
+                         </span>
+                        
                         </p>
 
                         <p>
@@ -132,6 +190,8 @@ async function loadTrashPosts() {
                 </article>
             `;
         }).join("");
+
+        updateElapsedTimes();
 
     } catch (error) {
         console.error("投稿一覧の取得に失敗しました:", error);
@@ -250,8 +310,14 @@ async function loadGarbagePostsOnMap(map) {
             popupContent.appendChild(title);
 
             const date = document.createElement("p");
-            date.textContent = `投稿日時：${formatDate(post.postedAt)}`;
+            date.textContent = `撮影日時：${formatDate(post.postedAt)}`;
             popupContent.appendChild(date);
+
+            const elapsed = document.createElement("p");
+            elapsed.className = "elapsed-time";
+            elapsed.dataset.postedAt = post.postedAt ?? "";
+            elapsed.textContent = formatElapsedTime(post.postedAt);
+            popupContent.appendChild(elapsed);
 
             const poster = document.createElement("p");
             poster.textContent = `投稿者：${post.user?.displayName || "投稿者不明"}`;
@@ -321,3 +387,9 @@ window.loadGarbagePostsOnMap = loadGarbagePostsOnMap;
  */
 document.getElementById("nav-trash-btn")
     ?.addEventListener("click", loadTrashPosts);
+
+
+/**
+ * 経過時間を1分ごとに更新
+ */
+setInterval(updateElapsedTimes, 60000);

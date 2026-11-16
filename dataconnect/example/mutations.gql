@@ -1,3 +1,4 @@
+
 mutation CreateUser(
   $lineUserId: String
   $displayName: String
@@ -34,7 +35,7 @@ mutation CreateGarbagePost(
   $hazardous: Boolean
   $aiResult: String
   $collectionStatus: String
-) @auth(level: PUBLIC) {
+) @auth(level: USER) {
   garbagePost_insert(
     data: {
       user: { userId: $userId }
@@ -46,6 +47,32 @@ mutation CreateGarbagePost(
       hazardous: $hazardous
       aiResult: $aiResult
       collectionStatus: $collectionStatus
+    }
+  )
+}
+
+mutation DeleteGarbagePost(
+  $postId: UUID!
+) @auth(expr: "auth.uid == 'hRlJwg9MjVcKsGm4ugvb37oxRlt2'") @transaction {
+  collectionStatus_deleteMany(
+    where: {
+      post: {
+        postId: { eq: $postId }
+      }
+    }
+  )
+
+  notification_deleteMany(
+    where: {
+      post: {
+        postId: { eq: $postId }
+      }
+    }
+  )
+
+  garbagePost_delete(
+    key: {
+      postId: $postId
     }
   )
 }

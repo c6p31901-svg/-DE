@@ -21,6 +21,7 @@ This README will guide you through the process of using the generated JavaScript
   - [*CreateUser*](#createuser)
   - [*CreateGarbageCategory*](#creategarbagecategory)
   - [*CreateGarbagePost*](#creategarbagepost)
+  - [*DeleteGarbagePost*](#deletegarbagepost)
 
 # Accessing the connector
 A connector is a collection of Queries and Mutations. One SDK is generated for each connector - this SDK is generated for the connector `example`. You can find more information about connectors in the [Data Connect documentation](https://firebase.google.com/docs/data-connect#how-does).
@@ -1354,6 +1355,125 @@ console.log(data.garbagePost_insert);
 executeMutation(ref).then((response) => {
   const data = response.data;
   console.log(data.garbagePost_insert);
+});
+```
+
+## DeleteGarbagePost
+You can execute the `DeleteGarbagePost` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+deleteGarbagePost(vars: DeleteGarbagePostVariables): MutationPromise<DeleteGarbagePostData, DeleteGarbagePostVariables>;
+
+interface DeleteGarbagePostRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteGarbagePostVariables): MutationRef<DeleteGarbagePostData, DeleteGarbagePostVariables>;
+}
+export const deleteGarbagePostRef: DeleteGarbagePostRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+deleteGarbagePost(dc: DataConnect, vars: DeleteGarbagePostVariables): MutationPromise<DeleteGarbagePostData, DeleteGarbagePostVariables>;
+
+interface DeleteGarbagePostRef {
+  ...
+  (dc: DataConnect, vars: DeleteGarbagePostVariables): MutationRef<DeleteGarbagePostData, DeleteGarbagePostVariables>;
+}
+export const deleteGarbagePostRef: DeleteGarbagePostRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the deleteGarbagePostRef:
+```typescript
+const name = deleteGarbagePostRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `DeleteGarbagePost` mutation requires an argument of type `DeleteGarbagePostVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface DeleteGarbagePostVariables {
+  postId: UUIDString;
+}
+```
+### Return Type
+Recall that executing the `DeleteGarbagePost` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `DeleteGarbagePostData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface DeleteGarbagePostData {
+  collectionStatus_deleteMany: number;
+  notification_deleteMany: number;
+  garbagePost_delete?: GarbagePost_Key | null;
+}
+```
+### Using `DeleteGarbagePost`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, deleteGarbagePost, DeleteGarbagePostVariables } from '@dataconnect/generated';
+
+// The `DeleteGarbagePost` mutation requires an argument of type `DeleteGarbagePostVariables`:
+const deleteGarbagePostVars: DeleteGarbagePostVariables = {
+  postId: ..., 
+};
+
+// Call the `deleteGarbagePost()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await deleteGarbagePost(deleteGarbagePostVars);
+// Variables can be defined inline as well.
+const { data } = await deleteGarbagePost({ postId: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await deleteGarbagePost(dataConnect, deleteGarbagePostVars);
+
+console.log(data.collectionStatus_deleteMany);
+console.log(data.notification_deleteMany);
+console.log(data.garbagePost_delete);
+
+// Or, you can use the `Promise` API.
+deleteGarbagePost(deleteGarbagePostVars).then((response) => {
+  const data = response.data;
+  console.log(data.collectionStatus_deleteMany);
+  console.log(data.notification_deleteMany);
+  console.log(data.garbagePost_delete);
+});
+```
+
+### Using `DeleteGarbagePost`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, deleteGarbagePostRef, DeleteGarbagePostVariables } from '@dataconnect/generated';
+
+// The `DeleteGarbagePost` mutation requires an argument of type `DeleteGarbagePostVariables`:
+const deleteGarbagePostVars: DeleteGarbagePostVariables = {
+  postId: ..., 
+};
+
+// Call the `deleteGarbagePostRef()` function to get a reference to the mutation.
+const ref = deleteGarbagePostRef(deleteGarbagePostVars);
+// Variables can be defined inline as well.
+const ref = deleteGarbagePostRef({ postId: ..., });
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = deleteGarbagePostRef(dataConnect, deleteGarbagePostVars);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.collectionStatus_deleteMany);
+console.log(data.notification_deleteMany);
+console.log(data.garbagePost_delete);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.collectionStatus_deleteMany);
+  console.log(data.notification_deleteMany);
+  console.log(data.garbagePost_delete);
 });
 ```
 

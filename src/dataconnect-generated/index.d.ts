@@ -56,6 +56,16 @@ export interface CreateUserVariables {
   userType?: string | null;
 }
 
+export interface DeleteGarbagePostData {
+  collectionStatus_deleteMany: number;
+  notification_deleteMany: number;
+  garbagePost_delete?: GarbagePost_Key | null;
+}
+
+export interface DeleteGarbagePostVariables {
+  postId: UUIDString;
+}
+
 export interface GarbageCategory_Key {
   categoryId: UUIDString;
   __typename?: 'GarbageCategory_Key';
@@ -254,6 +264,18 @@ export const createGarbagePostRef: CreateGarbagePostRef;
 
 export function createGarbagePost(vars: CreateGarbagePostVariables): MutationPromise<CreateGarbagePostData, CreateGarbagePostVariables>;
 export function createGarbagePost(dc: DataConnect, vars: CreateGarbagePostVariables): MutationPromise<CreateGarbagePostData, CreateGarbagePostVariables>;
+
+interface DeleteGarbagePostRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteGarbagePostVariables): MutationRef<DeleteGarbagePostData, DeleteGarbagePostVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteGarbagePostVariables): MutationRef<DeleteGarbagePostData, DeleteGarbagePostVariables>;
+  operationName: string;
+}
+export const deleteGarbagePostRef: DeleteGarbagePostRef;
+
+export function deleteGarbagePost(vars: DeleteGarbagePostVariables): MutationPromise<DeleteGarbagePostData, DeleteGarbagePostVariables>;
+export function deleteGarbagePost(dc: DataConnect, vars: DeleteGarbagePostVariables): MutationPromise<DeleteGarbagePostData, DeleteGarbagePostVariables>;
 
 interface ListUsersRef {
   /* Allow users to create refs without passing in DataConnect */

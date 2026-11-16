@@ -1,22 +1,60 @@
-// 投稿マップ（アップロードされた地図コードの主要レイヤーを利用）
-import { initializeApp } from "firebase/app";
-import { getDataConnect } from "firebase/data-connect";
+
+import { auth, dataConnect } from "./firebase.js";
+
 import {
-  connectorConfig,
-  listGarbagePosts
+  onAuthStateChanged,
+  signOut
+} from "firebase/auth";
+
+import {
+  listGarbagePosts,
+  deleteGarbagePost
 } from "../../src/dataconnect-generated/esm/index.esm.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCYDC_CEmV1ElV6gFqph5ieGS9akQ8v9tg",
-  authDomain: "beach-cleanup-14fd4.firebaseapp.com",
-  projectId: "beach-cleanup-14fd4",
-  storageBucket: "beach-cleanup-14fd4.firebasestorage.app",
-  messagingSenderId: "415491442995",
-  appId: "1:415491442995:web:f354f5aceb67c4c5a75646"
-};
+// 管理者UID（複数人対応）
+const ADMIN_UIDS = [
+  "hRlJwg9MjVcKsGm4ugvb37oxRlt2",
+  "uRg1XoqhezLs4zu70SynLuBfUpD2"
+];
 
-const firebaseApp = initializeApp(firebaseConfig);
-const dataConnect = getDataConnect(firebaseApp, connectorConfig);
+// ログイン状態を確認
+
+// ログイン状態を確認
+const currentUser = await new Promise((resolve) => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    unsubscribe();
+    resolve(user);
+  });
+});
+
+// 管理者権限を確認
+if (!currentUser || !ADMIN_UIDS.includes(currentUser.uid)) {
+  alert("管理者権限がありません。");
+  await signOut(auth);
+  location.replace("./login.html");
+  throw new Error("管理者権限がありません。");
+}
+
+console.log("管理者認証成功:", currentUser.email);
+
+
+// ログアウト処理
+document
+  .getElementById("logout-button")
+  ?.addEventListener("click", async () => {
+    const confirmed = confirm("ログアウトしますか？");
+
+    if (!confirmed) return;
+
+    try {
+      await signOut(auth);
+      location.replace("./login.html");
+    } catch (error) {
+      console.error("ログアウトエラー:", error);
+      alert("ログアウトに失敗しました。");
+    }
+  });
+
 let postMap = null;
 let postMapGeoJsonLayer = null;
 const originalMapZones = [
@@ -151,7 +189,7 @@ function updateStats(){
  $("#nav-report-count").textContent=reports.filter(r=>r.status==="未対応").length;
 }
 function reportRow(r,compact=false){
- return `<tr><td>${r.date}</td><td><span class="table-place">${r.place}</span><span class="table-sub">デモ位置情報</span></td><td><span class="table-tag">${r.icon} ${r.type}</span></td><td>${priorityPill(r.priority)}</td><td>${statusPill(r.status)}</td><td><button class="mini-btn" data-detail="${r.id}">詳細・対応</button></td></tr>`;
+ return `<tr><td>${r.date}</td><td><span class="table-place">${r.place}</span><span class="table-sub">デモ位置情報</span></td><td><span class="table-tag">${r.icon} ${r.type}</span></td><td>${priorityPill(r.priority)}</td><td>${statusPill(r.status)}</td><td><button class="mini-btn" data-detail="${r.id}">詳細・対応</button>${r.dbPostId ? `<button class="mini-btn" data-delete-post="${r.id}">削除</button>` : ""}</td></tr>`;
 }
 function renderRecent(){ $("#recent-table").innerHTML=reports.slice(0,4).map(r=>reportRow(r,true)).join("");}
 function renderReports(){
@@ -189,17 +227,85 @@ function navigate(view){
  if(view==="dashboard" && postMap) setTimeout(()=>postMap.invalidateSize(), 80);
  window.scrollTo({top:0,behavior:"smooth"});
 }
-document.addEventListener("click",e=>{
- const nav=e.target.closest("[data-view]");if(nav)navigate(nav.dataset.view);
- const go=e.target.closest("[data-goto]");if(go)navigate(go.dataset.goto);
- const det=e.target.closest("[data-detail]");if(det)openDetail(det.dataset.detail);
- const status=e.target.closest("[data-status]");
- if(status){
-  const r=reports.find(x=>x.id===Number(status.dataset.status));if(r){r.status=status.dataset.next;$("#detail-dialog").close();refresh();showToast(`投稿 #${r.id} を「${r.status}」に更新しました`);}
- }
- const bag=e.target.closest("[data-bag]");
- if(bag){const b=bags.find(x=>x.id===Number(bag.dataset.bag));if(b){b.status="回収済み";renderBags();updateStats();showToast("ごみ袋を回収済みに更新しました");}}
+
+document.addEventListener("click", async e => {
+  const nav = e.target.closest("[data-view]");
+  if (nav) navigate(nav.dataset.view);
+
+  const go = e.target.closest("[data-goto]");
+  if (go) navigate(go.dataset.goto);
+
+  const det = e.target.closest("[data-detail]");
+  if (det) openDetail(det.dataset.detail);
+
+  // Firebaseの投稿削除処理
+  const deleteButton = e.target.closest("[data-delete-post]");
+
+  if (deleteButton) {
+    const report = reports.find(
+      r => r.id === Number(deleteButton.dataset.deletePost)
+    );
+
+    if (!report || !report.dbPostId) {
+      showToast("削除対象の投稿が見つかりません。");
+      return;
+    }
+
+    const confirmed = confirm(
+      "この投稿を削除しますか？\n関連する回収状況と通知も削除されます。"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await deleteGarbagePost(dataConnect, {
+        postId: report.dbPostId
+      });
+
+      showToast("投稿を削除しました。");
+      await loadRealReports();
+
+    } catch (error) {
+      console.error("投稿削除エラー:", error);
+      showToast("投稿の削除に失敗しました。");
+    }
+
+    return;
+  }
+
+  // 投稿の回収状況変更
+  const status = e.target.closest("[data-status]");
+
+  if (status) {
+    const r = reports.find(
+      x => x.id === Number(status.dataset.status)
+    );
+
+    if (r) {
+      r.status = status.dataset.next;
+      $("#detail-dialog").close();
+      refresh();
+      showToast(`投稿 #${r.id} を「${r.status}」に更新しました`);
+    }
+  }
+
+  // ごみ袋の回収状況変更
+  const bag = e.target.closest("[data-bag]");
+
+  if (bag) {
+    const b = bags.find(
+      x => x.id === Number(bag.dataset.bag)
+    );
+
+    if (b) {
+      b.status = "回収済み";
+      renderBags();
+      updateStats();
+      showToast("ごみ袋を回収済みに更新しました");
+    }
+  }
 });
+
 $("#report-search").addEventListener("input",renderReports);
 $("#status-filter").addEventListener("change",renderReports);
 $("#priority-filter").addEventListener("change",renderReports);

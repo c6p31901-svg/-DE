@@ -14,7 +14,7 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { createUser, createGarbageCategory, createGarbagePost, listUsers, listGarbageCategories, listGarbagePosts, listGarbagePlaces, listCollectionStatuses, listGpsActivityRecords, listAnnouncements } from '@dataconnect/generated';
+import { createUser, createGarbageCategory, createGarbagePost, deleteGarbagePost, listUsers, listGarbageCategories, listGarbagePosts, listGarbagePlaces, listCollectionStatuses, listGpsActivityRecords } from '@dataconnect/generated';
 
 
 // Operation CreateUser:  For variables, look at type CreateUserVars in ../index.d.ts
@@ -25,6 +25,9 @@ const { data } = await CreateGarbageCategory(dataConnect, createGarbageCategoryV
 
 // Operation CreateGarbagePost:  For variables, look at type CreateGarbagePostVars in ../index.d.ts
 const { data } = await CreateGarbagePost(dataConnect, createGarbagePostVars);
+
+// Operation DeleteGarbagePost:  For variables, look at type DeleteGarbagePostVars in ../index.d.ts
+const { data } = await DeleteGarbagePost(dataConnect, deleteGarbagePostVars);
 
 // Operation ListUsers: 
 const { data } = await ListUsers(dataConnect);
@@ -43,9 +46,6 @@ const { data } = await ListCollectionStatuses(dataConnect);
 
 // Operation ListGpsActivityRecords: 
 const { data } = await ListGpsActivityRecords(dataConnect);
-
-// Operation ListAnnouncements: 
-const { data } = await ListAnnouncements(dataConnect);
 
 
 ```

@@ -8,8 +8,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <style>#priority-list{display:none!important}</style>
-  <script type="module" crossorigin src="/assets/app/admin/kannri_index-Bo9pfMhY.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index.esm-DT7gI91q.js">
+  <script type="module" crossorigin src="/assets/app/admin/kannri_index-0Q7mKSVb.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index.esm-B6uBLM-Y.js">
+  <link rel="modulepreload" crossorigin href="/assets/firebase-Dmbm78D9.js">
   <link rel="stylesheet" crossorigin href="/assets/kannri_index-Cp4Yzyo5.css">
 </head>
 <body>
@@ -35,7 +36,14 @@
       </div>
       <div class="top-actions">
         <span class="today" id="today-label"></span>
-        <div class="admin-label"><strong>財団管理者画面</strong><small></small></div>
+        <div class="admin-label">
+          <strong>財団管理者画面</strong>
+          <small>ログイン中</small>
+        </div>
+
+        <button id="logout-button" class="outline">
+          ログアウト
+        </button>
       </div>
     </header>
 

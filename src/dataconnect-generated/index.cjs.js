@@ -55,6 +55,20 @@ exports.createGarbagePost = function createGarbagePost(dcOrVars, vars) {
 }
 ;
 
+const deleteGarbagePostRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'DeleteGarbagePost', inputVars);
+}
+deleteGarbagePostRef.operationName = 'DeleteGarbagePost';
+exports.deleteGarbagePostRef = deleteGarbagePostRef;
+
+exports.deleteGarbagePost = function deleteGarbagePost(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(deleteGarbagePostRef(dcInstance, inputVars));
+}
+;
+
 const listUsersRef = (dc) => {
   const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
   dcInstance._useGeneratedSdk();
