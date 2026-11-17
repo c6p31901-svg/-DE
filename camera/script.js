@@ -39,7 +39,7 @@ function compressPhoto(file) {
     image.onload = () => {
       URL.revokeObjectURL(objectUrl);
 
-      const maxSize = 320;
+      const maxSize = 800;
       const scale = Math.min(
         1,
         maxSize / Math.max(image.width, image.height)
@@ -70,7 +70,7 @@ function compressPhoto(file) {
         canvas.height
       );
 
-      resolve(canvas.toDataURL("image/jpeg", 0.45));
+      resolve(canvas.toDataURL("image/jpeg", 0.8));
     };
 
     image.onerror = () => {
@@ -188,10 +188,6 @@ sendButton.addEventListener("click", async () => {
 
     const userId = userResult.data.user_insert.userId;
 
-    // 写真・位置情報・大きさを保存
-    status.textContent =
-      "写真と位置情報をデータベースに保存しています…";
-
     const postResult = await createGarbagePost(dataConnect, {
       userId: userId,
       photoUrl: compressedDataUrl,
@@ -201,11 +197,14 @@ sendButton.addEventListener("click", async () => {
       collectionStatus: "未回収"
     });
 
-    // 保存成功
-    status.textContent =
-      "投稿を保存できました。投稿ID：" +
-      postResult.data.garbagePost_insert.postId;
+    // 投稿IDを取得
+    const postId = postResult.data.garbagePost_insert.postId;
 
+    // 投稿保存成功
+    status.textContent =
+      "投稿を保存できました。投稿ID：" + postId;
+    
+    // AI判定（今後実装する部分）
     // 入力内容をリセット
     photoInput.value = "";
     compressedDataUrl = null;
