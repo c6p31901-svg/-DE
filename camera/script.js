@@ -35,93 +35,128 @@ const dataConnect = getDataConnect(app, connectorConfig);
 const functions = getFunctions(app, "asia-northeast1");
 const detectGarbage = httpsCallable(functions, "detectGarbage");
 // HTML要素
-const photoInput = document.getElementById("photo");
+
+// HTML要素
 const preview = document.getElementById("preview");
 const sendButton = document.getElementById("sendButton");
 const status = document.getElementById("status");
 
+const cameraVideo = document.getElementById("cameraVideo");
+const cameraContainer = document.getElementById("cameraContainer");
+const captureCanvas = document.getElementById("captureCanvas");
+
+const startCameraButton = document.getElementById("startCamera");
+const captureButton = document.getElementById("captureButton");
+const retakeButton = document.getElementById("retakeButton");
+
 let compressedDataUrl = null;
+let cameraStream = null;
 
-// 写真を圧縮する
-function compressPhoto(file) {
-  return new Promise((resolve, reject) => {
-    const image = new Image();
-    const objectUrl = URL.createObjectURL(file);
 
-    image.onload = () => {
-      URL.revokeObjectURL(objectUrl);
+// カメラを起動する
+async function startCamera() {
+    try {
+        if (!navigator.mediaDevices?.getUserMedia) {
+            throw new Error("このブラウザではカメラを利用できません。");
+        }
 
-      const maxSize = 800;
-      const scale = Math.min(
-        1,
-        maxSize / Math.max(image.width, image.height)
-      );
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+            audio: false,
+            video: {
+                facingMode: { ideal: "environment" },
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+            }
+        });
 
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.max(
-        1,
-        Math.round(image.width * scale)
-      );
-      canvas.height = Math.max(
-        1,
-        Math.round(image.height * scale)
-      );
+        cameraVideo.srcObject = cameraStream;
+        await cameraVideo.play();
 
-      const context = canvas.getContext("2d");
+        cameraContainer.style.display = "block";
+        captureButton.style.display = "block";
+        startCameraButton.style.display = "none";
+        retakeButton.style.display = "none";
 
-      if (!context) {
-        reject(new Error("画像を変換できませんでした。"));
-        return;
-      }
+        status.textContent = "撮影する対象物を枠内に収めてください。";
 
-      context.drawImage(
-        image,
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
-
-      resolve(canvas.toDataURL("image/jpeg", 0.8));
-    };
-
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      reject(new Error("画像を読み込めませんでした。"));
-    };
-
-    image.src = objectUrl;
-  });
+    } catch (error) {
+        console.error("カメラ起動エラー:", error);
+        status.textContent =
+            error.message || "カメラを起動できませんでした。";
+    }
 }
 
-// 写真を選択したときの処理
-photoInput.addEventListener("change", async () => {
-  compressedDataUrl = null;
+// カメラを停止する
+function stopCamera() {
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
 
-  const file = photoInput.files?.[0];
+    cameraVideo.srcObject = null;
+}
 
-  if (!file) {
-    preview.style.display = "none";
-    status.textContent = "";
-    return;
-  }
+// 撮影する
+function capturePhoto() {
+    if (!cameraVideo.videoWidth || !cameraVideo.videoHeight) {
+        status.textContent = "カメラ映像を取得できません。";
+        return;
+    }
 
-  try {
-    status.textContent = "写真を圧縮しています…";
+    const width = cameraVideo.videoWidth;
+    const height = cameraVideo.videoHeight;
 
-    compressedDataUrl = await compressPhoto(file);
+    // 映像の中央を正方形に切り出す
+    const cropSize = Math.min(width, height);
+    const sx = (width - cropSize) / 2;
+    const sy = (height - cropSize) / 2;
 
+    const outputSize = 800;
+
+    captureCanvas.width = outputSize;
+    captureCanvas.height = outputSize;
+
+    const context = captureCanvas.getContext("2d");
+
+    context.drawImage(
+        cameraVideo,
+        sx, sy, cropSize, cropSize,
+        0, 0, outputSize, outputSize
+    );
+
+    // JPEG形式に変換
+    compressedDataUrl = captureCanvas.toDataURL(
+        "image/jpeg",
+        0.8
+    );
+
+    // プレビュー表示
     preview.src = compressedDataUrl;
     preview.style.display = "block";
 
+    // 撮影後はカメラを停止
+    stopCamera();
+
+    cameraContainer.style.display = "none";
+    captureButton.style.display = "none";
+    startCameraButton.style.display = "none";
+    retakeButton.style.display = "block";
+
     status.textContent = "写真を準備しました。";
+}
 
-  } catch (error) {
-    console.error("写真の準備エラー:", error);
+// イベント登録
+startCameraButton.addEventListener("click", startCamera);
 
-    status.textContent =
-      error.message || "写真の準備に失敗しました。";
-  }
+captureButton.addEventListener("click", capturePhoto);
+
+// 撮り直し
+retakeButton.addEventListener("click", () => {
+    compressedDataUrl = null;
+    preview.removeAttribute("src");
+    preview.style.display = "none";
+
+    startCamera();
 });
 
 // 現在地を取得する
@@ -170,8 +205,9 @@ sendButton.addEventListener("click", async () => {
   try {
     // 写真が選択されているか確認
     if (!compressedDataUrl) {
-      throw new Error("先に写真を選択してください。");
+    throw new Error("先に写真を撮影してください。");
     }
+     
 
     // 対象物の大きさを取得
     const sizeInput = document.querySelector(
@@ -241,18 +277,25 @@ sendButton.addEventListener("click", async () => {
         "写真の保存は完了しましたが、AI判定に失敗しました。投稿ID：" + postId;
     }
     
+    
     // 入力内容をリセット
-    photoInput.value = "";
-    compressedDataUrl = null;
+compressedDataUrl = null;
 
-    preview.removeAttribute("src");
-    preview.style.display = "none";
+preview.removeAttribute("src");
+preview.style.display = "none";
 
-    document.querySelectorAll(
-      'input[name="objectSize"]'
-    ).forEach(input => {
-      input.checked = false;
-    });
+cameraContainer.style.display = "none";
+captureButton.style.display = "none";
+retakeButton.style.display = "none";
+startCameraButton.style.display = "block";
+
+stopCamera();
+
+document.querySelectorAll(
+    'input[name="objectSize"]'
+).forEach(input => {
+    input.checked = false;
+});
 
   } catch (error) {
     console.error("投稿保存エラー:", error);
