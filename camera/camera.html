@@ -22,12 +22,47 @@
         </p>
 
         <!-- カメラ -->
-        <input
-            type="file"
-            id="photo"
-            accept="image/*"
-            capture="environment"
-        >
+        
+<!-- カメラ撮影エリア -->
+<section class="camera-section">
+    <h2>ごみの撮影</h2>
+    <p>枠内にごみ全体が収まるように撮影してください。</p>
+
+    <button type="button" id="startCamera">
+        カメラを起動
+    </button>
+
+    <div id="cameraContainer" class="camera-container"
+         style="display:none;">
+
+        <video id="cameraVideo"
+               autoplay
+               playsinline
+               muted>
+        </video>
+
+        <!-- 撮影ガイド枠 -->
+        <div class="camera-guide"></div>
+    </div>
+
+    <button type="button" id="captureButton"
+            style="display:none;">
+        撮影する
+    </button>
+
+    <button type="button" id="retakeButton"
+            style="display:none;">
+        撮り直す
+    </button>
+
+    <!-- 撮影画像 -->
+    <canvas id="captureCanvas" style="display:none;"></canvas>
+
+    <img id="preview"
+         style="max-width:100%; display:none;"
+         alt="撮影した画像">
+</section>
+
 
         <br><br>
 
