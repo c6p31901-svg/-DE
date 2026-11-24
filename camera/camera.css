@@ -80,3 +80,51 @@ button {
     margin-top: 16px;
     font-size: 14px;
 }
+
+
+/* カメラ撮影画面 */
+.camera-section {
+    margin-top: 20px;
+}
+
+.camera-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #222;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.camera-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 撮影ガイド枠 */
+.camera-guide {
+    position: absolute;
+    width: 65%;
+    aspect-ratio: 1 / 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid #06C755;
+    border-radius: 8px;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+#preview {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+#captureButton,
+#retakeButton {
+    margin-top: 10px;
+}
