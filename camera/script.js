@@ -2,6 +2,10 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getDataConnect } from "firebase/data-connect";
 import {
+  initializeAppCheck,
+  ReCaptchaEnterpriseProvider
+} from "firebase/app-check";
+import {
   connectorConfig,
   createUser,
   createGarbagePost
@@ -19,6 +23,13 @@ const firebaseConfig = {
 const app = getApps().length
   ? getApp()
   : initializeApp(firebaseConfig);
+// Firebase App Checkの初期化
+const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaEnterpriseProvider(
+    "6LcNNDAuAAAAAEy20nTs21CAOY2cAm9hqGUhufen"
+  ),
+  isTokenAutoRefreshEnabled: true
+});
 
 const dataConnect = getDataConnect(app, connectorConfig);
 
