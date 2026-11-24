@@ -1,4 +1,4 @@
-
+import { getFunctions, httpsCallable } from "firebase/functions";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getDataConnect } from "firebase/data-connect";
 import {
@@ -32,7 +32,8 @@ const appCheck = initializeAppCheck(app, {
 });
 
 const dataConnect = getDataConnect(app, connectorConfig);
-
+const functions = getFunctions(app, "asia-northeast1");
+const detectGarbage = httpsCallable(functions, "detectGarbage");
 // HTML要素
 const photoInput = document.getElementById("photo");
 const preview = document.getElementById("preview");
@@ -215,7 +216,31 @@ sendButton.addEventListener("click", async () => {
     status.textContent =
       "投稿を保存できました。投稿ID：" + postId;
     
-    // AI判定（今後実装する部分）
+    // AWS LambdaによるAI画像判定
+    status.textContent = "写真を保存しました。AIで画像を判定しています…";
+    
+    try {
+      const aiResponse = await detectGarbage({
+        photoUrl: compressedDataUrl
+      });
+    
+      const aiResult = aiResponse.data;
+    
+      console.log("AI判定結果:", {
+        postId,
+        labels: aiResult.labels
+      });
+    
+      status.textContent =
+        "投稿とAI判定が完了しました。投稿ID：" + postId;
+    
+    } catch (aiError) {
+      console.error("AI判定エラー:", aiError);
+    
+      status.textContent =
+        "写真の保存は完了しましたが、AI判定に失敗しました。投稿ID：" + postId;
+    }
+    
     // 入力内容をリセット
     photoInput.value = "";
     compressedDataUrl = null;
